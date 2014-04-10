@@ -1,0 +1,12 @@
+Hacer uso de la macro DISALLOW_COPY_AND_ASSIGN en las clases
+see Google C++ Style Guide.
+
+
+denisacostaq(o sea mi mismo): arreglar @file ciaaCommInterface.h, @file ciaaCommInterface.cpp, @file ciaaSocket.h, @file ciaaSocket.cpp
+todos tienen \brief This file is for the Serial Port comunication in the Comms module. gg
+
+y poner siempre \file o @file, algo estandar.
+
+
+
+HACKING

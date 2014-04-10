@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/LadderIcons">
+        <file>Output.png</file>
+        <file>Input.png</file>
+        <file>Coil.png</file>
+        <file>Contact.png</file>
+    </qresource>
+</RCC>

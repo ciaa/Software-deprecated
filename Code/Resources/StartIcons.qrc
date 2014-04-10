@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/StartIcons">
+        <file>Debug.png</file>
+        <file>Compile.png</file>
+        <file>Program.png</file>
+        <file>Save.png</file>
+        <file>Help.png</file>
+        <file>New.png</file>
+        <file>Open.png</file>
+        <file>Clean.png</file>
+    </qresource>
+</RCC>
