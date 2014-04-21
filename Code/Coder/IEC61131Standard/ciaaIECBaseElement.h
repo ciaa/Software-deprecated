@@ -31,6 +31,8 @@
 #ifndef CIAAIECBASEELEMENT_H
 #define CIAAIECBASEELEMENT_H
 
+#include <cstdlib>
+
 #include "Defines/ciaaGlobalMacros.h"
 
 /*! \brief ciaaIECBaseElement is the base class for all IEC 61131 standard's elements
@@ -51,7 +53,7 @@ class ciaaIECBaseElement
 
         struct ciaaIECBaseElement_TSerializable
         {
-            uint32_t type;
+            u_int32_t type;
             void* data;
         };
 
@@ -59,7 +61,10 @@ class ciaaIECBaseElement
          *  \param pBuffer is the bytes buffer where the data will be added
          *  \return the buffer modified
          */
-        virtual uint8_t* Serialize (uint8_t pBuffer);
+        virtual u_int8_t* Serialize (u_int8_t pBuffer)
+        {
+          //TODO<Ezeqiel>: esto lo modifico alvaro porque no compilaba...
+        }
 };
 
 #endif // CIAAIECBASEELEMENT_H
