@@ -36,9 +36,9 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
- 
+
 #include "Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
-ciaaSocketTCP::ciaaSocketTCP(std::string host, u_int16_t port)
+ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
   : socket_{new ciaaQtcpSocketAdapter{host, port}}
 {
 }

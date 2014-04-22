@@ -39,7 +39,6 @@
 #ifndef COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 #define COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 
-#include <cstdlib>
 #include <iostream>//FIXME<denisacostaq\@gmail.com>:
 
 #include <QtNetwork/QTcpSocket>
@@ -51,9 +50,10 @@
  * \ingroup Ethernet
  */
 class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface
-{
+{//TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
+ //ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
   public:
-    ciaaQtcpSocketAdapter(std::string host, u_int16_t port);
+    ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
     ~ciaaQtcpSocketAdapter() = default;
 
     ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
@@ -62,10 +62,10 @@ class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface
     ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
     ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
 
-    CommDriverErrorCode connect(int32_t timeout) override;
-    CommDriverErrorCode disconnect(int32_t timeout) override;
-    CommDriverErrorCode read(int32_t timeout, char *data, int *n_bytes) override;
-    CommDriverErrorCode write(int32_t timeout, const char *data, int *n_bytes) override;
+    CommDriverErrorCode connect(std::int32_t timeout) override;
+    CommDriverErrorCode disconnect(std::int32_t timeout) override;
+    CommDriverErrorCode read(std::int32_t timeout, char *data, std::int32_t *n_bytes) override;
+    CommDriverErrorCode write(std::int32_t timeout, const char *data, std::int32_t *n_bytes) override;
 
   private:
     QTcpSocket socket_;

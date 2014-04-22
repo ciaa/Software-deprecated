@@ -39,8 +39,9 @@
 #ifndef COMMS_DRIVERS_ADAPTER_INTERFACE_H
 #define COMMS_DRIVERS_ADAPTER_INTERFACE_H
 
-#include <cstdlib>
+#include <cstdint>
 
+#include "Defines/ciaaGlobalMacros.h"
 #include "Comms/Drivers/ciaa_comm_driver_error_code.h"
 
 /*!
@@ -60,11 +61,14 @@ class ciaaCommAdapterInterface
     ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
     ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) = delete;
 
-    virtual CommDriverErrorCode connect(int32_t timeout) = 0;
-    virtual CommDriverErrorCode disconnect(int32_t timeout) = 0;
-    virtual CommDriverErrorCode read(int32_t timeout, char *data, int32_t *n_bytes) = 0;
-    virtual CommDriverErrorCode write(int32_t timeout, const char *data, int32_t *n_bytes) = 0;
-
+    virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
+    virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
+    virtual CommDriverErrorCode read(std::int32_t timeout,
+                                     char *data,
+                                     std::int32_t *n_bytes) = 0;
+    virtual CommDriverErrorCode write(std::int32_t timeout,
+                                      const char *data,
+                                      std::int32_t *n_bytes) = 0;
 };
 
 #endif // COMMS_DRIVERS_ADAPTER_INTERFACE_H

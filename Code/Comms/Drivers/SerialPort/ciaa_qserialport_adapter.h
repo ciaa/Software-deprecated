@@ -59,10 +59,14 @@ class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface
     ciaaQSerialPortAdapter(const ciaaQSerialPortAdapter&&) = delete;
     ciaaQSerialPortAdapter& operator=(const ciaaQSerialPortAdapter&&) = delete;
 
-    CommDriverErrorCode connect(int32_t timeout) override;
-    CommDriverErrorCode disconnect(int32_t timeout) override;
-    CommDriverErrorCode read(int32_t timeout, char *data, int *n_bytes) override;
-    CommDriverErrorCode write(int32_t timeout, const char *data, int *n_bytes) override;
+    CommDriverErrorCode connect(std::int32_t timeout) override;
+    CommDriverErrorCode disconnect(std::int32_t timeout) override;
+    CommDriverErrorCode read(std::int32_t timeout,
+                             char *data,
+                             std::int32_t *n_bytes) override;
+    CommDriverErrorCode write(std::int32_t timeout,
+                              const char *data,
+                              std::int32_t *n_bytes) override;
 
     QSerialPort serial_;
 };

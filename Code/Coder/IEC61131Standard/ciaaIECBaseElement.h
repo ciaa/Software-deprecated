@@ -31,7 +31,7 @@
 #ifndef CIAAIECBASEELEMENT_H
 #define CIAAIECBASEELEMENT_H
 
-#include <cstdlib>
+#include <cstdint>
 
 #include "Defines/ciaaGlobalMacros.h"
 
@@ -53,7 +53,7 @@ class ciaaIECBaseElement
 
         struct ciaaIECBaseElement_TSerializable
         {
-            u_int32_t type;
+            uint32_t type;
             void* data;
         };
 
@@ -61,9 +61,9 @@ class ciaaIECBaseElement
          *  \param pBuffer is the bytes buffer where the data will be added
          *  \return the buffer modified
          */
-        virtual u_int8_t* Serialize (u_int8_t pBuffer)
+        virtual uint8_t* Serialize (uint8_t pBuffer)
         {
-          //TODO<Ezeqiel>: esto lo modifico alvaro porque no compilaba...
+          //FIXME<Ezequiel>: esto lo puso alvaro para que compilara.
         }
 };
 

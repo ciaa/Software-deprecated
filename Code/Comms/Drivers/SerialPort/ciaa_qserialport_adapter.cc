@@ -40,32 +40,41 @@
 
 ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device)
 {
+  CIAA_UNUSED_PARAM(device);
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::connect(int32_t timeout)
+CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
   return CommDriverErrorCode::Ok;
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(int32_t timeout)
+CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
   return CommDriverErrorCode::Ok;
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::read(int32_t timeout,
+CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
                                                  char *data,
-                                                 int *n_bytes)
+                                                 std::int32_t *n_bytes)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
+  CIAA_UNUSED_PARAM(data);
+  CIAA_UNUSED_PARAM(n_bytes);
   return CommDriverErrorCode::Ok;
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::write(int32_t timeout,
+CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
                                                   const char *data,
-                                                  int *n_bytes)
+                                                  std::int32_t *n_bytes)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
+  CIAA_UNUSED_PARAM(data);
+  CIAA_UNUSED_PARAM(n_bytes);
   return CommDriverErrorCode::Ok;
 }
