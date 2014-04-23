@@ -30,7 +30,7 @@
 
 
 /*! \mainpage CIAA Source documentation.
-\image html MainPage.png
+\image html fetch_005.png
 \n\n\n\n\n\n\n\n\n\n\n
 Este documento presenta una propuesta para el desarrollo de una Computadora Industrial
 Abierta Argentina, que consiste en una plaqueta electrónica provista de un microcontrolador y
