@@ -38,7 +38,7 @@
  
 #include "Comms/Drivers/ciaa_comm_facade.h"
 
-ciaaCommFacade::ciaaCommFacade(std::string host, u_int16_t port)
+ciaaCommFacade::ciaaCommFacade(std::string host, std::uint16_t port)
   : transporter_{new ciaaSocketTCP{host, port}}
 {
 }

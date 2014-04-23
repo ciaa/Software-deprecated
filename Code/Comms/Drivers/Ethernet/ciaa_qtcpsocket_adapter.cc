@@ -38,13 +38,13 @@
 
 #include "Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 
-ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host, u_int16_t port)
+ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host, std::uint16_t port)
   : host_{host.c_str()}
   , port_(port)
 {
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::connect(int32_t timeout)
+CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout)
 {
   //TODO<denisacostaq\@gmail.com>: some
   socket_.connectToHost(host_, port_);
@@ -59,24 +59,31 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::connect(int32_t timeout)
   }
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(int32_t timeout)
+CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
   return CommDriverErrorCode::Ok;
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::read(int32_t timeout,
+CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
                                                 char *data,
-                                                int *n_bytes)
+                                                std::int32_t *n_bytes)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
+  CIAA_UNUSED_PARAM(data);
+  CIAA_UNUSED_PARAM(n_bytes);
   return CommDriverErrorCode::Ok;
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::write(int32_t timeout,
+CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
                                                  const char *data,
-                                                 int *n_bytes)
+                                                 std::int32_t *n_bytes)
 {
   //TODO<denisacostaq\@gmail.com>: todo
+  CIAA_UNUSED_PARAM(timeout);
+  CIAA_UNUSED_PARAM(data);
+  CIAA_UNUSED_PARAM(n_bytes);
   return CommDriverErrorCode::Ok;
 }

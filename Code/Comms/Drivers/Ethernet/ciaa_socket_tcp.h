@@ -35,7 +35,7 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 
 #ifndef COMMS_DRIVERS_ETHERNET_SOCKETTCP_H
 #define COMMS_DRIVERS_ETHERNET_SOCKETTCP_H
@@ -50,7 +50,7 @@
 class ciaaSocketTCP : public ciaaCommInterface
 {
 public:
-    ciaaSocketTCP(std::string host, u_int16_t port);
+    ciaaSocketTCP(std::string host, std::uint16_t port);
     ~ciaaSocketTCP();
 
     ciaaSocketTCP(const ciaaSocketTCP&) = delete;
@@ -59,23 +59,23 @@ public:
     ciaaSocketTCP(const ciaaSocketTCP&&) = delete;
     ciaaSocketTCP& operator=(const ciaaSocketTCP&&) = delete;
 
-    inline CommDriverErrorCode connect(int32_t timeout) const override {
+    inline CommDriverErrorCode connect(std::int32_t timeout) const override {
       return socket_->connect(timeout) ;
     }
 
-    inline CommDriverErrorCode disconnect(int32_t timeout) const override {
+    inline CommDriverErrorCode disconnect(std::int32_t timeout) const override {
       return socket_->disconnect(timeout);
     }
 
-    inline CommDriverErrorCode read(int32_t timeout,
+    inline CommDriverErrorCode read(std::int32_t timeout,
                                     char *data,
-                                    int *n_bytes) const override {
+                                    std::int32_t *n_bytes) const override {
       return socket_->read(timeout, data, n_bytes);
     }
 
-    inline CommDriverErrorCode write(int32_t timeout,
+    inline CommDriverErrorCode write(std::int32_t timeout,
                                      const char *data,
-                                     int *n_bytes) const override {
+                                     std::int32_t *n_bytes) const override {
       return socket_->write(timeout, data, n_bytes) ;
     }
 

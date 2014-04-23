@@ -36,7 +36,7 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
- 
+
 #ifndef COMMS_DRIVERS_SERIALPORT_H
 #define COMMS_DRIVERS_SERIALPORT_H
 
@@ -48,7 +48,7 @@
  *  \brief This class is for the Serial Port communication using RS-232
  *  \brief standard(ANSI/EIA­232) in the Comms module.
  * \ingroup SerialPort
- */  
+ */
 class ciaaSerialPort : public ciaaCommInterface
 {
 public:
@@ -61,23 +61,23 @@ public:
     ciaaSerialPort(const ciaaSerialPort&&) = delete;
     ciaaSerialPort& operator=(const ciaaSerialPort&&) = delete;
 
-    inline CommDriverErrorCode connect(int32_t timeout) const override {
+    inline CommDriverErrorCode connect(std::int32_t timeout) const override {
       return serial_->connect(timeout) ;
     }
 
-    inline CommDriverErrorCode disconnect(int32_t timeout) const override{
+    inline CommDriverErrorCode disconnect(std::int32_t timeout) const override {
       return serial_->disconnect(timeout);
     }
 
-    inline CommDriverErrorCode read(int32_t timeout,
+    inline CommDriverErrorCode read(std::int32_t timeout,
                                     char *data,
-                                    int *n_bytes) const override {
+                                    std::int32_t *n_bytes) const override {
       return serial_->read(timeout, data, n_bytes);
     }
 
-    inline CommDriverErrorCode write(int32_t timeout,
+    inline CommDriverErrorCode write(std::int32_t timeout,
                                      const char *data,
-                                     int *n_bytes) const override {
+                                     std::int32_t *n_bytes) const override {
       return serial_->write(timeout, data, n_bytes) ;
     }
 

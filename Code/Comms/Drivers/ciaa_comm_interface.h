@@ -39,7 +39,7 @@
 #ifndef CIAA_COMM_INTERFACE_H
 #define CIAA_COMM_INTERFACE_H
 
-#include <sys/types.h>
+#include <cstdint>
 
 #include "Comms/Drivers/ciaa_comm_driver_error_code.h"
 /*!
@@ -58,17 +58,17 @@ class ciaaCommInterface
     ciaaCommInterface(const ciaaCommInterface&&) = delete;
     ciaaCommInterface& operator=(const ciaaCommInterface&&) = delete;
 
-    virtual CommDriverErrorCode connect(int32_t timeout) const = 0;
+    virtual CommDriverErrorCode connect(std::int32_t timeout) const = 0;
 
-    virtual CommDriverErrorCode disconnect(int32_t timeout) const = 0;
+    virtual CommDriverErrorCode disconnect(std::int32_t timeout) const = 0;
 
-    virtual CommDriverErrorCode read(int32_t timeout,
+    virtual CommDriverErrorCode read(std::int32_t timeout,
                                      char *data,
-                                     int *n_bytes) const = 0;
+                                     std::int32_t *n_bytes) const = 0;
 
-    virtual CommDriverErrorCode write(int32_t timeout,
+    virtual CommDriverErrorCode write(std::int32_t timeout,
                                       const char *data,
-                                      int *n_bytes) const = 0;
+                                      std::int32_t *n_bytes) const = 0;
 
 };
 
