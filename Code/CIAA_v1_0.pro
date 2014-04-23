@@ -4,13 +4,15 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui network serialport
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = CIAA_v1_0
 
 TEMPLATE = app
+
+CONFIG += c++11
 
 SOURCES += main.cpp\
     GUI/MainWindow/ciaaMainwindow_Controller.cpp \
@@ -61,9 +63,6 @@ SOURCES += main.cpp\
     System/ciaaFreescale/ciaaFSMapMemory.cpp \
     System/ciaaNXP/ciaaNXPMapMemory.cpp \
     System/ciaaST/ciaaSTMapMemory.cpp \
-    Comms/Drivers/Ethernet/ciaaSocket.cpp \
-    Comms/Drivers/SerialPort/ciaaSerialPort.cpp \
-    Comms/Drivers/ciaaCommInterface.cpp \
     Comms/Protocols/Modbus/ciaaModbus.cpp \
     Coder/IEC61131Standard/Projects/ciaaIECProject.cpp \
     Compiler/ciaaIECCompiler.cpp \
@@ -76,7 +75,14 @@ SOURCES += main.cpp\
     Coder/IEC61131Standard/ciaaIECBaseElement.cpp \
     Coder/IL/Visualiser/ciaaVIL_Model.cpp \
     Coder/IL/Visualiser/ciaaVIL_View.cpp \
-    Coder/ciaaProject.cpp
+    Coder/ciaaProject.cpp \
+    Comms/Drivers/Ethernet/ciaa_socket_tcp.cc \
+    Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.cc \
+    Comms/Drivers/Ethernet/ciaa_socket_udp.cc \
+    Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.cc \
+    Comms/Drivers/SerialPort/ciaa_serial_port.cc \
+    Comms/Drivers/SerialPort/ciaa_qserialport_adapter.cc \
+    Comms/Drivers/ciaa_comm_facade.cc
 
 HEADERS  += GUI/MainWindow/ciaaMainWindow_Controller.h \
     Coder/Ladder/Elements/ciaaLElement_Controller.h \
@@ -126,9 +132,6 @@ HEADERS  += GUI/MainWindow/ciaaMainWindow_Controller.h \
     System/ciaaFreescale/ciaaFSMapMemory.h \
     System/ciaaNXP/ciaaNXPMapMemory.h \
     System/ciaaST/ciaaSTMapMemory.h \
-    Comms/Drivers/Ethernet/ciaaSocket.h \
-    Comms/Drivers/SerialPort/ciaaSerialPort.h \
-    Comms/Drivers/ciaaCommInterface.h \
     Comms/Protocols/Modbus/ciaaModbus.h \
     Coder/IEC61131Standard/Projects/ciaaIECProject.h \
     Compiler/ciaaIECCompiler.h \
@@ -142,7 +145,17 @@ HEADERS  += GUI/MainWindow/ciaaMainWindow_Controller.h \
     Defines/ciaaGlobalMacros.h \
     Coder/IL/Visualiser/ciaaVIL_Model.h \
     Coder/IL/Visualiser/ciaaVIL_View.h \
-    Coder/ciaaProject.h
+    Coder/ciaaProject.h \
+    Comms/Drivers/ciaa_comm_facade.h \
+    Comms/Drivers/ciaa_comm_interface.h \
+    Comms/Drivers/ciaa_comm_driver_error_code.h \
+    Comms/Drivers/ciaa_comm_adapter_interface.h \
+    Comms/Drivers/SerialPort/ciaa_serial_port.h \
+    Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h \
+    Comms/Drivers/Ethernet/ciaa_socket_udp.h \
+    Comms/Drivers/Ethernet/ciaa_socket_tcp.h \
+    Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h \
+    Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h
 
 FORMS    += GUI/MainWindow/ciaaMainwindow_View.ui
 

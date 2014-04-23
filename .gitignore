@@ -27,5 +27,5 @@ Code/Makefile
 
 
 #doc directory
-doc/html/
+Doc/html/
 **/*.html

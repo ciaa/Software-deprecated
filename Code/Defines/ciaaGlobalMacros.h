@@ -43,4 +43,6 @@
 TypeName(const TypeName&); \
 void operator=(const TypeName&)
 
+#define CIAA_UNUSED_PARAM(unusedparam) (void)unusedparam
+
 #endif // CIAAGLOBALMACROS_H
