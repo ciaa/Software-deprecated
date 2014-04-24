@@ -11,14 +11,11 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
+
     Copyright (C) 2014 $(Entidad que patenta)
 
   This software is free software; you can redistribute it and/or modify
@@ -39,7 +36,7 @@
 #ifndef COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 #define COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 
-#include <iostream>//FIXME<denisacostaq\@gmail.com>:
+#include <iostream>  // FIXME<denisacostaq\@gmail.com>:
 
 #include <QtNetwork/QTcpSocket>
 
@@ -49,28 +46,32 @@
  * \brief The ciaaQtcpSocketAdapter class
  * \ingroup Ethernet
  */
-class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface
-{//TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
- //ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
-  public:
-    ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
-    ~ciaaQtcpSocketAdapter() = default;
+class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface {
+  // TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
+  // ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
+ public:
+  ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
+  ~ciaaQtcpSocketAdapter() = default;
 
-    ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
-    ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&) = delete;
+  ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
+  ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&) = delete;
 
-    ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
-    ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
+  ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
+  ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
 
-    CommDriverErrorCode connect(std::int32_t timeout) override;
-    CommDriverErrorCode disconnect(std::int32_t timeout) override;
-    CommDriverErrorCode read(std::int32_t timeout, char *data, std::int32_t *n_bytes) override;
-    CommDriverErrorCode write(std::int32_t timeout, const char *data, std::int32_t *n_bytes) override;
+  CommDriverErrorCode connect(std::int32_t timeout) override;
+  CommDriverErrorCode disconnect(std::int32_t timeout) override;
+  CommDriverErrorCode read(std::int32_t timeout,
+                           char *data,
+                           std::int32_t *n_bytes) override;
+  CommDriverErrorCode write(std::int32_t timeout,
+                            const char *data,
+                            std::int32_t *n_bytes) override;
 
-  private:
-    QTcpSocket socket_;
-    QString host_;
-    quint16 port_;
+ private:
+  QTcpSocket socket_;
+  QString host_;
+  quint16 port_;
 };
 
-#endif // COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
+#endif  // COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
