@@ -21,7 +21,7 @@ add_library(comms_drivers ${comms_Code})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-#    set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror")
+    set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     #TODO: set(warnings "/W4 /WX /EHsc")
 endif()
