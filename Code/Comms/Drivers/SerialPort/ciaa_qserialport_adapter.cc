@@ -11,15 +11,12 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
-    Copyright (C) 2014 Ezequiel Esposito <ejesposito\@debtech.com.ar>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
+
+    Copyright (C) 2014 $(Entidad que patenta)
 
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -38,43 +35,38 @@
 
 #include "Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
 
-ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device)
-{
+ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
   CIAA_UNUSED_PARAM(device);
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }
 
 CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
                                                  char *data,
-                                                 std::int32_t *n_bytes)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+                                                 std::int32_t *n_bytes) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }
 
 CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
                                                   const char *data,
-                                                  std::int32_t *n_bytes)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+                                                  std::int32_t *n_bytes) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }
