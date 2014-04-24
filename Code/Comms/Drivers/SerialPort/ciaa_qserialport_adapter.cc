@@ -42,13 +42,13 @@ ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
 CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout) {
   // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }
 
 CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
   // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }
 
 CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
@@ -58,7 +58,7 @@ CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }
 
 CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
@@ -68,5 +68,5 @@ CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }
