@@ -1,17 +1,22 @@
-/*! \file MainPage.h
-    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
+/*! \brief This file is for doxygen main page.
+    \file MainPage.h
+    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
-    \brief Thie file become from: CIAA_v1_0/doc/MainPage.h
+    \brief This file is part of doxygen documentation.
+    \brief Thie file become from: CIAA_v1_0/Doc/MainPage.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
 
     \copyright
+    
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
 
-    <h3>This file is part of CIAA project (Computadora Industrial Argentina Abierta).</h3>
-    Copyright (C) 2014 Ezequiel Esposito <ejesposito\@debtech.com.ar>
+    Copyright (C) 2014 $(Entidad que patenta)
 
     This software is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -405,7 +410,7 @@ Library.
 - Stable version:\n
     - NULL
 - Last code:\n
-    - https://github.com/ejesposito/CIAA_v1_0.git
+    - https://github.com/ciaa/CIAA_v1_0.git
 */
 
 //-----------------------------------------------------------
