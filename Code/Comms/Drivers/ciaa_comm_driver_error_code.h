@@ -41,22 +41,6 @@
  * \ingroup Drivers
  */
 enum class CommDriverErrorCode {
-<<<<<<< HEAD
-  without_error,         /**< General operation without errors. */
-  access,                /**< Application lacked the required privileges. */
-  resource, /**< The local system ran out of resources (e.g., too many fd). */
-  connection, /**< The connect operation fail or current connection broken. */
-  inuse,                 /**< The device is busy. */
-  unsuported_operation,  // TODO<denisacostaq\@gmail.com>: ej escribir un
-                         // dispositivo de solo lectura
-  unfinished_operation,  /**< Still in progress in the background. */
-  temporary,             /**< You can retry the operation later. */
-  disconnect,            /**< Could not disconnect the device. */
-  read,                  /**< The read operation has been fail. */
-  write,                 /**< The write operation has been fail. */
-  timeout,               /**< The operation fail by timeout. */
-  unknown                /**< An unidentified error occurred. */
-=======
   OK,                          /**< General operation without errors. */
   access_error,                /**< Application lacked the required privileges. */  // NOLINT(whitespace/line_length)
   resource_error,              /**< The local system ran out of resources (e.g., too many fd). */  // NOLINT(whitespace/line_length)
@@ -70,6 +54,5 @@ enum class CommDriverErrorCode {
   write_error,                 /**< The write operation has been fail. */
   timeout_error,               /**< The operation fail by timeout. */
   unknown_error                /**< An unidentified error occurred. */
->>>>>>> experimental_cmake
 };
 #endif  // COMM_DRIVER_ERROR_CODE_H
