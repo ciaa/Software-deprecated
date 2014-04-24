@@ -1,0 +1,60 @@
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../)
+
+set(coder_Code
+  IL/Elements/ciaaILRegister.cpp
+  IL/Visualiser/ciaaVIL_View.cpp
+  IL/Visualiser/ciaaVIL_Controller.cpp
+  IL/Visualiser/ciaaVIL_Model.cpp
+  IL/Operators/ciaaILAnd.cpp
+  ciaaProject.cpp
+  IEC61131Standard/ConfigElements/Tasks/ciaaIECTask.cpp
+  IEC61131Standard/ConfigElements/Configurations/ciaaIECConfig.cpp
+  IEC61131Standard/ConfigElements/Resources/ciaaIECResource.cpp
+  IEC61131Standard/Projects/ciaaIECProject.cpp
+  IEC61131Standard/ciaaIECBaseElement.cpp
+  IEC61131Standard/DataTypes/ciaaIECByteType.cpp
+  IEC61131Standard/DataTypes/ciaaIECBoolType.cpp
+  IEC61131Standard/DataTypes/ciaaIECWordType.cpp
+  IEC61131Standard/DataTypes/ciaaIECDWordType.cpp
+  IEC61131Standard/DataTypes/ciaaIECDIntType.cpp
+  IEC61131Standard/DataTypes/ciaaIECDBaseType.cpp
+  IEC61131Standard/Blocks/FunctionsBlocks/ciaaIECBaseFB.cpp
+  IEC61131Standard/Blocks/Functions/ciaaIECBaseF.cpp
+  IEC61131Standard/Blocks/ciaaIECBaseBlock.cpp
+  IEC61131Standard/Blocks/Programs/ciaaIECBaseProgram.cpp
+  IEC61131Standard/Variables/ciaaIECStructures.cpp
+  IEC61131Standard/Variables/ciaaIECArrays.cpp
+  IEC61131Standard/Variables/ciaaIECVariable.cpp
+  IEC61131Standard/Variables/ciaaIECAttributes.cpp
+  IEC61131Standard/Operators/ciaaIECOr.cpp
+  IEC61131Standard/Operators/ciaaIECAdd.cpp
+  IEC61131Standard/Operators/ciaaIECBUnaryOperator.cpp
+  IEC61131Standard/Operators/ciaaIECBBinaryOperator.cpp
+  IEC61131Standard/Operators/ciaaIECAnd.cpp
+  Ladder/Elements/ciaaLElement_Controller.cpp
+  Ladder/Elements/ciaaLElement_View.cpp
+  Ladder/Elements/ciaaLCoil_Model.cpp
+  Ladder/Elements/ciaaLInput_View.cpp
+  Ladder/Elements/ciaaLCoil_Controller.cpp
+  Ladder/Elements/ciaaLProgram.cpp
+  Ladder/Elements/ciaaLInput_Controller.cpp
+  Ladder/Elements/ciaaLOutput_View.cpp
+  Ladder/Elements/ciaaLF.cpp
+  Ladder/Elements/ciaaLContact_View.cpp
+  Ladder/Elements/ciaaLInput_Model.cpp
+  Ladder/Elements/ciaaLOutput_Controller.cpp
+  Ladder/Elements/ciaaLFB.cpp
+  Ladder/Elements/ciaaLContact_Controller.cpp
+  Ladder/Elements/ciaaLOutput_Model.cpp
+  Ladder/Elements/ciaaLCoil_View.cpp
+  Ladder/Elements/ciaaLContact_Model.cpp
+  Ladder/Elements/ciaaLElement_Model.cpp
+  Ladder/Visualiser/ciaaVLadder_Controller.cpp
+  Ladder/Visualiser/ciaaVLadder_Model.cpp
+  Ladder/Visualiser/ciaaVLadder_View.cpp
+  Ladder/Operators/ciaaLAnd.cpp)
+
+add_library(coder
+    ${coder_Code})
+
+

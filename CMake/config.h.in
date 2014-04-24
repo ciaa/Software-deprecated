@@ -1,0 +1,7 @@
+#define brief "@porject_brief@"
+#define details "@porject_details@"
+
+
+#define project_name "@CMAKE_PROJECT_NAME@"
+
+#define PROJECT_VERSION "@str_VERSION@"

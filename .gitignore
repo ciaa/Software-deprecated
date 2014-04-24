@@ -17,12 +17,15 @@ Code/CIAA_v1_0
 
 # Qt-es
 
-*.pro.user
-*.pro.user.*
+Code/*.pro.user
+Code/*.pro.user.*
+Code/Makefile
 moc_*.cpp
 ui_*.h
 qrc_*.cpp
-Code/Makefile
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+build/
 *-build-*
 
 
