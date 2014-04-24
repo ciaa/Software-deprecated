@@ -49,26 +49,25 @@
  * adaptor pattern.
  * \ingroup Drivers
  */
-class ciaaCommAdapterInterface
-{
-  public:
-    ciaaCommAdapterInterface() = default;
-    virtual ~ciaaCommAdapterInterface() = default;
+class ciaaCommAdapterInterface {
+ public:
+  ciaaCommAdapterInterface() = default;
+  virtual ~ciaaCommAdapterInterface() = default;
 
-    ciaaCommAdapterInterface(const ciaaCommAdapterInterface&) = delete;
-    ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&) = delete;
+  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&) = delete;
+  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&) = delete;
 
-    ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
-    ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) = delete;
+  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
+  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) =delete;
 
-    virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
-    virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
-    virtual CommDriverErrorCode read(std::int32_t timeout,
-                                     char *data,
-                                     std::int32_t *n_bytes) = 0;
-    virtual CommDriverErrorCode write(std::int32_t timeout,
-                                      const char *data,
-                                      std::int32_t *n_bytes) = 0;
+  virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
+  virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
+  virtual CommDriverErrorCode read(std::int32_t timeout,
+                                   char *data,
+                                   std::int32_t *n_bytes) = 0;
+  virtual CommDriverErrorCode write(std::int32_t timeout,
+                                    const char *data,
+                                    std::int32_t *n_bytes) = 0;
 };
 
-#endif // COMMS_DRIVERS_ADAPTER_INTERFACE_H
+#endif  // COMMS_DRIVERS_ADAPTER_INTERFACE_H

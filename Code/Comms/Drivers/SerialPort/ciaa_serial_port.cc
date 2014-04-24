@@ -11,15 +11,12 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
-    Copyright (C) 2014 Ezequiel Esposito <ejesposito\@debtech.com.ar>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
+
+    Copyright (C) 2014 $(Entidad que patenta)
 
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,15 +32,13 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 
 #include "Comms/Drivers/SerialPort/ciaa_serial_port.h"
 ciaaSerialPort::ciaaSerialPort(std::string device)
-  : serial_{new ciaaQSerialPortAdapter{device}}
-{
+  : serial_{new ciaaQSerialPortAdapter{device}} {
 }
 
-ciaaSerialPort::~ciaaSerialPort()
-{
+ciaaSerialPort::~ciaaSerialPort() {
   delete serial_;
 }

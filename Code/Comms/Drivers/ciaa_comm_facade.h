@@ -11,14 +11,10 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
 
     Copyright (C) 2014 $(Entidad que patenta)
 
@@ -50,121 +46,106 @@
  * \brief ciaaCommFacade is a common facade for \"all\" transport protocols.
  * \ingroup Drivers
  */
-class ciaaCommFacade
-{
-  public:
-    ciaaCommFacade(std::string host, std::uint16_t port);
-    ciaaCommFacade(std::string device);
-    ~ciaaCommFacade();
+class ciaaCommFacade {
+ public:
+  ciaaCommFacade(std::string host, std::uint16_t port);
+  explicit ciaaCommFacade(std::string device);
+  ~ciaaCommFacade();
 
-    ciaaCommFacade(const ciaaCommFacade&) = delete;
-    ciaaCommFacade& operator=(const ciaaCommFacade&) = delete;
+  ciaaCommFacade(const ciaaCommFacade&) = delete;
+  ciaaCommFacade& operator=(const ciaaCommFacade&) = delete;
 
-    ciaaCommFacade(const ciaaCommFacade&&) = delete;
-    ciaaCommFacade& operator=(const ciaaCommFacade&&) = delete;
+  ciaaCommFacade(const ciaaCommFacade&&) = delete;
+  ciaaCommFacade& operator=(const ciaaCommFacade&&) = delete;
 
-    inline CommDriverErrorCode connect(std::int32_t timeout) {
-      return transporter_->connect(timeout);
+  inline CommDriverErrorCode connect(std::int32_t timeout) {
+    return transporter_->connect(timeout);
+  }
+
+  inline CommDriverErrorCode disconnect(std::int32_t timeout) {
+    return transporter_->disconnect(timeout);
+  }
+
+  inline CommDriverErrorCode read(std::int32_t timeout,
+                                  char *data,
+                                  std::int32_t *n_bytes) {
+    return transporter_->read(timeout, data, n_bytes);
+  }
+
+  inline CommDriverErrorCode write(std::int32_t timeout,
+                                   const char *data,
+                                   std::int32_t *n_bytes) {
+    return transporter_->write(timeout, data, n_bytes);
+  }
+
+  inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
+    return msg_error_.find(err_code)->second;
+  }
+
+ protected:
+  ciaaCommInterface *transporter_{nullptr};
+
+
+ private:
+
+  std::map<CommDriverErrorCode, std::string> msg_error_ {
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::without_error, u8"General operation without errors."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::access,
+      u8"Application lacked the required privileges."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::resource,
+      u8"The local system ran out of resources (e.g., too many fd)."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::timeout,
+      u8"General operation timed out."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::connection,
+      u8"The connect operation fail or the current connection has been broken."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::inuse,
+      u8"***//TODO<denisacostaq@gmail.com>. The device is busy***"
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::unsuported_operation,
+      // TODO<denisacostaq@gmail.com>:
+      u8"Ej: scribir un dispositivo de solo lectura.***"
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::unfinished_operation,
+      u8"The last operation attempted has not finished yet."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::temporary,
+      u8"You can retry the operation later."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::disconnect,
+      u8"Could not disconnect the device."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::read,
+      u8"The read operation has been fail."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::write,
+      u8"The write operation has been fail."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::timeout,
+      u8"The operation fail by timeout."
+    },
+    std::pair<CommDriverErrorCode, std::string> {
+      CommDriverErrorCode::unknown,
+      u8"An unidentified error occurred."
     }
-
-    inline CommDriverErrorCode disconnect(std::int32_t timeout) {
-      return transporter_->disconnect(timeout);
-    }
-
-    inline CommDriverErrorCode read(std::int32_t timeout,
-                                    char *data,
-                                    std::int32_t *n_bytes) {
-      return transporter_->read(timeout, data, n_bytes);
-    }
-
-    inline CommDriverErrorCode write(std::int32_t timeout,
-                                     const char *data,
-                                     std::int32_t *n_bytes) {
-      return transporter_->write(timeout, data, n_bytes);
-    }
-
-    inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
-      return msg_error_.find(err_code)->second;
-    }
-
-  protected:
-    ciaaCommInterface *transporter_{nullptr};
-
-
-  private:
-
-    std::map<CommDriverErrorCode, std::string> msg_error_
-    {
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::Ok, u8"General operation without errors."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::access_error,
-        u8"Application lacked the required privileges."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::resource_error,
-        u8"The local system ran out of resources (e.g., too many fd)."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::timeout_error,
-        u8"General operation timed out."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::connection_error,
-        u8"The connect operation fail or the current connection has been broken."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::inuse_error,
-        u8"***//TODO<denisacostaq@gmail.com>. The device is busy***"
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::unsupported_operation_error,
-        u8"***//TODO<denisacostaq@gmail.com>: ej escribir un dispositivo de solo lectura.***"
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::unfinished_operation_error,
-        u8"The last operation attempted has not finished yet (still in progress in the background)."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::temporary_error,
-        u8"You can retry the operation later."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::disconnect_error,
-        u8"Could not disconnect the device."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::read_error,
-        u8"The read operation has been fail."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::write_error,
-        u8"The write operation has been fail."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::timeout_error,
-        u8"The operation fail by timeout."
-      },
-      std::pair<CommDriverErrorCode, std::string>
-      {
-        CommDriverErrorCode::unknown_error,
-        u8"An unidentified error occurred."
-      }
-    };
+  };
 };
 
-#endif // COMMS_DRIVERS_FACADE_H
+#endif  // COMMS_DRIVERS_FACADE_H

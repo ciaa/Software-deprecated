@@ -1,22 +1,20 @@
-/*! \brief This file gives a ciaaSocketUDP functionality.
-    \file ciaa_socket_udp.cc
+// \brief Do not include this file directly in external modules.
+// \brief This file gives a className(TODO: \author) functionality.
+/*! \brief This is the only file you need to include external modules to use the ModuleName(TODO).
+    \file TODO
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+    \date Sun Apr  6 16:20:20 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.cc
+    \brief This file is part of TODO:ModuleName module.
+    \brief This file become from: TODO:Code/Comms/Drivers/ciaa_comm_facade.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
 
     \copyright
 
-    <a class="el" href="http://proyecto-ciaa.com.ar">
-      This file is part of CIAA Project.
-      ==================================
-    </a>
-
-    Copyright (C) 2014 $(Entidad que patenta)
+    <h3>This file is part of CIAA project (Computadora Industrial Argentina Abierta).</h3>
+    Copyright (C) 2014 Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
 
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -33,6 +31,16 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <memory>
 
-#include "Comms/Drivers/Ethernet/ciaa_socket_udp.h"
+#include "Comms/Protocols/Modbus/ciaa_modbus_master_rtu.h"
+int main()
+{
+  std::unique_ptr<ciaaModbusMasterOverCommsInterface> over_serial{
+    new ciaaModbusMasterOverSerial("/dev/ttyS0")};
+  ciaaModbusMasterRTU::build(over_serial);
+
+  return 0;
+}
+
 

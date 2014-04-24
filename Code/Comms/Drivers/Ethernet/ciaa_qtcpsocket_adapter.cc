@@ -11,15 +11,12 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
-    Copyright (C) 2014 Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
+
+    Copyright (C) 2014 $(Entidad que patenta)
 
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -38,52 +35,50 @@
 
 #include "Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 
-ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host, std::uint16_t port)
+ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host,
+                                             std::uint16_t port)
   : host_{host.c_str()}
-  , port_(port)
-{
+  , port_(port) {
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout)
-{
-  //TODO<denisacostaq\@gmail.com>: some
+CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
+  // TODO<denisacostaq\@gmail.com>: socket_.reset() || others
   socket_.connectToHost(host_, port_);
   socket_.waitForConnected(timeout);
-  if (socket_.state() == QAbstractSocket::SocketState::ConnectedState)
-  {
-    return CommDriverErrorCode::Ok;
+  if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
+    return CommDriverErrorCode::without_error;
   }
-  {
-    qDebug() << "yop: " << socket_.errorString();
-    return CommDriverErrorCode::connection_error;
-  }
+  return CommDriverErrorCode::connection;
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
-  CIAA_UNUSED_PARAM(timeout);
-  return CommDriverErrorCode::Ok;
+CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
+  socket_.disconnectFromHost();
+  if (socket_.state() == QAbstractSocket::ConnectedState) {
+    socket_.waitForDisconnected(timeout);
+  }
+  if (socket_.state() == QAbstractSocket::UnconnectedState) {
+    return CommDriverErrorCode::without_error;
+  }
+  // TODO<denisacostaq\@gmail.com>: socket_.reset()
+  return CommDriverErrorCode::disconnect;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
                                                 char *data,
-                                                std::int32_t *n_bytes)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+                                                std::int32_t *n_bytes) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
                                                  const char *data,
-                                                 std::int32_t *n_bytes)
-{
-  //TODO<denisacostaq\@gmail.com>: todo
+                                                 std::int32_t *n_bytes) {
+  // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::Ok;
+  return CommDriverErrorCode::without_error;
 }

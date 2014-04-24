@@ -46,9 +46,8 @@
  * \brief The ciaaCommInterface class is a common innterface for the Drivers module
  * \ingroup Drivers
  */
-class ciaaCommInterface
-{
-  public:
+class ciaaCommInterface {
+ public:
     ciaaCommInterface() = default;
     virtual ~ciaaCommInterface() = default;
 
@@ -72,4 +71,4 @@ class ciaaCommInterface
 
 };
 
-#endif // CIAA_COMM_INTERFACE_H
+#endif  // CIAA_COMM_INTERFACE_H

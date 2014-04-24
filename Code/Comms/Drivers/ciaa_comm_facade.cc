@@ -11,15 +11,12 @@
 
     \copyright
 
-    <h3>
-      This file is part of
-      <a class="el" href="http://proyecto-ciaa.com.ar">
-        <h3>
-          CIAA project (Computadora Industrial Argentina Abierta).
-        </h3>
-      </a>
-    </h3>
-    Copyright (C) 2014 Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
+    <a class="el" href="http://proyecto-ciaa.com.ar">
+      This file is part of CIAA Project.
+      ==================================
+    </a>
+
+    Copyright (C) 2014 $(Entidad que patenta)
 
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -35,17 +32,15 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
- 
+
 #include "Comms/Drivers/ciaa_comm_facade.h"
 
 ciaaCommFacade::ciaaCommFacade(std::string host, std::uint16_t port)
-  : transporter_{new ciaaSocketTCP{host, port}}
-{
+  : transporter_{new ciaaSocketTCP{host, port}} {
 }
 
 ciaaCommFacade::ciaaCommFacade(std::string device)
-  : transporter_{new ciaaSerialPort{device}}
-{
+  : transporter_{new ciaaSerialPort{device}} {
   /*
      SERIAL_PORT::BaudRate baudrate,
      SERIAL_PORT::DataBits databits,
@@ -55,7 +50,6 @@ ciaaCommFacade::ciaaCommFacade(std::string device)
   */
 }
 
-ciaaCommFacade::~ciaaCommFacade()
-{
+ciaaCommFacade::~ciaaCommFacade() {
   delete transporter_;
 }
