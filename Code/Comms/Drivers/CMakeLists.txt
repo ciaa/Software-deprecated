@@ -9,6 +9,9 @@ set(comms_drivers_ethernet_Code
   Ethernet/ciaa_socket_udp.cc)
 set(comms_drivers_serial_port_Code SerialPort/ciaa_serial_port.cc)
 set(comms_Code
+  ciaa_comm_driver_error_code.h
+  ciaa_comm_adapter_interface.h
+  ciaa_comm_interface.h
   ciaa_comm_facade.cc
   ${comms_drivers_serial_port_Code}
   ${comms_drivers_ethernet_Code}
@@ -18,7 +21,7 @@ add_library(comms_drivers ${comms_Code})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
    "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror")
+#    set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     #TODO: set(warnings "/W4 /WX /EHsc")
 endif()

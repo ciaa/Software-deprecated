@@ -1,15 +1,19 @@
 include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/DoxygenDependencies.cmake)
 if(DOXYGEN_FOUND)
-  if(DOXYGEN_DOT_FOUND)
-    MESSAGE("-- Dot ready for your doxygen!")
-  else(DOXYGEN_DOT_FOUND)
-    MESSAGE(WARNING "Dot not ready for your doxygen!")
-  endif(DOXYGEN_DOT_FOUND)
-
   if(DOXYGEN_VERSION LESS 1.8)
     MESSAGE(WARNING "Your Doxygen is very old!")
+  else(DOXYGEN_VERSION LESS 1.8)
+    MESSAGE(WARNING "Doxygen meaby say ${PROJECT_SOURCE_DIR}/.../file warning:
+            Unexpected html tag <h1> found within <a href=...> context.
+            I not understand this according to:
+            file:///usr/share/doc/doxygen/html/htmlcmds.html")
   endif(DOXYGEN_VERSION LESS 1.8)
 
+  if(DOXYGEN_DOT_FOUND)
+    MESSAGE("-- Dot ready for your doxygen!\n")
+  else(DOXYGEN_DOT_FOUND)
+    MESSAGE(WARNING "-- Dot not ready for your doxygen!")
+  endif(DOXYGEN_DOT_FOUND)
 
   #FILE(MAKE_DIRECTORY  ${PROJECT_BINARY_DIR}/Doc)
   SET(DOXYGEN_INPUT    ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
