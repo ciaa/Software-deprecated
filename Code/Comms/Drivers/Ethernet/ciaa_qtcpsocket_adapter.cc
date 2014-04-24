@@ -46,9 +46,9 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
   socket_.connectToHost(host_, port_);
   socket_.waitForConnected(timeout);
   if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
-    return CommDriverErrorCode::without_error;
+    return CommDriverErrorCode::OK;
   }
-  return CommDriverErrorCode::connection;
+  return CommDriverErrorCode::connection_error;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
@@ -57,10 +57,10 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
     socket_.waitForDisconnected(timeout);
   }
   if (socket_.state() == QAbstractSocket::UnconnectedState) {
-    return CommDriverErrorCode::without_error;
+    return CommDriverErrorCode::OK;
   }
   // TODO<denisacostaq\@gmail.com>: socket_.reset()
-  return CommDriverErrorCode::disconnect;
+  return CommDriverErrorCode::disconnect_error;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
@@ -70,7 +70,7 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
@@ -80,5 +80,5 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
   CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::without_error;
+  return CommDriverErrorCode::OK;
 }

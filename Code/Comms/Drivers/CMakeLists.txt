@@ -9,6 +9,9 @@ set(comms_drivers_ethernet_Code
   Ethernet/ciaa_socket_udp.cc)
 set(comms_drivers_serial_port_Code SerialPort/ciaa_serial_port.cc)
 set(comms_Code
+  ciaa_comm_driver_error_code.h
+  ciaa_comm_adapter_interface.h
+  ciaa_comm_interface.h
   ciaa_comm_facade.cc
   ${comms_drivers_serial_port_Code}
   ${comms_drivers_ethernet_Code}

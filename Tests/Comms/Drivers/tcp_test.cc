@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
   if (server.startSlave()) {
     ciaaCommFacade client{kHost, kTcpPort};
     CommDriverErrorCode ret = client.connect(10000);
-    if (ret == CommDriverErrorCode::without_error) {
+    if (ret == CommDriverErrorCode::OK) {
         printf("Connection ok!\n");
         client.disconnect(100);
         server.endSlave();
