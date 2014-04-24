@@ -11,7 +11,7 @@ BUILD:
 	- mkdir build
 	- cd build
 	- sudo apt-get install cmake
-	- cmake .. -DCMAKE_PREFIX_PATH=$PATH_TO_QT_CMAKE_MODULES
+	- ccmake .. -DCMAKE_PREFIX_PATH=your_path -DUSE_BOOST_ASIO=OFF
 	- make
   Donde &quot;PATH_TO_QT_CMAKE_MODULES&quot; es el directorio donde est&eacute;n
   instalados los m&oacute;dulos de cmake para qt, en mi caso por ejemplo
