@@ -1,4 +1,4 @@
-find_package(Qt5Widgets)
+find_package(Qt5Widgets REQUIRED)
 # Instruct CMake to run moc automatically when needed.
 set(CMAKE_AUTOMOC ON)
 

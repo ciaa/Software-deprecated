@@ -1,4 +1,4 @@
-#define brief "@porject_brief@"
+#define brief @porject_brief@
 #define details "@porject_details@"
 
 

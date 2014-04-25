@@ -63,22 +63,51 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
   return CommDriverErrorCode::disconnect_error;
 }
 
+  // FIXME<denisacostaq\@gmail.com>: arreglar esto, ver el .h \warning
 CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
                                                 char *data,
-                                                std::int32_t *n_bytes) {
-  // TODO<denisacostaq\@gmail.com>: todo
-  CIAA_UNUSED_PARAM(timeout);
-  CIAA_UNUSED_PARAM(data);
-  CIAA_UNUSED_PARAM(n_bytes);
+                                                ciaa_size_t *n_bytes) {
+  std::int32_t lenth = socket_.read(data, *n_bytes);
+  if (lenth == 0) {
+    if (socket_.waitForReadyRead(timeout)) {
+      std::int32_t lenth = socket_.read(data, *n_bytes);
+      if (lenth == *n_bytes) {
+        return CommDriverErrorCode::OK;
+      } else {
+        *n_bytes = lenth;
+        return CommDriverErrorCode::read_error;
+      }
+    } else {
+      *n_bytes = 0;
+      if (socket_.state() != QAbstractSocket::SocketState::ConnectedState) {
+        return CommDriverErrorCode::connection_error;
+      } else {
+        // En relidad pudiera ser error tambien.
+        return CommDriverErrorCode::timeout_error;
+      }
+    }
+  }
   return CommDriverErrorCode::OK;
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
                                                  const char *data,
-                                                 std::int32_t *n_bytes) {
-  // TODO<denisacostaq\@gmail.com>: todo
-  CIAA_UNUSED_PARAM(timeout);
-  CIAA_UNUSED_PARAM(data);
-  CIAA_UNUSED_PARAM(n_bytes);
-  return CommDriverErrorCode::OK;
+                                                 ciaa_size_t *n_bytes) {
+  std::int32_t lenth = socket_.write(data, *n_bytes);
+  if (socket_.waitForBytesWritten(timeout)) {
+    if (*n_bytes == lenth) {
+      return CommDriverErrorCode::OK;
+    } else {
+      *n_bytes = lenth;
+      return CommDriverErrorCode::write_error;
+    }
+  } else {
+    *n_bytes = 0;
+    if (socket_.state() != QAbstractSocket::SocketState::ConnectedState) {
+      return CommDriverErrorCode::connection_error;
+    } else {
+      // En relidad pudiera ser error tambien.
+      return CommDriverErrorCode::timeout_error;
+    }
+  }
 }

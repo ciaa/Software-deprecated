@@ -53,7 +53,7 @@ CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
 
 CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
                                                  char *data,
-                                                 std::int32_t *n_bytes) {
+                                                 ciaa_size_t *n_bytes) {
   // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);
@@ -63,7 +63,7 @@ CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
 
 CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
                                                   const char *data,
-                                                  std::int32_t *n_bytes) {
+                                                  ciaa_size_t *n_bytes) {
   // TODO<denisacostaq\@gmail.com>: todo
   CIAA_UNUSED_PARAM(timeout);
   CIAA_UNUSED_PARAM(data);

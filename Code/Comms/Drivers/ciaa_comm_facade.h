@@ -68,13 +68,13 @@ class ciaaCommFacade {
 
   inline CommDriverErrorCode read(std::int32_t timeout,
                                   char *data,
-                                  std::int32_t *n_bytes) {
+                                  ciaa_size_t *n_bytes) {
     return transporter_->read(timeout, data, n_bytes);
   }
 
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
-                                   std::int32_t *n_bytes) {
+                                   ciaa_size_t *n_bytes) {
     return transporter_->write(timeout, data, n_bytes);
   }
 

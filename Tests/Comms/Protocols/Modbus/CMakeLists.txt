@@ -1,5 +1,3 @@
-include_directories(${Project_DIRECTORY}/Code)
-
 enable_testing()
 
 option(USE_QT_MODULES "Use Qt Modules?" ON)

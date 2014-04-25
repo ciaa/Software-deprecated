@@ -36,7 +36,9 @@
 
 #include <cstdint>
 
+#include "Comms/Drivers/ciaa_comm_drivers_config.h" // NOLINT
 #include "Comms/Drivers/ciaa_comm_driver_error_code.h"
+
 /*!
  * \brief The ciaaCommInterface class is a common innterface for the Drivers module
  * \ingroup Drivers
@@ -58,11 +60,11 @@ class ciaaCommInterface {
 
     virtual CommDriverErrorCode read(std::int32_t timeout,
                                      char *data,
-                                     std::int32_t *n_bytes) const = 0;
+                                     ciaa_size_t *n_bytes) const = 0;
 
     virtual CommDriverErrorCode write(std::int32_t timeout,
                                       const char *data,
-                                      std::int32_t *n_bytes) const = 0;
+                                      ciaa_size_t *n_bytes) const = 0;
 
 };
 
