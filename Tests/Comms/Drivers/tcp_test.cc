@@ -47,7 +47,7 @@
 const std::int32_t kTcpPort{8881};
 const std::int32_t kDataBufferSize{256};
 const std::string kHost{"127.0.0.1"};
-const std::int32_t kIters{50};
+const std::int32_t kIters{10};
 
 class Slave {
  public:
@@ -226,7 +226,7 @@ int main(int argc, char *argv[]) {
       exit(EXIT_FAILURE);
     }
   });
-  t.start(5000);
+  t.start(1000);
   server.start();
   client.start();
   return app.exec();

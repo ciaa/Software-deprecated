@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=@CMAKE_PROJECT_NAME@ IDE
+GenericName=Integrated Development Environment
+Comment=@porject_brief@
+Exec=@CMAKE_PROJECT_NAME@ %u
+Terminal=false
+Icon=@CMAKE_PROJECT_NAME@
+Type=Application
+Categories=Development;Engineering;Electronics;
+MimeType=text/xml
+StartupNotify=true

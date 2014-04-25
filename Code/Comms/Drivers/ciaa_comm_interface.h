@@ -36,7 +36,7 @@
 
 #include <cstdint>
 
-#include "ciaa_comm_drivers_config.h" // NOLINT
+#include "Comms/Drivers/ciaa_comm_drivers_config.h" // NOLINT
 #include "Comms/Drivers/ciaa_comm_driver_error_code.h"
 
 /*!

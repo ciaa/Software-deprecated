@@ -41,6 +41,7 @@
 #include <QtNetwork/QTcpSocket>
 
 #include "Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "config.h"  // NOLINT
 
 /*! \brief TODO<denisacostaq\@gmail.com>
  * \brief The ciaaQtcpSocketAdapter class

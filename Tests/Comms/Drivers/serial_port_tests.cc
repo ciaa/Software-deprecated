@@ -34,23 +34,28 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <iostream>
+#include <cstdio>
 
 #include "Comms/Drivers/ciaa_comm_facade.h"
+#include "config.h"  // NOLINT
 
-int main() {
-    ciaaCommFacade *s = new ciaaCommFacade("10.58.20.150", 8888);
-    CommDriverErrorCode ret = s->connect(100);
-    if (ret == CommDriverErrorCode::without_error) {
-        std::cout << "All OK!!!" << std::endl;
-    } else {
-        std::cout << s->get_msg_error(s->connect(100)) << std::endl;
-    }
-    delete s;
-    qDebug() << "clientaaaaa";
-    if (ret == CommDriverErrorCode::without_error) {
-      return 0;
-    } else {
-      return 0;
-    }
+int main(int argc, char *argv[]) {
+  if (argc != 2) {
+    std::fprintf(stderr, "Debe especificar el dispositivo virtual.\n");
+    exit(EXIT_FAILURE);
+  }
+  ciaaCommFacade s(argv[1]);
+
+  CommDriverErrorCode ret = s.connect(100);
+  if (ret == CommDriverErrorCode::OK) {
+      std::cout << "All OK!!!" << std::endl;
+  } else {
+      std::cout << s.get_msg_error(s.connect(100)) << std::endl;
+  }
+  qDebug() << "clientaaaaa";
+  if (ret == CommDriverErrorCode::OK) {
+    return 0;
+  } else {
+    return 0;
+  }
 }

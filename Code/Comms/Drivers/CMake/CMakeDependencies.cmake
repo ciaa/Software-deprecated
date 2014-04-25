@@ -25,4 +25,4 @@ endif(USE_BOOST_ASIO)
 
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/CMake/ciaa_comm_drivers_config.h.in
-  ${CMAKE_SOURCE_DIR}/Code/ciaa_comm_drivers_config.h)
+  ${CMAKE_CURRENT_BINARY_DIR}/ciaa_comm_drivers_config.h)

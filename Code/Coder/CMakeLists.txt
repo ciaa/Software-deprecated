@@ -1,5 +1,3 @@
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../)
-
 set(coder_Code
   IL/Elements/ciaaILRegister.cpp
   IL/Visualiser/ciaaVIL_View.cpp
