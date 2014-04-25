@@ -38,7 +38,7 @@
 #define COMMS_DRIVERS_SERIALPORT_H
 
 #include "Comms/Drivers/ciaa_comm_interface.h"
-#include "Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
+#include "ciaa_qserialport_adapter.h" // NOLINT
 
 /*! \brief ciaaSerialPort is a class for the Serial Port communication.
  *  \ingroup SerialPort
@@ -67,13 +67,13 @@ class ciaaSerialPort : public ciaaCommInterface {
 
   inline CommDriverErrorCode read(std::int32_t timeout,
                                   char *data,
-                                  std::int32_t *n_bytes) const override {
+                                  ciaa_size_t *n_bytes) const override {
     return serial_->read(timeout, data, n_bytes);
   }
 
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
-                                   std::int32_t *n_bytes) const override {
+                                   ciaa_size_t *n_bytes) const override {
     return serial_->write(timeout, data, n_bytes) ;
   }
 

@@ -61,12 +61,22 @@ class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface {
 
   CommDriverErrorCode connect(std::int32_t timeout) override;
   CommDriverErrorCode disconnect(std::int32_t timeout) override;
+
+  /*! \brief read Read n_bytes and put it into data.
+   * \param timeout
+   * \param data
+   * \param n_bytes
+   * \warning Is very important fot itself implementation try read first
+   *  beacause if tha data are available the readyRead() signal no are performed
+   *  beafore.
+   * \return
+   */
   CommDriverErrorCode read(std::int32_t timeout,
                            char *data,
-                           std::int32_t *n_bytes) override;
+                           ciaa_size_t *n_bytes) override;
   CommDriverErrorCode write(std::int32_t timeout,
                             const char *data,
-                            std::int32_t *n_bytes) override;
+                            ciaa_size_t *n_bytes) override;
 
  private:
   QTcpSocket socket_;

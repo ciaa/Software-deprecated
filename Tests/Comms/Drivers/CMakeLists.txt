@@ -11,6 +11,13 @@ endif(USE_QT_MODULES)
 add_executable(tcp_test tcp_test.cc)
 qt5_use_modules(tcp_test Network)
 target_link_libraries(tcp_test comms_drivers)
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
+  "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set_target_properties(tcp_test PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
+elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+  set_target_properties(tcp_test PROPERTIES COMPILE_FLAGS "/W4 /WX /EHsc")
+#   set(warnings "/W4 /WX /EHsc")
+endif()
 
 #add_executable(serial_port_tests serial_port_tests.cc)
 #target_link_libraries(serial_port_tests comms_drivers)

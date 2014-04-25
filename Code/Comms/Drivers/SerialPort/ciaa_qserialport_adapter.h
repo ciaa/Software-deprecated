@@ -59,10 +59,10 @@ class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
   CommDriverErrorCode disconnect(std::int32_t timeout) override;
   CommDriverErrorCode read(std::int32_t timeout,
                            char *data,
-                           std::int32_t *n_bytes) override;
+                           ciaa_size_t *n_bytes) override;
   CommDriverErrorCode write(std::int32_t timeout,
                             const char *data,
-                            std::int32_t *n_bytes) override;
+                            ciaa_size_t *n_bytes) override;
 
   QSerialPort serial_;
 };

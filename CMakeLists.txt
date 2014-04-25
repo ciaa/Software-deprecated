@@ -31,7 +31,7 @@ endif(LIBRARY_TYPE_SHARED)
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
     "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     add_definitions(-std=c++11)
-    set(warnings "-Wall -Wextra")
+#    set(warnings "-Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     set(warnings "/W4 /WX /EHsc")
 endif()

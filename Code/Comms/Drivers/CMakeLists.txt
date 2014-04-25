@@ -1,4 +1,5 @@
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_INCLUDE_CURRENT_BINARY_DIR ON)
 
 include(CMake/CMakeDependencies.cmake)
 
@@ -20,10 +21,10 @@ set(comms_Code
 add_library(comms_drivers ${comms_Code})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
-   "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror")
+  "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-    #TODO: set(warnings "/W4 /WX /EHsc")
+  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "/W4 /WX /EHsc")
 endif()
 
 if(USE_BOOST_ASIO)
