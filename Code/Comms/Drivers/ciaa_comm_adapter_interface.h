@@ -14,6 +14,8 @@
       ==================================
     </a>
 
+    Copyright (C) 2014 $(Entidad que patenta)
+
   This software is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
   the Free Software Foundation; either version 3 of the License, or
@@ -35,6 +37,7 @@
 #include <cstdint>
 
 #include "Defines/ciaaGlobalMacros.h"
+#include "Comms/Drivers/ciaa_comm_drivers_config.h" //NOLINT
 #include "Comms/Drivers/ciaa_comm_driver_error_code.h"
 
 /*!
@@ -57,10 +60,10 @@ class ciaaCommAdapterInterface {
   virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
   virtual CommDriverErrorCode read(std::int32_t timeout,
                                    char *data,
-                                   std::int32_t *n_bytes) = 0;
+                                   ciaa_size_t *n_bytes) = 0;
   virtual CommDriverErrorCode write(std::int32_t timeout,
                                     const char *data,
-                                    std::int32_t *n_bytes) = 0;
+                                    ciaa_size_t *n_bytes) = 0;
 };
 
 #endif  // COMMS_DRIVERS_ADAPTER_INTERFACE_H

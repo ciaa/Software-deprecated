@@ -65,13 +65,13 @@ class ciaaSocketTCP : public ciaaCommInterface {
 
     inline CommDriverErrorCode read(std::int32_t timeout,
                                     char *data,
-                                    std::int32_t *n_bytes) const override {
+                                    ciaa_size_t *n_bytes) const override {
       return socket_->read(timeout, data, n_bytes);
     }
 
     inline CommDriverErrorCode write(std::int32_t timeout,
                                      const char *data,
-                                     std::int32_t *n_bytes) const override {
+                                     ciaa_size_t *n_bytes) const override {
       return socket_->write(timeout, data, n_bytes) ;
     }
 

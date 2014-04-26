@@ -21,5 +21,3 @@ set(comms_protocols_modbus_Code
 add_library(comms_protocols_modbus
     ${comms_protocols_modbus_Code})
 target_link_libraries(comms_protocols_modbus comms_drivers)
-
-include_directories(${Project_DIRECTORY}/Code)

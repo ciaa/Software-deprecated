@@ -68,13 +68,13 @@ class ciaaCommFacade {
 
   inline CommDriverErrorCode read(std::int32_t timeout,
                                   char *data,
-                                  std::int32_t *n_bytes) {
+                                  ciaa_size_t *n_bytes) {
     return transporter_->read(timeout, data, n_bytes);
   }
 
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
-                                   std::int32_t *n_bytes) {
+                                   ciaa_size_t *n_bytes) {
     return transporter_->write(timeout, data, n_bytes);
   }
 
@@ -90,59 +90,54 @@ class ciaaCommFacade {
 
   std::map<CommDriverErrorCode, std::string> msg_error_ {
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::without_error, u8"General operation without errors."
+      CommDriverErrorCode::OK, u8"General operation without errors."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::access,
+      CommDriverErrorCode::access_error,
       u8"Application lacked the required privileges."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::resource,
+      CommDriverErrorCode::resource_error,
       u8"The local system ran out of resources (e.g., too many fd)."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::timeout,
-      u8"General operation timed out."
-    },
-    std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::connection,
+      CommDriverErrorCode::connection_error,
       u8"The connect operation fail or the current connection has been broken."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::inuse,
-      u8"***//TODO<denisacostaq@gmail.com>. The device is busy***"
+      CommDriverErrorCode::inuse_error,
+      u8"TODO<denisacostaq@gmail.com>               /**< The device is busy."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::unsuported_operation,
-      // TODO<denisacostaq@gmail.com>:
-      u8"Ej: scribir un dispositivo de solo lectura.***"
+      CommDriverErrorCode::unsupported_operation_error,
+      u8"TODO<denisacostaq@gmail.com>: ej escribir un dispositivo de solo lectura"  // NOLINT(whitespace/line_length)
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::unfinished_operation,
-      u8"The last operation attempted has not finished yet."
+      CommDriverErrorCode::unfinished_operation_error,
+      u8"The last operation attempted has not finished yet (still in progress in the background)."  // NOLINT(whitespace/line_length)
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::temporary,
+      CommDriverErrorCode::temporary_error,
       u8"You can retry the operation later."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::disconnect,
+      CommDriverErrorCode::disconnect_error,
       u8"Could not disconnect the device."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::read,
+      CommDriverErrorCode::read_error,
       u8"The read operation has been fail."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::write,
+      CommDriverErrorCode::write_error,
       u8"The write operation has been fail."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::timeout,
+      CommDriverErrorCode::timeout_error,
       u8"The operation fail by timeout."
     },
     std::pair<CommDriverErrorCode, std::string> {
-      CommDriverErrorCode::unknown,
+      CommDriverErrorCode::unknown_error,
       u8"An unidentified error occurred."
     }
   };
