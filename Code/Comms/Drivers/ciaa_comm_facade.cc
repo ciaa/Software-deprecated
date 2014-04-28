@@ -33,21 +33,19 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Comms/Drivers/ciaa_comm_facade.h"
+#include "Code/Comms/Drivers/ciaa_comm_facade.h"
 
 ciaaCommFacade::ciaaCommFacade(std::string host, std::uint16_t port)
   : transporter_{new ciaaSocketTCP{host, port}} {
 }
 
-ciaaCommFacade::ciaaCommFacade(std::string device)
-  : transporter_{new ciaaSerialPort{device}} {
-  /*
-     SERIAL_PORT::BaudRate baudrate,
-     SERIAL_PORT::DataBits databits,
-     SERIAL_PORT::Parity parity,
-     SERIAL_PORT::StopBits stop_bits,
-     SERIAL_PORT::FlowControl flow_control
-  */
+ciaaCommFacade::ciaaCommFacade(std::string device,
+                               SerialPortAdaptor::BaudRate baudrt,
+                               SerialPortAdaptor::DataBits databs,
+                               SerialPortAdaptor::FlowControl flowctl,
+                               SerialPortAdaptor::Parity prt,
+                               SerialPortAdaptor::StopBits stbs)
+  : transporter_{new ciaaSerialPort{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
 }
 
 ciaaCommFacade::~ciaaCommFacade() {

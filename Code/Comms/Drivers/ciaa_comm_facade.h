@@ -39,8 +39,8 @@
 
 #include <map>
 
-#include "Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
-#include "Comms/Drivers/SerialPort/ciaa_serial_port.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
+#include "Code/Comms/Drivers/SerialPort/ciaa_serial_port.h"
 
 /*! \brief The ciaaCommFacade class use a facade pattern.
  * \brief ciaaCommFacade is a common facade for \"all\" transport protocols.
@@ -48,8 +48,14 @@
  */
 class ciaaCommFacade {
  public:
+    // FIXME(denisacoatq\@gmail.com): revisar boost vs qt std::uint16_t port
   ciaaCommFacade(std::string host, std::uint16_t port);
-  explicit ciaaCommFacade(std::string device);
+  ciaaCommFacade(std::string device,
+                 SerialPortAdaptor::BaudRate baudrt,
+                 SerialPortAdaptor::DataBits databs,
+                 SerialPortAdaptor::FlowControl flowctl,
+                 SerialPortAdaptor::Parity prt,
+                 SerialPortAdaptor::StopBits stbs);
   ~ciaaCommFacade();
 
   ciaaCommFacade(const ciaaCommFacade&) = delete;
@@ -72,6 +78,14 @@ class ciaaCommFacade {
     return transporter_->read(timeout, data, n_bytes);
   }
 
+  void read(std::int32_t timeout,
+            const char *data,
+            std::function<CommDriverErrorCode()> callback) {
+        CIAA_UNUSED_PARAM(timeout);
+        CIAA_UNUSED_PARAM(data);
+        CIAA_UNUSED_PARAM(callback);
+  }
+
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) {
@@ -88,7 +102,7 @@ class ciaaCommFacade {
 
  private:
 
-  std::map<CommDriverErrorCode, std::string> msg_error_ {
+  const std::map<CommDriverErrorCode, std::string> msg_error_ {
     std::pair<CommDriverErrorCode, std::string> {
       CommDriverErrorCode::OK, u8"General operation without errors."
     },

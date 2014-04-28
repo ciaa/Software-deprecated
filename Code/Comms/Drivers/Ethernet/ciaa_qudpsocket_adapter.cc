@@ -3,7 +3,7 @@
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr  6 16:42:12 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
+    \brief This file is part of Comms/Driversrnet module.
     \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -33,4 +33,4 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h"

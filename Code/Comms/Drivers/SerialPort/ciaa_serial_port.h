@@ -37,8 +37,9 @@
 #ifndef COMMS_DRIVERS_SERIALPORT_H
 #define COMMS_DRIVERS_SERIALPORT_H
 
-#include "Comms/Drivers/ciaa_comm_interface.h"
-#include "ciaa_qserialport_adapter.h" // NOLINT
+#include "Code/Comms/Drivers/ciaa_comm_interface.h"
+#include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
+//#include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
 
 /*! \brief ciaaSerialPort is a class for the Serial Port communication.
  *  \ingroup SerialPort
@@ -48,7 +49,12 @@
  */
 class ciaaSerialPort : public ciaaCommInterface {
  public:
-  explicit ciaaSerialPort(std::string device);
+  explicit ciaaSerialPort(std::string device,
+                          SerialPortAdaptor::BaudRate baudrt,
+                          SerialPortAdaptor::DataBits databs,
+                          SerialPortAdaptor::FlowControl flowctl,
+                          SerialPortAdaptor::Parity prt,
+                          SerialPortAdaptor::StopBits stbs);
   ~ciaaSerialPort();
 
   ciaaSerialPort(const ciaaSerialPort&) = delete;
@@ -80,6 +86,7 @@ class ciaaSerialPort : public ciaaCommInterface {
 
  private:
   ciaaQSerialPortAdapter *serial_;
+  //ciaaBoostSerialPortAdapter *serial_;
 };
 
 #endif  // COMMS_DRIVERS_SERIALPORT_H

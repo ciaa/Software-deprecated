@@ -36,9 +36,9 @@
 
 #include <cstdint>
 
-#include "Defines/ciaaGlobalMacros.h"
-#include "Comms/Drivers/ciaa_comm_drivers_config.h" //NOLINT
-#include "Comms/Drivers/ciaa_comm_driver_error_code.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
+#include "Code/Comms/Drivers/ciaa_comm_drivers_config.h"
+#include "Code/Comms/Drivers/ciaa_comm_driver_error_code.h"
 
 /*!
  * \brief The ciaaCommAdapterInterface class is a common innterface for the
