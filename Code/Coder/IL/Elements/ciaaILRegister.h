@@ -31,7 +31,7 @@
 #ifndef CIAAILREGISTER_H
 #define CIAAILREGISTER_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaILRegister class TODO: document here. see ciaaSerialPort

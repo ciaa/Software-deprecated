@@ -33,11 +33,11 @@
 
 #include <vector>
 
-#include "Coder/IEC61131Standard/ConfigElements/Configurations/ciaaIECConfig.h"
-#include "Coder/IEC61131Standard/ConfigElements/Resources/ciaaIECResource.h"
-#include "Coder/IEC61131Standard/ConfigElements/Tasks/ciaaIECTask.h"
+#include "Code/Coder/IEC61131Standard/ConfigElements/Configurations/ciaaIECConfig.h"
+#include "Code/Coder/IEC61131Standard/ConfigElements/Resources/ciaaIECResource.h"
+#include "Code/Coder/IEC61131Standard/ConfigElements/Tasks/ciaaIECTask.h"
 
-#include "Coder/IEC61131Standard/Blocks/ciaaIECBaseBlock.h"
+#include "Code/Coder/IEC61131Standard/Blocks/ciaaIECBaseBlock.h"
 
 /*! \brief ciaaIECProject has the project in terms of IEC61132 standard
  *  \ingroup Projects

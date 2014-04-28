@@ -3,8 +3,7 @@
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Thu Apr 24 18:44:27 CDT 2014
 
-    \brief A enum class for errors in Comms.
-    \brief This file is part of Comms module.
+    \brief This file is part of Tests Comms/Divers module.
     \brief This file become from: Tests/Comms/Drivers/serial_port_tests.cc
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -34,28 +33,109 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+
 #include <cstdio>
 
-#include "Comms/Drivers/ciaa_comm_facade.h"
-#include "config.h"  // NOLINT
+#include <QtCore/QThread>
 
-int main(int argc, char *argv[]) {
-  if (argc != 2) {
-    std::fprintf(stderr, "Debe especificar el dispositivo virtual.\n");
-    exit(EXIT_FAILURE);
-  }
-  ciaaCommFacade s(argv[1]);
+#include <Code/Comms/Drivers/ciaa_comm_facade.h>
 
-  CommDriverErrorCode ret = s.connect(100);
-  if (ret == CommDriverErrorCode::OK) {
-      std::cout << "All OK!!!" << std::endl;
-  } else {
-      std::cout << s.get_msg_error(s.connect(100)) << std::endl;
+#include "Tests/Comms/Drivers/comms_drivers_master_test.h"
+
+class Slave : public QThread {
+ public:
+  explicit  Slave(std::string device) :
+    QThread{},
+    device_{device} {
+    }
+  ~Slave() = default;
+
+  Slave(const Slave&) = delete;
+  Slave& operator=(const Slave&) = delete;
+
+  Slave(const Slave&&) = delete;
+  Slave& operator=(const Slave&&) = delete;
+
+ protected:
+  void run() override {
+    ciaaCommFacade s_dev{device_,
+                       SerialPortAdaptor::BaudRate::Baud1200,
+                       SerialPortAdaptor::DataBits::Data8,
+                       SerialPortAdaptor::FlowControl::NoFlowControl,
+                       SerialPortAdaptor::Parity::SpaceParity,
+                       SerialPortAdaptor::StopBits::TwoStop};
+
+    CommDriverErrorCode ret = s_dev.connect(100);
+    if (ret != CommDriverErrorCode::OK) {
+      fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str())  ;
+      return;
+    }
+
+    std::int32_t iters{kIters};
+    while (iters--) {
+      char data[100]{0};
+      ciaa_size_t lenth{sizeof(std::int32_t)};
+      if ((ret = s_dev.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+        std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
+        printf("checking transitioned... %lld\n", lenth);
+        s_dev.disconnect(100);
+        return;
+      }
+      memcpy(&lenth, data, sizeof(std::int32_t));
+      memset(data, 0, sizeof(data));
+      if ((ret = s_dev.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+        std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
+        printf("checking transitioned... %lld\n", lenth);
+        s_dev.disconnect(100);
+        return;
+      }
+      printf("%s", data);
+
+      char msg_for_remot[]{"I am a server.\n"};
+      std::int32_t client_msg_lenth{sizeof(msg_for_remot)};
+      lenth = sizeof(std::int32_t);
+      memset(data, 0, sizeof(data));
+      memcpy(data, &client_msg_lenth, lenth);
+      if ((ret = s_dev.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+        std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
+        printf("checking transitioned... %lld\n", lenth);
+        s_dev.disconnect(100);
+        return;
+      }
+      memset(data, 0, sizeof(data));
+      memcpy(data, msg_for_remot, sizeof(msg_for_remot));
+      lenth = sizeof(msg_for_remot);
+      if ((ret = s_dev.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+        std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
+        printf("checking transitioned... %lld\n", lenth);
+        s_dev.disconnect(100);
+        return;
+      }
+    }
+    s_dev.disconnect(100);
   }
-  qDebug() << "clientaaaaa";
-  if (ret == CommDriverErrorCode::OK) {
-    return 0;
+
+ private:
+  std::string device_;
+
+};
+
+int main (int argc, char *argv[]) {
+  QCoreApplication app(argc, argv);
+  if (argc != 3) {
+    printf("usage: %s @com1@ @com1@\n",
+           app.applicationFilePath().toStdString().c_str());
+    return EXIT_FAILURE;
+  }
+  Slave server{std::string{argv[1]}};
+  CommsDriversMaster client{std::string{argv[2]}};
+  client.start();
+  server.start();
+  server.wait();
+  client.wait();
+  if (client.is_correct()) {
+    return EXIT_SUCCESS;
   } else {
-    return 0;
+    return EXIT_FAILURE;
   }
 }

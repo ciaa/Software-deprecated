@@ -31,7 +31,7 @@
 #ifndef CIAAIECBYTETYPE_H
 #define CIAAIECBYTETYPE_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaIECByteType class TODO: document here. see ciaaSerialPort

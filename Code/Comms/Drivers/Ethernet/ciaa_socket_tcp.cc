@@ -3,7 +3,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
+    \brief This file is part of Comms/Driversrnet module.
     \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_tcp.cc
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -34,10 +34,14 @@
  */
 
 
-#include "Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
 ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
   : socket_{new ciaaQtcpSocketAdapter{host, port}} {
 }
+
+//ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
+//  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
+//}
 
 ciaaSocketTCP::~ciaaSocketTCP() {
   delete socket_;

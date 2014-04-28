@@ -31,7 +31,7 @@
 #ifndef CIAANXPMAPMEMORY_H
 #define CIAANXPMAPMEMORY_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 class ciaaNXPMapMemory
 {

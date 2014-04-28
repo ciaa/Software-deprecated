@@ -31,7 +31,7 @@
 #ifndef CIAAIECSTRUCTURES_H
 #define CIAAIECSTRUCTURES_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaIECStructures class TODO: document here. see ciaaSerialPort

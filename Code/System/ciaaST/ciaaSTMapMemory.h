@@ -31,7 +31,7 @@
 #ifndef CIAASTMAPMEMORY_H
 #define CIAASTMAPMEMORY_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaSTMapMemory class TODO: document here. see ciaaSerialPort

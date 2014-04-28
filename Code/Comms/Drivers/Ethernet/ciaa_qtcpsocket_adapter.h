@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_qtcpsocket_adapter.h
+    \file ciaa_boosttcp_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Fri Mar 21 00:44:09 CDT 2014
+    \date Sun Apr 27 22:20:34 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h
+    \brief This file is part of Comms/Driversrnet module.
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -36,12 +36,13 @@
 #ifndef COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 #define COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H
 
-#include <iostream>  // FIXME<denisacostaq\@gmail.com>:
+#include <iostream>  // FIXME(denisacostaq\@gmail.com):
+#include <functional>
 
 #include <QtNetwork/QTcpSocket>
 
-#include "Comms/Drivers/ciaa_comm_adapter_interface.h"
-#include "config.h"  // NOLINT
+#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "Code/config.h"  // NOLINT
 
 /*! \brief TODO<denisacostaq\@gmail.com>
  * \brief The ciaaQtcpSocketAdapter class
@@ -75,9 +76,24 @@ class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface {
   CommDriverErrorCode read(std::int32_t timeout,
                            char *data,
                            ciaa_size_t *n_bytes) override;
+  void read(std::int32_t timeout,
+            const char *data,
+            std::function<CommDriverErrorCode()> callback) {
+        CIAA_UNUSED_PARAM(timeout);
+        CIAA_UNUSED_PARAM(data);
+        CIAA_UNUSED_PARAM(callback);
+  }
+
   CommDriverErrorCode write(std::int32_t timeout,
                             const char *data,
                             ciaa_size_t *n_bytes) override;
+  void write(std::int32_t timeout,
+             const char *data,
+             std::function<CommDriverErrorCode()> callback) {
+        CIAA_UNUSED_PARAM(timeout);
+        CIAA_UNUSED_PARAM(data);
+        CIAA_UNUSED_PARAM(callback);
+  }
 
  private:
   QTcpSocket socket_;
