@@ -1,8 +1,8 @@
 include(InstallRequiredSystemLibraries)
 
 
-set(CPACK_PACKAGE_VENDOR "\nCámara Argentina de Industrias Electrónicas, Electromecánicas y Luminotécnicas (CADIEEL) \n&\nAsociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Embebidos (ACSE)" VERBATIM)
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Instalador de ${CMAKE_PROJECT_NAME} del proyecto ${porject_brief}")
+set(CPACK_PACKAGE_VENDOR "\nCámara Argentina de Industrias Electrónicas, Electromecánicas y Luminotécnicas (CADIEEL) \n&\nAsociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Embebidos (ACSE)")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Instalador de ${CMAKE_PROJECT_NAME} del proyecto CIAA")
 
 set(CPACK_GENERATOR "DEB")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY ON)
@@ -21,12 +21,13 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
   message("WINDOWS...")
 #if WIN32 TRUE, CMAKE_HOST_UNIX, CMAKE_HOST_WIN32
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  message("Build instaler on Linux-${CMAKE_SYSTEM_VERSION}...")
+  message(STATUS "Build instaler on Linux-${CMAKE_SYSTEM_VERSION}...")
 else(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   message("ninguno")
 endif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-message("Processor architecture ${CMAKE_SYSTEM_PROCESSOR}.")
+message(STATUS "Processor architecture ${CMAKE_SYSTEM_PROCESSOR}.")
 set(CPACK_PACKAGING_INSTALL_PREFIX /usr/local)
+set(CMAKE_INSTALL_PREFIX /usr/local)
 #set(CMAKE_INSTALL_PREFIX  /usr/local on UNIX and c:/Program Files on Windows)
 install(FILES ${CPACK_RESOURCE_FILE_README}
         DESTINATION share/doc/${CMAKE_PROJECT_NAME}
@@ -38,7 +39,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/CMake/${CMAKE_PROJECT_NAME}.png
         DESTINATION share/icons/hicolor/48x48/apps
         PERMISSIONS OWNER_READ OWNER_WRITE GROUP_READ WORLD_READ)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Code/${CMAKE_PROJECT_NAME}.desktop
-        DESTINATION /usr/share/applications
+        DESTINATION share/applications
         PERMISSIONS OWNER_READ OWNER_WRITE OWNER_WRITE GROUP_READ WORLD_READ)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/Code/${CMAKE_PROJECT_NAME}
         DESTINATION bin

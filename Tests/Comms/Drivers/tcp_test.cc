@@ -3,8 +3,7 @@
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Thu Apr 24 18:44:27 CDT 2014
 
-    \brief A enum class for errors in Comms.
-    \brief This file is part of Comms module.
+    \brief This file is part of Tests Comms/Divers module.
     \brief This file become from: Tests/Comms/Drivers/tcp_test.cc
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -42,12 +41,12 @@
 #include <QtNetwork/QTcpServer>
 #include <QDebug>
 
-#include "Comms/Drivers/ciaa_comm_facade.h"
+#include <Code/Comms/Drivers/ciaa_comm_facade.h>
+
+#include "Tests/Comms/Drivers/comms_drivers_master_test.h"
 
 const std::int32_t kTcpPort{8881};
-const std::int32_t kDataBufferSize{256};
 const std::string kHost{"127.0.0.1"};
-const std::int32_t kIters{10};
 
 class Slave {
  public:
@@ -137,83 +136,10 @@ class Slave {
   }
 };
 
-class Master : public QThread {
- public:
-  Master() = default;
-  ~Master() = default;
-
-  Master(const Master&) = delete;
-  Master& operator=(const Master&) = delete;
-
-  Master(const Master&&) = delete;
-  Master& operator=(const Master&&) = delete;
-
-  bool is_correct() {
-    return correct_;
-  }
-
- protected:
-  void run() {
-    ciaaCommFacade sck{kHost, kTcpPort};
-    CommDriverErrorCode ret = sck.connect(100);
-    if (ret != CommDriverErrorCode::OK) {
-      return;
-    }
-
-    int iters{kIters};
-    while (iters--) {
-      char data[kDataBufferSize]{0};
-      char msg_for_remot[]{"I am a client.\n"};
-      std::int32_t client_msg_lenth{sizeof(msg_for_remot)};
-      ciaa_size_t lenth{sizeof(std::int32_t)};
-      memcpy(data, &client_msg_lenth, lenth);
-      if ((ret = sck.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
-        std::fprintf(stderr, "%s\n", sck.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
-        sck.disconnect(100);
-        return;
-      }
-      memset(data, 0, sizeof(data));
-      memcpy(data, msg_for_remot, sizeof(msg_for_remot));
-      lenth = sizeof(msg_for_remot);
-      if ((ret = sck.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
-        std::fprintf(stderr, "%s\n", sck.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
-        sck.disconnect(100);
-        return;
-      }
-      memset(data, 0, sizeof(data));
-      lenth = sizeof(std::int32_t);
-      if ((ret = sck.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
-        std::fprintf(stderr, "%s\n", sck.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
-        sck.disconnect(100);
-        return;
-      }
-      memcpy(&lenth, data, sizeof(std::int32_t));
-      memset(data, 0, sizeof(data));
-      if ((ret = sck.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
-        std::fprintf(stderr, "%s\n", sck.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
-        sck.disconnect(100);
-        return;
-      }
-      printf("%s", data);
-    }
-    if ((ret = sck.disconnect(100)) != CommDriverErrorCode::OK) {
-      std::fprintf(stderr, "%s\n", sck.get_msg_error(ret).c_str());
-    }
-    correct_ = true;
-  }
-
- private:
-  bool correct_{false};
-};
-
 int main(int argc, char *argv[]) {
   QCoreApplication app(argc, argv);
   Slave server;
-  Master client;
+  CommsDriversMaster client(kHost, kTcpPort);
   QTimer t;
   QObject::connect(&t, &QTimer::timeout, [&t, &server, &client]{
     t.stop();

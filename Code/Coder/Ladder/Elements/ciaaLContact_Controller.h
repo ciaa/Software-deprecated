@@ -31,7 +31,7 @@
 #ifndef CIAALCONTACT_CONTROLLER_H
 #define CIAALCONTACT_CONTROLLER_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaLContact_Controller class TODO: document here. see ciaaSerialPort

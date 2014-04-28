@@ -34,10 +34,19 @@
  */
 
 
-#include "Comms/Drivers/SerialPort/ciaa_serial_port.h"
-ciaaSerialPort::ciaaSerialPort(std::string device)
-  : serial_{new ciaaQSerialPortAdapter{device}} {
+#include "Code/Comms/Drivers/SerialPort/ciaa_serial_port.h"
+ciaaSerialPort::ciaaSerialPort(std::string device,
+                               SerialPortAdaptor::BaudRate baudrt,
+                               SerialPortAdaptor::DataBits databs,
+                               SerialPortAdaptor::FlowControl flowctl,
+                               SerialPortAdaptor::Parity prt,
+                               SerialPortAdaptor::StopBits stbs)
+  : serial_{new ciaaQSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
 }
+
+//ciaaSerialPort::ciaaSerialPort(std::string device)
+//  : serial_{new ciaaBoostSerialPortAdapter{device}} {
+//}
 
 ciaaSerialPort::~ciaaSerialPort() {
   delete serial_;

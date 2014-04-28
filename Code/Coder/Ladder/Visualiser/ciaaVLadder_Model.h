@@ -31,7 +31,7 @@
 #ifndef CIAAVLADDER_MODEL_H
 #define CIAAVLADDER_MODEL_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaVLadder_Modele class TODO: document here. see ciaaSerialPort

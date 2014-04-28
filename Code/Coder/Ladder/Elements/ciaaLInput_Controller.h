@@ -32,7 +32,7 @@
 #define CIAALINPUT_CONTROLLER_H
 
 #include "ciaaLContact_Controller.h"
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaLInput_Controller class TODO: document here. see ciaaSerialPort
