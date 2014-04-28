@@ -36,8 +36,8 @@
 
 #include <cstdint>
 
-#include "Comms/Drivers/ciaa_comm_drivers_config.h" // NOLINT
-#include "Comms/Drivers/ciaa_comm_driver_error_code.h"
+#include "Code/Comms/Drivers/ciaa_comm_drivers_config.h" // NOLINT
+#include "Code/Comms/Drivers/ciaa_comm_driver_error_code.h"
 
 /*!
  * \brief The ciaaCommInterface class is a common innterface for the Drivers module

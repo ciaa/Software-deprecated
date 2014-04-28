@@ -33,7 +33,7 @@
 
 #include <QMainWindow>
 
-//FIXME: #include "Defines/ciaaGlobalMacros.h" hacer esto
+//FIXME: #include "Code/Defines/ciaaGlobalMacros.h" hacer esto
 
 /*! \brief short document, in one line TODO
  * \brief the Ui namespace is... TODO

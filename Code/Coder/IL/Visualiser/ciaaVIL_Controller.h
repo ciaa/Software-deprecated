@@ -31,7 +31,7 @@
 #ifndef CIAAVIL_CONTROLLER_H
 #define CIAAVIL_CONTROLLER_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaVIL_Controller class TODO: document here. see ciaaSerialPort

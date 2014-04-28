@@ -31,7 +31,7 @@
 #ifndef CIAAIECATTRIBUTES_H
 #define CIAAIECATTRIBUTES_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaIECAttributes class TODO: document here. see ciaaSerialPort

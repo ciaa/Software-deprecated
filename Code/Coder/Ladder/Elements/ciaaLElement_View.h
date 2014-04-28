@@ -31,7 +31,7 @@
 #ifndef CIAALELEMENT_VIEW_H
 #define CIAALELEMENT_VIEW_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaLElement_View class TODO: document here. see ciaaSerialPort

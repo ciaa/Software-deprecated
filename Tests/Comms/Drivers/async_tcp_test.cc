@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketUDP functionality.
-    \file ciaa_socket_udp.cc
+/*! \brief Do not include this file in external modules.
+    \file async_tcp_test.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+    \date Mon Apr 28 00:37:29 CDT 2014
 
-    \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.cc
+    \brief This file is part of Tests Comms/Divers module.
+    \brief This file become from: Tests/Comms/Drivers/async_tcp_test.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,6 +33,11 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <Code/Comms/Drivers/ciaa_comm_facade.h>
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_socket_udp.h"
-
+int main(int argc, char *argv[])
+{
+  CIAA_UNUSED_PARAM(argc);
+  CIAA_UNUSED_PARAM(argv);
+  return EXIT_SUCCESS;
+}

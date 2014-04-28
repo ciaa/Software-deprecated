@@ -3,7 +3,7 @@
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr  6 16:42:12 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
+    \brief This file is part of Comms/Driversrnet module.
     \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -36,7 +36,7 @@
 #ifndef COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
 #define COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
 
-#include "Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
 
 class ciaaQudpSocketAdapater : public ciaaCommAdapterInterface {
  public:

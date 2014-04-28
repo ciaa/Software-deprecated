@@ -1,8 +1,8 @@
 include(CMake/CMakeDependencies.cmake)
 
-include_directories(${CMAKE_SOURCE_DIR}/Code)
+#include_directories(${CMAKE_SOURCE_DIR}/Code)
 #FIXME: CMAKE_INCLUDE_CURRENT_DIR: Automatically add the current source- and build directories to the include path.
-include_directories(${CMAKE_BINARY_DIR}/Code)
+#include_directories(${CMAKE_BINARY_DIR}/Code)
 
 set(comms_drivers_base_Code
   ${BASE_MODULES_FOR_COMMS_SRC})

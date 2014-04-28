@@ -31,7 +31,7 @@
 #ifndef CIAAIECCOMPILER_H
 #define CIAAIECCOMPILER_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaIECCompiler class TODO: document here. see ciaaSerialPort

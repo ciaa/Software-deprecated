@@ -31,7 +31,7 @@
 #ifndef CIAALELEMENT_MODEL_H
 #define CIAALELEMENT_MODEL_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The TODO:class-name class TODO: document here. see ciaaSerialPort

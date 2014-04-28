@@ -3,7 +3,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
+    \brief This file is part of Comms/Driversrnet module.
     \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_tcp.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -37,8 +37,15 @@
 #ifndef COMMS_DRIVERS_ETHERNET_SOCKETTCP_H
 #define COMMS_DRIVERS_ETHERNET_SOCKETTCP_H
 
-#include "Comms/Drivers/ciaa_comm_interface.h"
-#include "Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+#include "Code/Comms/Drivers/ciaa_comm_interface.h"
+#ifdef USE_BOOST_ASIO
+//#include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+#else
+//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+#endif
+//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+
 
 /*! \brief TODO <denisacostaq\@gmail.com>
  * \brief The ciaaSocket class
@@ -77,7 +84,13 @@ class ciaaSocketTCP : public ciaaCommInterface {
 
 
  private:
+#ifdef USE_BOOST_ASIO
+    //  ciaaQtcpSocketAdapter *socket_;
+#else
+    //  ciaaBoostAsiotcpSocketAdapter *socket_;
+#endif
     ciaaQtcpSocketAdapter *socket_;
+
 };
 
 #endif  // COMMS_DRIVERS_ETHERNET_SOCKETTCP_H

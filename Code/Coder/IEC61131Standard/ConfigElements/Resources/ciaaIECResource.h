@@ -31,7 +31,7 @@
 #ifndef CIAAIECRESOURCE_H
 #define CIAAIECRESOURCE_H
 
-#include "System/Base/ciaaBaseMapMemory.h"
+#include "Code/System/Base/ciaaBaseMapMemory.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaIECResource class TODO: document here. see ciaaSerialPort

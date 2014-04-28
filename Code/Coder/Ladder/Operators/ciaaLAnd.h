@@ -31,7 +31,7 @@
 #ifndef CIAALAND_H
 #define CIAALAND_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief TODO: in one line description. see ciaaSerialPort
  * \brief The ciaaLAnd class TODO: document here. see ciaaSerialPort

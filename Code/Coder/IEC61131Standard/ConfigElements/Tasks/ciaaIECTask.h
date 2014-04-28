@@ -33,9 +33,9 @@
 
 #include <vector>
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
-#include "Coder/IEC61131Standard/ciaaIECBaseElement.h"
+#include "Code/Coder/IEC61131Standard/ciaaIECBaseElement.h"
 
 /*! \brief ciaIECTask has the program in terms of structs.
  *  \brief Those structs are saved in a vector of ciaaIECBaseElement.

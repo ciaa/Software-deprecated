@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketUDP functionality.
-    \file ciaa_socket_udp.cc
+/*! \brief This file gives a ciaaBoostAsiotcpSocketAdapter functionality.
+    \file ciaa_boosttcp_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+    \date Sun Apr 27 22:51:04 CDT 2014
 
-    \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.cc
+    \brief This file is part of Comms/Drivers module.
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,6 +33,4 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-
-#include "Code/Comms/Drivers/Ethernet/ciaa_socket_udp.h"
-
+#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"

@@ -1,10 +1,10 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_socket_udp.h
+/*! \brief Do not include this file in external modules.
+    \file comms_drivers_master_test.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+    \date Mon Apr 28 15:53:23 CDT 2014
 
-    \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.h
+    \brief This file is part of Tests Comms/Divers module.
+    \brief This file become from: Tests/Comms/Drivers/comms_drivers_master_test.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,22 +33,37 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <cstdio>
 
-#ifndef COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
-#define COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
+#include <QtCore/QThread>
 
-#include "Code/Comms/Drivers/ciaa_comm_interface.h"
+#include <Code/Comms/Drivers/ciaa_comm_facade.h>
 
-class ciaaSocketUDP : public ciaaCommInterface {
+const std::int32_t kDataBufferSize{256};
+const std::int32_t kIters{10};
+class CommsDriversMaster : public QThread {
  public:
-  ciaaSocketUDP() = delete;
-  ~ciaaSocketUDP() = default;
+  CommsDriversMaster(const std::string host, std::uint16_t port);
+  explicit  CommsDriversMaster(std::string device);
+  ~CommsDriversMaster();
 
-  ciaaSocketUDP(const ciaaSocketUDP&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&) = delete;
+  CommsDriversMaster(const CommsDriversMaster&) = delete;
+  CommsDriversMaster& operator=(const CommsDriversMaster&) = delete;
 
-  ciaaSocketUDP(const ciaaSocketUDP&&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&&) = delete;
+  CommsDriversMaster(const CommsDriversMaster&&) = delete;
+  CommsDriversMaster& operator=(const CommsDriversMaster&&) = delete;
+
+  bool is_correct() {
+    return correct_;
+  }
+
+ protected:
+  void run() override;
+
+ private:
+  ciaaCommFacade *dev_;
+  std::string host_;
+  std::uint16_t port_{0};
+  std::string serial_device_name_;
+  bool correct_;
 };
-
-#endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
