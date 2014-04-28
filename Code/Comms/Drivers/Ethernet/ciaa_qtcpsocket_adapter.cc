@@ -86,12 +86,12 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
     }
 
     if (total_readed == *n_bytes) {
-      //std::cout << *n_bytes << " OKKKKK" << std::endl;
+      // std::cout << *n_bytes << " OKKKKK" << std::endl;
       return CommDriverErrorCode::OK;
     } else {
-      //std::cout << *n_bytes << " FAIL" << std::endl;
+      // std::cout << *n_bytes << " FAIL" << std::endl;
       *n_bytes = total_readed;
-      //TODO(<denisacostaq\@gmail.com>):
+      // TODO(<denisacostaq\@gmail.com>):
       return CommDriverErrorCode::read_error;
     }
 }
@@ -115,7 +115,7 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
     return CommDriverErrorCode::OK;
   } else {
     *n_bytes = total_writed;
-    //TODO(<denisacostaq\@gmail.com>):
+    // TODO(<denisacostaq\@gmail.com>):
     return CommDriverErrorCode::write_error;
   }
 }

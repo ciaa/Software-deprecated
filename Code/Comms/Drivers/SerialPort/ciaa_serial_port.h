@@ -39,7 +39,7 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 #include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
-//#include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
+// #include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
 
 /*! \brief ciaaSerialPort is a class for the Serial Port communication.
  *  \ingroup SerialPort
@@ -86,7 +86,7 @@ class ciaaSerialPort : public ciaaCommInterface {
 
  private:
   ciaaQSerialPortAdapter *serial_;
-  //ciaaBoostSerialPortAdapter *serial_;
+  // ciaaBoostSerialPortAdapter *serial_;
 };
 
 #endif  // COMMS_DRIVERS_SERIALPORT_H

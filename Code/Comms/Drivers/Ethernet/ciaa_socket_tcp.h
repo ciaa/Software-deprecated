@@ -39,11 +39,11 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 #ifdef USE_BOOST_ASIO
-//#include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 #else
-//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #endif
-//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 
 
@@ -85,9 +85,9 @@ class ciaaSocketTCP : public ciaaCommInterface {
 
  private:
 #ifdef USE_BOOST_ASIO
-    //  ciaaQtcpSocketAdapter *socket_;
+    // ciaaQtcpSocketAdapter *socket_;
 #else
-    //  ciaaBoostAsiotcpSocketAdapter *socket_;
+    // ciaaBoostAsiotcpSocketAdapter *socket_;
 #endif
     ciaaQtcpSocketAdapter *socket_;
 

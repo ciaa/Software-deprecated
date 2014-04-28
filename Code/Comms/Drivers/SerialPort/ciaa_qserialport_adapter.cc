@@ -35,9 +35,9 @@
 
 #include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
 
-//ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
+// ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
 //  CIAA_UNUSED_PARAM(device);
-//}
+// }
 
 ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(
     std::string device,
@@ -65,8 +65,7 @@ CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout) {
     serial_.setParity(actived_parity_);
     serial_.setStopBits(actived_stop_bits_);
     return CommDriverErrorCode::OK;
-  }
-  else {
+  } else {
     return CommDriverErrorCode::connection_error;
   }
 }
@@ -101,12 +100,12 @@ CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
   }
 
   if (total_readed == *n_bytes) {
-    //std::cout << *n_bytes << " OKKKKK" << std::endl;
+    // std::cout << *n_bytes << " OKKKKK" << std::endl;
     return CommDriverErrorCode::OK;
   } else {
-    //std::cout << *n_bytes << " FAIL" << std::endl;
+    // std::cout << *n_bytes << " FAIL" << std::endl;
     *n_bytes = total_readed;
-    //TODO(<denisacostaq\@gmail.com>):
+    // TODO(<denisacostaq\@gmail.com>):
     return CommDriverErrorCode::read_error;
   }
 }
@@ -130,7 +129,7 @@ CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
     return CommDriverErrorCode::OK;
   } else {
     *n_bytes = total_writed;
-    //TODO(<denisacostaq\@gmail.com>):
+    // TODO(<denisacostaq\@gmail.com>):
     return CommDriverErrorCode::write_error;
   }
 }

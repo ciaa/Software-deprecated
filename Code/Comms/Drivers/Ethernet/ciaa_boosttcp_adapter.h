@@ -88,8 +88,8 @@ class ciaaBoostAsiotcpSocketAdapter : public ciaaCommAdapterInterface {
     return CommDriverErrorCode::OK;
   }
 
-   private:
-    //QTcpSocket socket_;
-    std::string host_;
-    int port_;
+ private:
+  // QTcpSocket socket_;
+  std::string host_;
+  int port_;
 };

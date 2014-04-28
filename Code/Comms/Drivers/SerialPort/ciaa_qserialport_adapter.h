@@ -37,7 +37,6 @@
 #define COMMS_DRIVERS_QSERIALPORT_ADAPTER_H
 
 #include <map>
-#include <map>
 
 #include <QtSerialPort/QtSerialPort>
 
@@ -50,7 +49,7 @@
  */
 class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
  public:
-  //explicit ciaaQSerialPortAdapter(std::string device);
+  // explicit ciaaQSerialPortAdapter(std::string device);
   ciaaQSerialPortAdapter(std::string device,
                          SerialPortAdaptor::BaudRate baudrt,
                          SerialPortAdaptor::DataBits databs,
@@ -188,9 +187,9 @@ class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
   QSerialPort::Parity actived_parity_;
   QSerialPort::StopBits actived_stop_bits_;
 
-//    inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
-//      return msg_error_.find(err_code)->second;
-//    }
+// inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
+//   return msg_error_.find(err_code)->second;
+// }
 };
 
 #endif  // COMMS_DRIVERS_QSERIALPORT_ADAPTER_H

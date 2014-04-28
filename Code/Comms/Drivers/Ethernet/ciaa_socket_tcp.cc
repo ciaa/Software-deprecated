@@ -39,9 +39,9 @@ ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
   : socket_{new ciaaQtcpSocketAdapter{host, port}} {
 }
 
-//ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
+// ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
 //  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
-//}
+// }
 
 ciaaSocketTCP::~ciaaSocketTCP() {
   delete socket_;

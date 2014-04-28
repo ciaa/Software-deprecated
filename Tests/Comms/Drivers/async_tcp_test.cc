@@ -35,8 +35,7 @@
 
 #include <Code/Comms/Drivers/ciaa_comm_facade.h>
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   CIAA_UNUSED_PARAM(argc);
   CIAA_UNUSED_PARAM(argv);
   return EXIT_SUCCESS;
