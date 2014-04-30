@@ -41,14 +41,14 @@
 
 #include <QtNetwork/QTcpSocket>
 
-#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
 #include "Code/config.h"  // NOLINT
 
 /*! \brief TODO<denisacostaq\@gmail.com>
  * \brief The ciaaQtcpSocketAdapter class
  * \ingroup Ethernet
  */
-class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface {
+class ciaaQtcpSocketAdapter : public ciaaCommQIODeviceAdapter {
   // TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
   // ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
  public:
@@ -64,41 +64,10 @@ class ciaaQtcpSocketAdapter : public ciaaCommAdapterInterface {
   CommDriverErrorCode connect(std::int32_t timeout) override;
   CommDriverErrorCode disconnect(std::int32_t timeout) override;
 
-  /*! \brief read Read n_bytes and put it into data.
-   * \param timeout
-   * \param data
-   * \param n_bytes
-   * \warning Is very important fot itself implementation try read first
-   *  beacause if tha data are available the readyRead() signal no are performed
-   *  beafore.
-   * \return
-   */
-  CommDriverErrorCode read(std::int32_t timeout,
-                           char *data,
-                           ciaa_size_t *n_bytes) override;
-  void read(std::int32_t timeout,
-            const char *data,
-            std::function<CommDriverErrorCode()> callback) {
-        CIAA_UNUSED_PARAM(timeout);
-        CIAA_UNUSED_PARAM(data);
-        CIAA_UNUSED_PARAM(callback);
-  }
-
-  CommDriverErrorCode write(std::int32_t timeout,
-                            const char *data,
-                            ciaa_size_t *n_bytes) override;
-  void write(std::int32_t timeout,
-             const char *data,
-             std::function<CommDriverErrorCode()> callback) {
-        CIAA_UNUSED_PARAM(timeout);
-        CIAA_UNUSED_PARAM(data);
-        CIAA_UNUSED_PARAM(callback);
-  }
-
  private:
-  QTcpSocket socket_;
   QString host_;
   quint16 port_;
+  QTcpSocket socket_;
 };
 
 #endif  // COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H

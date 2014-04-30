@@ -36,11 +36,13 @@
 #ifndef COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
 #define COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
 
-#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include <QtNetwork/QUdpSocket>
 
-class ciaaQudpSocketAdapater : public ciaaCommAdapterInterface {
+#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
+
+class ciaaQudpSocketAdapater : public ciaaCommQIODeviceAdapter {
  public:
-  ciaaQudpSocketAdapater() = delete;
+  ciaaQudpSocketAdapater();
   ~ciaaQudpSocketAdapater() = default;
 
   ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
@@ -48,6 +50,9 @@ class ciaaQudpSocketAdapater : public ciaaCommAdapterInterface {
 
   ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
   ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
+
+ private:
+  QUdpSocket socket_;
 };
 
 #endif  // COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H

@@ -77,10 +77,23 @@ class ciaaSerialPort : public ciaaCommInterface {
     return serial_->read(timeout, data, n_bytes);
   }
 
+  inline void read(char *data,
+                   ciaa_size_t *n_bytes,
+                   std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+    serial_->read(data, n_bytes, callback);
+  }
+
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) const override {
     return serial_->write(timeout, data, n_bytes) ;
+  }
+
+  inline void write(const char *data,
+                    ciaa_size_t *n_bytes,
+                    std::function<void(CommDriverErrorCode,
+                                       ciaa_size_t)> callback) override {
+    return serial_->write(data, n_bytes, callback);
   }
 
 

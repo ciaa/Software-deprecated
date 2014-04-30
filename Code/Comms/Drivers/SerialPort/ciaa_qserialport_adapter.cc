@@ -45,7 +45,8 @@ ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(
     SerialPortAdaptor::DataBits databs,
     SerialPortAdaptor::FlowControl flowctl,
     SerialPortAdaptor::Parity prt,
-    SerialPortAdaptor::StopBits stbs) {
+    SerialPortAdaptor::StopBits stbs)
+  : ciaaCommQIODeviceAdapter{&serial_} {
   serial_.setPortName(QString{device.c_str()});
 
   actived_baudrate_ = static_cast<QSerialPort::BaudRate>(baudrt);
@@ -76,60 +77,4 @@ CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
 
   serial_.close();
   return CommDriverErrorCode::OK;
-}
-
-CommDriverErrorCode ciaaQSerialPortAdapter::read(std::int32_t timeout,
-                                                 char *data,
-                                                 ciaa_size_t *n_bytes) {
-  ciaa_size_t total_readed = serial_.read(data, *n_bytes);
-  if (total_readed != *n_bytes &&  // IF NOT, all ok!
-      total_readed >= 0) {  // IF NOT, is an error!
-    if (serial_.waitForReadyRead(timeout)) {
-      do {
-        ciaa_size_t readed_in_transition =
-            serial_.read(data + total_readed, *n_bytes - total_readed);
-
-        if (readed_in_transition >= 0) {  // IF NOT, is an error!
-          total_readed += readed_in_transition;
-          if (total_readed == *n_bytes) break;
-        } else {
-          break;
-        }
-      } while (serial_.waitForReadyRead(timeout));
-    }
-  }
-
-  if (total_readed == *n_bytes) {
-    // std::cout << *n_bytes << " OKKKKK" << std::endl;
-    return CommDriverErrorCode::OK;
-  } else {
-    // std::cout << *n_bytes << " FAIL" << std::endl;
-    *n_bytes = total_readed;
-    // TODO(<denisacostaq\@gmail.com>):
-    return CommDriverErrorCode::read_error;
-  }
-}
-
-CommDriverErrorCode ciaaQSerialPortAdapter::write(std::int32_t timeout,
-                                                  const char *data,
-                                                  ciaa_size_t *n_bytes) {
-  ciaa_size_t total_writed = serial_.write(data, *n_bytes);
-  // FIXME(denisacostaq@gmail.com): deberia ser esto en lugar de el
-  // socket_.waitForBytesWritten(timeout); que hay en siguiente bloque ya que
-  // si total_writed == *n_bytes es porque ya escribio todo.
-//  if (total_writed != *n_bytes &&  // IF NOT, all ok!
-//      total_writed >= 0) {  // IF NOT, is an error!
-//       if (!socket_.waitForBytesWritten(timeout)) {
-//        *n_bytes = total_writed;
-//       }
-//  }
-
-  if (total_writed == *n_bytes) {
-    serial_.waitForBytesWritten(timeout);
-    return CommDriverErrorCode::OK;
-  } else {
-    *n_bytes = total_writed;
-    // TODO(<denisacostaq\@gmail.com>):
-    return CommDriverErrorCode::write_error;
-  }
 }
