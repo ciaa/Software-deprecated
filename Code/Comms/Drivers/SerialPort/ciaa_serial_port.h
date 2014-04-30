@@ -39,7 +39,7 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 #include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
-//#include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
+// #include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
 
 /*! \brief ciaaSerialPort is a class for the Serial Port communication.
  *  \ingroup SerialPort
@@ -77,16 +77,29 @@ class ciaaSerialPort : public ciaaCommInterface {
     return serial_->read(timeout, data, n_bytes);
   }
 
+  inline void read(char *data,
+                   ciaa_size_t *n_bytes,
+                   std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+    serial_->read(data, n_bytes, callback);
+  }
+
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) const override {
     return serial_->write(timeout, data, n_bytes) ;
   }
 
+  inline void write(const char *data,
+                    ciaa_size_t *n_bytes,
+                    std::function<void(CommDriverErrorCode,
+                                       ciaa_size_t)> callback) override {
+    return serial_->write(data, n_bytes, callback);
+  }
+
 
  private:
   ciaaQSerialPortAdapter *serial_;
-  //ciaaBoostSerialPortAdapter *serial_;
+  // ciaaBoostSerialPortAdapter *serial_;
 };
 
 #endif  // COMMS_DRIVERS_SERIALPORT_H

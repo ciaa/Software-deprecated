@@ -37,12 +37,13 @@
 
 ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host,
                                              std::uint16_t port)
-  : host_{host.c_str()}
-  , port_(port) {
+  : ciaaCommQIODeviceAdapter{&socket_},
+    host_{host.c_str()},
+    port_(port) {
 }
 
 CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
-  // TODO<denisacostaq\@gmail.com>: socket_.reset() || others
+  // TODO<denisacostaq\@gmail.com>: socket_reset() || others
   socket_.connectToHost(host_, port_);
   socket_.waitForConnected(timeout);
   if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
@@ -59,63 +60,6 @@ CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
   if (socket_.state() == QAbstractSocket::UnconnectedState) {
     return CommDriverErrorCode::OK;
   }
-  // TODO(denisacostaq\@gmail.com): socket_.reset()
+  // TODO(denisacostaq\@gmail.com): socket_reset()
   return CommDriverErrorCode::disconnect_error;
-}
-
-  // FIXME(denisacostaq\@gmail.com): arreglar esto, ver el .h \warning
-CommDriverErrorCode ciaaQtcpSocketAdapter::read(std::int32_t timeout,
-                                                char *data,
-                                                ciaa_size_t *n_bytes) {
-    ciaa_size_t total_readed = socket_.read(data, *n_bytes);
-    if (total_readed != *n_bytes &&  // IF NOT, all ok!
-        total_readed >= 0) {  // IF NOT, is an error!
-      if (socket_.waitForReadyRead(timeout)) {
-        do {
-          ciaa_size_t readed_in_transition =
-              socket_.read(data + total_readed, *n_bytes - total_readed);
-
-          if (readed_in_transition >= 0) {  // IF NOT, is an error!
-            total_readed += readed_in_transition;
-            if (total_readed == *n_bytes) break;
-          } else {
-            break;
-          }
-        } while (socket_.waitForReadyRead(timeout));
-      }
-    }
-
-    if (total_readed == *n_bytes) {
-      //std::cout << *n_bytes << " OKKKKK" << std::endl;
-      return CommDriverErrorCode::OK;
-    } else {
-      //std::cout << *n_bytes << " FAIL" << std::endl;
-      *n_bytes = total_readed;
-      //TODO(<denisacostaq\@gmail.com>):
-      return CommDriverErrorCode::read_error;
-    }
-}
-
-CommDriverErrorCode ciaaQtcpSocketAdapter::write(std::int32_t timeout,
-                                                 const char *data,
-                                                 ciaa_size_t *n_bytes) {
-  ciaa_size_t total_writed = socket_.write(data, *n_bytes);
-  // FIXME(denisacostaq@gmail.com): deberia ser esto en lugar de el
-  // socket_.waitForBytesWritten(timeout); que hay en siguiente bloque ya que
-  // si total_writed == *n_bytes es porque ya escribio todo.
-//  if (total_writed != *n_bytes &&  // IF NOT, all ok!
-//      total_writed >= 0) {  // IF NOT, is an error!
-//       if (!socket_.waitForBytesWritten(timeout)) {
-//        *n_bytes = total_writed;
-//       }
-//  }
-
-  if (total_writed == *n_bytes) {
-    socket_.waitForBytesWritten(timeout);
-    return CommDriverErrorCode::OK;
-  } else {
-    *n_bytes = total_writed;
-    //TODO(<denisacostaq\@gmail.com>):
-    return CommDriverErrorCode::write_error;
-  }
 }

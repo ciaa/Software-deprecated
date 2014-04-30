@@ -43,7 +43,7 @@ CommsDriversMaster::CommsDriversMaster(std::string device) :
   correct_{false} {
 }
 
-CommsDriversMaster::CommsDriversMaster(const std::string host, std::uint16_t port) :
+CommsDriversMaster::CommsDriversMaster(const std::string host, std::uint16_t port) :  // NOLINT(whitespace/line_length)
   dev_{nullptr},
   host_{host},
   port_{port},
@@ -76,7 +76,7 @@ void CommsDriversMaster::run() {
     return;
   }
   char data[100]{0};
-  strcat(data, "Client\n");
+  printf(data, "Client\n");
   std::int32_t iters{kIters};
   while (iters--) {
     char data[kDataBufferSize];

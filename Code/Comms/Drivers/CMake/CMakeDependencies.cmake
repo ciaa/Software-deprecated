@@ -23,7 +23,8 @@ else(USE_BOOST_ASIO)
   set(BASE_MODULES_FOR_COMMS_SRC
     Ethernet/ciaa_qtcpsocket_adapter.cc
     Ethernet/ciaa_qudpsocket_adapter.cc
-    SerialPort/ciaa_qserialport_adapter.cc)
+    SerialPort/ciaa_qserialport_adapter.cc
+    ciaa_qiodevice_adapter.cc)
 endif(USE_BOOST_ASIO)
 #libqt5serialport5-dev libqt5network5
 configure_file(

@@ -44,10 +44,6 @@ ciaaSerialPort::ciaaSerialPort(std::string device,
   : serial_{new ciaaQSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
 }
 
-//ciaaSerialPort::ciaaSerialPort(std::string device)
-//  : serial_{new ciaaBoostSerialPortAdapter{device}} {
-//}
-
 ciaaSerialPort::~ciaaSerialPort() {
   delete serial_;
 }

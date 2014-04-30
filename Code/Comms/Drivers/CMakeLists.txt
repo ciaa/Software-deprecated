@@ -23,9 +23,9 @@ add_library(comms_drivers ${comms_Code})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
   "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
+#  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
-  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "/W4 /WX /EHsc")
+#  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "/W4 /WX /EHsc")
 endif()
 
 if(USE_BOOST_ASIO)

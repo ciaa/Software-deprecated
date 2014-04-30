@@ -120,7 +120,7 @@ class Slave : public QThread {
 
 };
 
-int main (int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
   QCoreApplication app(argc, argv);
   if (argc != 3) {
     printf("usage: %s @com1@ @com1@\n",
