@@ -1,15 +1,13 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_boosttcp_adapter.h
+    \file ciaa_qiodevice_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr 27 22:51:04 CDT 2014
+    \date Mon Apr 28 14:09:31 CDT 2014
 
-    \brief This file is part of Comms/Drivers module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h
+    \brief This file is part of Comms module.
+    \brief This file become from: Code/Comms/Drivers/ciaa_qiodevice_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
-
-    \copyright
 
     <a class="el" href="http://proyecto-ciaa.com.ar">
       This file is part of CIAA Project.
@@ -33,34 +31,23 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <stdint.h>
-#include <string>
+#ifndef COMMS_DRIVERS_CIAA_QIODEVICE_ADAPTER_H
+#define COMMS_DRIVERS_CIAA_QIODEVICE_ADAPTER_H
+
+#include <QtNetwork/QTcpSocket>
 
 #include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
 
-class ciaaBoostAsiotcpSocketAdapter : public ciaaCommAdapterInterface {
+class ciaaCommQIODeviceAdapter : public ciaaCommAdapterInterface {
  public:
-  ciaaBoostAsiotcpSocketAdapter(std::string host, std::uint16_t port);
-  ~ciaaBoostAsiotcpSocketAdapter() = default;
+  explicit ciaaCommQIODeviceAdapter(QIODevice *conexion);
+  ~ciaaCommQIODeviceAdapter();
 
-  ciaaBoostAsiotcpSocketAdapter(
-      const ciaaBoostAsiotcpSocketAdapter&) = delete;
-  ciaaBoostAsiotcpSocketAdapter& operator=(
-      const ciaaBoostAsiotcpSocketAdapter&) = delete;
+  ciaaCommQIODeviceAdapter(const ciaaCommQIODeviceAdapter&) = delete;
+  ciaaCommQIODeviceAdapter& operator=(const ciaaCommQIODeviceAdapter&) = delete;
 
-  ciaaBoostAsiotcpSocketAdapter(
-      const ciaaBoostAsiotcpSocketAdapter&&) = delete;
-  ciaaBoostAsiotcpSocketAdapter& operator=(
-      const ciaaBoostAsiotcpSocketAdapter&&) = delete;
-
-  CommDriverErrorCode connect(std::int32_t timeout) override {
-    CIAA_UNUSED_PARAM(timeout);
-    return CommDriverErrorCode::OK;
-  }
-  CommDriverErrorCode disconnect(std::int32_t timeout) override {
-    CIAA_UNUSED_PARAM(timeout);
-    return CommDriverErrorCode::OK;
-  }
+  ciaaCommQIODeviceAdapter(const ciaaCommQIODeviceAdapter&&) = delete;
+  ciaaCommQIODeviceAdapter& operator=(const ciaaCommQIODeviceAdapter&&) =delete;
 
   /*! \brief read Read n_bytes and put it into data.
    * \param timeout
@@ -73,23 +60,23 @@ class ciaaBoostAsiotcpSocketAdapter : public ciaaCommAdapterInterface {
    */
   CommDriverErrorCode read(std::int32_t timeout,
                            char *data,
-                           ciaa_size_t *n_bytes) override {
-    CIAA_UNUSED_PARAM(n_bytes);
-    CIAA_UNUSED_PARAM(data);
-    CIAA_UNUSED_PARAM(timeout);
-    return CommDriverErrorCode::OK;
-  }
+                           ciaa_size_t *n_bytes) override;
+  void read(char *data,
+            ciaa_size_t *n_bytes,
+            std::function<void(CommDriverErrorCode, ciaa_size_t)> callback);
+
+
   CommDriverErrorCode write(std::int32_t timeout,
                             const char *data,
-                            ciaa_size_t *n_bytes) override {
-    CIAA_UNUSED_PARAM(n_bytes);
-    CIAA_UNUSED_PARAM(data);
-    CIAA_UNUSED_PARAM(timeout);
-    return CommDriverErrorCode::OK;
-  }
+                            ciaa_size_t *n_bytes) override;
+
+  void write(const char *data,
+             ciaa_size_t *n_bytes,
+             std::function<void(CommDriverErrorCode, ciaa_size_t)> callback);
 
  private:
-  // QTcpSocket socket_;
-  std::string host_;
-  int port_;
+  // WARNING(denisacostaq\@gmail.com): do not make this visible fot chields
+    QIODevice *conexion_;
 };
+
+#endif  // COMMS_DRIVERS_CIAA_QIODEVICE_ADAPTER_H

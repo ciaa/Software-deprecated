@@ -57,13 +57,25 @@ class ciaaCommAdapterInterface {
   ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) =delete;
 
   virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
+
   virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
+
   virtual CommDriverErrorCode read(std::int32_t timeout,
                                    char *data,
                                    ciaa_size_t *n_bytes) = 0;
+  virtual void read(char *data,
+                    ciaa_size_t *n_bytes,
+                    std::function<void(CommDriverErrorCode,
+                                        ciaa_size_t)> callback) = 0;
+
   virtual CommDriverErrorCode write(std::int32_t timeout,
                                     const char *data,
                                     ciaa_size_t *n_bytes) = 0;
+
+  virtual void write(const char *data,
+                     ciaa_size_t *n_bytes,
+                     std::function<void(CommDriverErrorCode,
+                                        ciaa_size_t)> callback) = 0;
 };
 
 #endif  // COMMS_DRIVERS_ADAPTER_INTERFACE_H

@@ -39,11 +39,11 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 #ifdef USE_BOOST_ASIO
-//#include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 #else
-//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #endif
-//#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 
 
@@ -76,18 +76,31 @@ class ciaaSocketTCP : public ciaaCommInterface {
       return socket_->read(timeout, data, n_bytes);
     }
 
+    inline void read(char *data,
+                     ciaa_size_t *n_bytes,
+                     std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+      socket_->read(data, n_bytes, callback);
+    }
+
     inline CommDriverErrorCode write(std::int32_t timeout,
                                      const char *data,
                                      ciaa_size_t *n_bytes) const override {
       return socket_->write(timeout, data, n_bytes) ;
     }
 
+    inline void write(const char *data,
+                      ciaa_size_t *n_bytes,
+                      std::function<void(CommDriverErrorCode,
+                                         ciaa_size_t)> callback) override {
+      return socket_->write(data, n_bytes, callback);
+    }
+
 
  private:
 #ifdef USE_BOOST_ASIO
-    //  ciaaQtcpSocketAdapter *socket_;
+    // ciaaQtcpSocketAdapter *socket_;
 #else
-    //  ciaaBoostAsiotcpSocketAdapter *socket_;
+    // ciaaBoostAsiotcpSocketAdapter *socket_;
 #endif
     ciaaQtcpSocketAdapter *socket_;
 

@@ -37,20 +37,19 @@
 #define COMMS_DRIVERS_QSERIALPORT_ADAPTER_H
 
 #include <map>
-#include <map>
 
 #include <QtSerialPort/QtSerialPort>
 
-#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
 #include "Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h"
 
 /*! \brief TODO<denisacostaq\@gmail.com>
  * \brief The ciaaQSerialPortAdapter class
  * \ingroup SerialPort
  */
-class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
+class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
  public:
-  //explicit ciaaQSerialPortAdapter(std::string device);
+  // explicit ciaaQSerialPortAdapter(std::string device);
   ciaaQSerialPortAdapter(std::string device,
                          SerialPortAdaptor::BaudRate baudrt,
                          SerialPortAdaptor::DataBits databs,
@@ -67,12 +66,6 @@ class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
 
   CommDriverErrorCode connect(std::int32_t timeout) override;
   CommDriverErrorCode disconnect(std::int32_t timeout) override;
-  CommDriverErrorCode read(std::int32_t timeout,
-                           char *data,
-                           ciaa_size_t *n_bytes) override;
-  CommDriverErrorCode write(std::int32_t timeout,
-                            const char *data,
-                            ciaa_size_t *n_bytes) override;
 
  private:
 
@@ -188,9 +181,9 @@ class ciaaQSerialPortAdapter : public ciaaCommAdapterInterface {
   QSerialPort::Parity actived_parity_;
   QSerialPort::StopBits actived_stop_bits_;
 
-//    inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
-//      return msg_error_.find(err_code)->second;
-//    }
+// inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
+//   return msg_error_.find(err_code)->second;
+// }
 };
 
 #endif  // COMMS_DRIVERS_QSERIALPORT_ADAPTER_H

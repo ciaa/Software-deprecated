@@ -78,18 +78,22 @@ class ciaaCommFacade {
     return transporter_->read(timeout, data, n_bytes);
   }
 
-  void read(std::int32_t timeout,
-            const char *data,
-            std::function<CommDriverErrorCode()> callback) {
-        CIAA_UNUSED_PARAM(timeout);
-        CIAA_UNUSED_PARAM(data);
-        CIAA_UNUSED_PARAM(callback);
+  inline void read(char *data,
+                   ciaa_size_t *n_bytes,
+                   std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+    transporter_->read(data, n_bytes, callback);
   }
 
   inline CommDriverErrorCode write(std::int32_t timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) {
     return transporter_->write(timeout, data, n_bytes);
+  }
+
+  inline void write(char *data,
+                    ciaa_size_t *n_bytes,
+                    std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+    transporter_->write(data, n_bytes, callback);
   }
 
   inline const std::string get_msg_error(CommDriverErrorCode err_code) const {
