@@ -43,6 +43,9 @@
 #include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
 #include "Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h"
 
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
 /*! \brief TODO<denisacostaq\@gmail.com>
  * \brief The ciaaQSerialPortAdapter class
  * \ingroup SerialPort
@@ -64,8 +67,8 @@ class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
   ciaaQSerialPortAdapter(const ciaaQSerialPortAdapter&&) = delete;
   ciaaQSerialPortAdapter& operator=(const ciaaQSerialPortAdapter&&) = delete;
 
-  CommDriverErrorCode connect(std::int32_t timeout) override;
-  CommDriverErrorCode disconnect(std::int32_t timeout) override;
+  ciaaErrorCode connect(std::int32_t timeout) override;
+  ciaaErrorCode disconnect(std::int32_t timeout) override;
 
  private:
 
@@ -185,5 +188,7 @@ class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
 //   return msg_error_.find(err_code)->second;
 // }
 };
-
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_QSERIALPORT_ADAPTER_H

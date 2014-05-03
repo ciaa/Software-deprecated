@@ -1,10 +1,10 @@
 /*! \brief This file gives a ciaaBoostSerialPortAdapter functionality.
-    \file ciaa_qserialport_adapter.cc
+    \file ciaa_boostserialport_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr 27 23:20:13 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.cc
+    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -32,3 +32,33 @@
   with this program; if not, write to the Free Software Foundation, Inc.,
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
+#include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
+
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaBoostSerialPortAdapter::ciaaBoostSerialPortAdapter(
+          std::string device,
+          SerialPortAdaptor::BaudRate baudrt,
+          SerialPortAdaptor::DataBits databs,
+          SerialPortAdaptor::FlowControl flowctl,
+          SerialPortAdaptor::Parity prt,
+          SerialPortAdaptor::StopBits stbs)
+        : device_{device}
+        , io_service_{}
+        , serial_{io_service_}
+        , deadline_{io_service_} {
+          actived_baudrate_ = static_cast<boost::asio::serial_port::baud_rate>(
+                static_cast<unsigned int>(baudrt));
+          actived_databits_ = databits(databs);
+          actived_flow_control_ = flow_control(flowctl);
+          actived_parity_ = parity(prt);
+          actived_stop_bits_ = stop_bits(stbs);
+
+          deadline_.expires_at(boost::posix_time::pos_infin);
+          this->check_deadline();
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

@@ -1,15 +1,13 @@
-/*! \brief This file gives a ciaaCommFacade functionality.
-    \file ciaa_comm_facade.cc
+/*! \brief Do not include this file directly in external modules.
+    \file ciaa_ioservice_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Thu Jan 9 14:28:58 CDT 2014
+    \date Sat May  3 15:05:41 CDT 2014
 
     \brief This file is part of Comms module.
-    \brief This file become from: Code/Comms/Drivers/ciaa_comm_facade.cc
+    \brief This file become from: Code/Comms/Drivers/ciaa_ioservice_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
-
-    \copyright
 
     <a class="el" href="http://proyecto-ciaa.com.ar">
       This file is part of CIAA Project.
@@ -33,27 +31,36 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/ciaa_comm_facade.h"
+#ifndef COMMS_DRIVERS_IOSERVICE_ADAPTER_H
+#define COMMS_DRIVERS_IOSERVICE_ADAPTER_H
+// #include <boost/asio/basic_io_object.hpp>
+
+#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
 
 namespace ciaa {
   namespace comms {
     namespace drivers {
-      ciaaCommFacade::ciaaCommFacade(std::string host, std::uint16_t port)
-        : transporter_{new ciaaSocketTCP{host, port}} {
-      }
+      // TODO(denisacostaq\@gmail.com): todo
+      class ciaaIOServiceAdapter : public ciaaCommAdapterInterface {
+       public:
+        ciaaIOServiceAdapter(/*boost::asio::basic_io_object *io_object*/)
+         // : io_object_{io_object} {
+        {
+        }
 
-      ciaaCommFacade::ciaaCommFacade(std::string device,
-                                     SerialPortAdaptor::BaudRate baudrt,
-                                     SerialPortAdaptor::DataBits databs,
-                                     SerialPortAdaptor::FlowControl flowctl,
-                                     SerialPortAdaptor::Parity prt,
-                                     SerialPortAdaptor::StopBits stbs)
-        : transporter_{new ciaaSerialPort{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
-      }
+        ~ciaaIOServiceAdapter() = default;
 
-      ciaaCommFacade::~ciaaCommFacade() {
-        delete transporter_;
-      }
+        ciaaIOServiceAdapter(const ciaaIOServiceAdapter&) = delete;
+        ciaaIOServiceAdapter& operator=(const ciaaIOServiceAdapter&) = delete;
+
+        ciaaIOServiceAdapter(const ciaaIOServiceAdapter&&) = delete;
+        ciaaIOServiceAdapter& operator=(const ciaaIOServiceAdapter&&) = delete;
+       protected:
+
+       private:
+        // TODO(denisacostaq\@gmail.com): boost::asio::basic_io_object *io_object_;
+      };
     }  // namespace ciaa
   }  // namespace comms
 }  // namespace drivers
+#endif  // COMMS_DRIVERS_IOSERVICE_ADAPTER_H

@@ -63,7 +63,7 @@ class ciaaIECBaseElement
          */
         virtual uint8_t* Serialize (uint8_t pBuffer)
         {
-          //FIXME<Ezequiel>: esto lo puso alvaro para que compilara.
+          //FIXME(Ezequiel): esto lo puso alvaro para que compilara.
         }
 };
 

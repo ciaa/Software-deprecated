@@ -23,12 +23,13 @@ add_library(comms_drivers ${comms_Code})
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" OR
   "${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-#  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
+  #set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "-Werror -Wall -Wextra")
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 #  set_target_properties(comms_drivers PROPERTIES COMPILE_FLAGS "/W4 /WX /EHsc")
 endif()
 
 if(USE_BOOST_ASIO)
+  target_link_libraries(comms_drivers ${USED_LIBS})
 else(USE_BOOST_ASIO)
   qt5_use_modules(comms_drivers Network SerialPort)
 endif(USE_BOOST_ASIO)

@@ -34,3 +34,26 @@
  */
 
 #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaBoostAsiotcpSocketAdapter::ciaaBoostAsiotcpSocketAdapter(
+          std::string host,
+          std::uint16_t port)
+        : host_{host}
+        , port_{port}
+        , io_service_{}
+        , socket_{io_service_}
+        , deadline_{io_service_}
+       {
+        // set the deadline to positive infinity so that the actor takes no action
+        // until a specific deadline is set.
+         deadline_.expires_at(boost::posix_time::pos_infin);
+
+        // Start the persistent actor that checks for deadline expiry.
+         this->check_deadline();
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

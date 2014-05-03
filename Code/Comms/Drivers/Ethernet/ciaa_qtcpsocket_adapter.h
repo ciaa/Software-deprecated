@@ -44,30 +44,35 @@
 #include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
 #include "Code/config.h"  // NOLINT
 
-/*! \brief TODO<denisacostaq\@gmail.com>
- * \brief The ciaaQtcpSocketAdapter class
- * \ingroup Ethernet
- */
-class ciaaQtcpSocketAdapter : public ciaaCommQIODeviceAdapter {
-  // TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
-  // ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
- public:
-  ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
-  ~ciaaQtcpSocketAdapter() = default;
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      /*! \brief TODO<denisacostaq\@gmail.com>
+       * \brief The ciaaQtcpSocketAdapter class
+       * \ingroup Ethernet
+       */
+      class ciaaQtcpSocketAdapter : public ciaaCommQIODeviceAdapter {
+        // TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
+        // ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
+       public:
+        ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
+        ~ciaaQtcpSocketAdapter() = default;
 
-  ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
-  ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&) = delete;
+        ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
+        ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&) = delete;
 
-  ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
-  ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
+        ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
+        ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
 
-  CommDriverErrorCode connect(std::int32_t timeout) override;
-  CommDriverErrorCode disconnect(std::int32_t timeout) override;
+        ciaaErrorCode connect(std::int32_t timeout) override;
+        ciaaErrorCode disconnect(std::int32_t timeout) override;
 
- private:
-  QString host_;
-  quint16 port_;
-  QTcpSocket socket_;
-};
-
+       private:
+        QString host_;
+        quint16 port_;
+        QTcpSocket socket_;
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H

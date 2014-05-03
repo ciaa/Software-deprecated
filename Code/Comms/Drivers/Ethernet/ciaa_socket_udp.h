@@ -39,16 +39,21 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 
-class ciaaSocketUDP : public ciaaCommInterface {
- public:
-  ciaaSocketUDP() = delete;
-  ~ciaaSocketUDP() = default;
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      class ciaaSocketUDP : public ciaaCommInterface {
+       public:
+        ciaaSocketUDP() = delete;
+        ~ciaaSocketUDP() = default;
 
-  ciaaSocketUDP(const ciaaSocketUDP&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&) = delete;
+        ciaaSocketUDP(const ciaaSocketUDP&) = delete;
+        ciaaSocketUDP& operator =(const ciaaSocketUDP&) = delete;
 
-  ciaaSocketUDP(const ciaaSocketUDP&&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&&) = delete;
-};
-
+        ciaaSocketUDP(const ciaaSocketUDP&&) = delete;
+        ciaaSocketUDP& operator =(const ciaaSocketUDP&&) = delete;
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H

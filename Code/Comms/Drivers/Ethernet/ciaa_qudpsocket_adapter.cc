@@ -34,6 +34,13 @@
  */
 
 #include "Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h"
-ciaaQudpSocketAdapater::ciaaQudpSocketAdapater()
-  : ciaaCommQIODeviceAdapter{&socket_} {
-}
+
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaQudpSocketAdapater::ciaaQudpSocketAdapater()
+        : ciaaCommQIODeviceAdapter{&socket_} {
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

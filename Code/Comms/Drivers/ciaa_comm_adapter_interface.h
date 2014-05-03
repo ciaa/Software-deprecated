@@ -35,47 +35,53 @@
 #define COMMS_DRIVERS_ADAPTER_INTERFACE_H
 
 #include <cstdint>
+#include <functional>
 
 #include "Code/Defines/ciaaGlobalMacros.h"
 #include "Code/Comms/Drivers/ciaa_comm_drivers_config.h"
 #include "Code/Comms/Drivers/ciaa_comm_driver_error_code.h"
 
-/*!
- * \brief The ciaaCommAdapterInterface class is a common innterface for the
- * adaptor pattern.
- * \ingroup Drivers
- */
-class ciaaCommAdapterInterface {
- public:
-  ciaaCommAdapterInterface() = default;
-  virtual ~ciaaCommAdapterInterface() = default;
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      /*!
+       * \brief The ciaaCommAdapterInterface class is a common innterface for the
+       * adaptor pattern.
+       * \ingroup Drivers
+       */
+      class ciaaCommAdapterInterface {
+       public:
+        ciaaCommAdapterInterface() = default;
+        virtual ~ciaaCommAdapterInterface() = default;
 
-  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&) = delete;
-  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&) = delete;
+        ciaaCommAdapterInterface(const ciaaCommAdapterInterface&) = delete;
+        ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&) = delete;
 
-  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
-  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) =delete;
+        ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
+        ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) =delete;
 
-  virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
+        virtual ciaaErrorCode connect(std::int32_t timeout) = 0;
 
-  virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
+        virtual ciaaErrorCode disconnect(std::int32_t timeout) = 0;
 
-  virtual CommDriverErrorCode read(std::int32_t timeout,
-                                   char *data,
-                                   ciaa_size_t *n_bytes) = 0;
-  virtual void read(char *data,
-                    ciaa_size_t *n_bytes,
-                    std::function<void(CommDriverErrorCode,
-                                        ciaa_size_t)> callback) = 0;
+        virtual ciaaErrorCode read(std::int32_t timeout,
+                                         char *data,
+                                         ciaa_size_t *n_bytes) = 0;
+        virtual void read(char *data,
+                          ciaa_size_t *n_bytes,
+                          std::function<void(ciaaErrorCode,
+                                              ciaa_size_t)> callback) = 0;
 
-  virtual CommDriverErrorCode write(std::int32_t timeout,
-                                    const char *data,
-                                    ciaa_size_t *n_bytes) = 0;
+        virtual ciaaErrorCode write(std::int32_t timeout,
+                                          const char *data,
+                                          ciaa_size_t *n_bytes) = 0;
 
-  virtual void write(const char *data,
-                     ciaa_size_t *n_bytes,
-                     std::function<void(CommDriverErrorCode,
-                                        ciaa_size_t)> callback) = 0;
-};
-
+        virtual void write(const char *data,
+                           ciaa_size_t *n_bytes,
+                           std::function<void(ciaaErrorCode,
+                                              ciaa_size_t)> callback) = 0;
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_ADAPTER_INTERFACE_H

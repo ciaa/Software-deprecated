@@ -7,7 +7,4 @@
  #include <@ciaa_comm_drivers_R_W_size_t_header_file@>
  using ciaa_size_t = @ciaa_comm_drivers_R_W_size_t@;
 
-
- #define USE_BOOST_ASIO
-
 #endif  // DFDFDD

@@ -35,46 +35,52 @@
 
 #include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
 
-// ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
-//  CIAA_UNUSED_PARAM(device);
-// }
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      // ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(std::string device) {
+      //  CIAA_UNUSED_PARAM(device);
+      // }
 
-ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(
-    std::string device,
-    SerialPortAdaptor::BaudRate baudrt,
-    SerialPortAdaptor::DataBits databs,
-    SerialPortAdaptor::FlowControl flowctl,
-    SerialPortAdaptor::Parity prt,
-    SerialPortAdaptor::StopBits stbs)
-  : ciaaCommQIODeviceAdapter{&serial_} {
-  serial_.setPortName(QString{device.c_str()});
+      ciaaQSerialPortAdapter::ciaaQSerialPortAdapter(
+          std::string device,
+          SerialPortAdaptor::BaudRate baudrt,
+          SerialPortAdaptor::DataBits databs,
+          SerialPortAdaptor::FlowControl flowctl,
+          SerialPortAdaptor::Parity prt,
+          SerialPortAdaptor::StopBits stbs)
+        : ciaaCommQIODeviceAdapter{&serial_} {
+        serial_.setPortName(QString{device.c_str()});
 
-  actived_baudrate_ = static_cast<QSerialPort::BaudRate>(baudrt);
-  actived_databits_ = databits(databs);
-  actived_flow_control_ = flow_control(flowctl);
-  actived_parity_ = parity(prt);
-  actived_stop_bits_ = stop_bits(stbs);
-}
+        actived_baudrate_ = static_cast<QSerialPort::BaudRate>(baudrt);
+        actived_databits_ = databits(databs);
+        actived_flow_control_ = flow_control(flowctl);
+        actived_parity_ = parity(prt);
+        actived_stop_bits_ = stop_bits(stbs);
+      }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout) {
-  // TODO<denisacostaq\@gmail.com>: todo
-  CIAA_UNUSED_PARAM(timeout);
-  if (serial_.open(QIODevice::ReadWrite)) {
-    serial_.setBaudRate(static_cast<qint32>(actived_baudrate_));
-    serial_.setDataBits(actived_databits_);
-    serial_.setFlowControl(actived_flow_control_);
-    serial_.setParity(actived_parity_);
-    serial_.setStopBits(actived_stop_bits_);
-    return CommDriverErrorCode::OK;
-  } else {
-    return CommDriverErrorCode::connection_error;
-  }
-}
+      ciaaErrorCode ciaaQSerialPortAdapter::connect(std::int32_t timeout) {
+        // TODO<denisacostaq\@gmail.com>: todo
+        CIAA_UNUSED_PARAM(timeout);
+        if (serial_.open(QIODevice::ReadWrite)) {
+          serial_.setBaudRate(static_cast<qint32>(actived_baudrate_));
+          serial_.setDataBits(actived_databits_);
+          serial_.setFlowControl(actived_flow_control_);
+          serial_.setParity(actived_parity_);
+          serial_.setStopBits(actived_stop_bits_);
+          return ciaaErrorCode::OK;
+        } else {
+          return ciaaErrorCode::connection_error;
+        }
+      }
 
-CommDriverErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
-  // TODO<denisacostaq\@gmail.com>: usar flush y wait
-  CIAA_UNUSED_PARAM(timeout);
+      ciaaErrorCode ciaaQSerialPortAdapter::disconnect(std::int32_t timeout) {
+        // TODO<denisacostaq\@gmail.com>: usar flush y wait
+        CIAA_UNUSED_PARAM(timeout);
 
-  serial_.close();
-  return CommDriverErrorCode::OK;
-}
+        serial_.close();
+        return ciaaErrorCode::OK;
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

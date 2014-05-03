@@ -35,20 +35,20 @@
 
 #include "Tests/Comms/Drivers/comms_drivers_master_test.h"
 
-CommsDriversMaster::CommsDriversMaster(std::string device) :
-  dev_{nullptr},
-  host_{""},
-  port_{0},
-  serial_device_name_{device},
-  correct_{false} {
+CommsDriversMaster::CommsDriversMaster(std::string device)
+  : dev_{nullptr}
+  , host_{""}
+  , port_{0}
+  , serial_device_name_{device}
+  , correct_{false} {
 }
 
-CommsDriversMaster::CommsDriversMaster(const std::string host, std::uint16_t port) :  // NOLINT(whitespace/line_length)
-  dev_{nullptr},
-  host_{host},
-  port_{port},
-  serial_device_name_{""},
-  correct_{false} {
+CommsDriversMaster::CommsDriversMaster(const std::string host, std::uint16_t port)  // NOLINT(whitespace/line_length)
+  : dev_{nullptr}
+  , host_{host}
+  , port_{port}
+  , serial_device_name_{""}
+  , correct_{false} {
 }
 
 CommsDriversMaster::~CommsDriversMaster() {
@@ -70,8 +70,8 @@ void CommsDriversMaster::run() {
     if (dev_ == nullptr) dev_ = new ciaaCommFacade (host_, port_);
   }
 
-  CommDriverErrorCode ret = dev_->connect(100);
-  if (ret != CommDriverErrorCode::OK) {
+  ciaaErrorCode ret = dev_->connect(100);
+  if (ret != ciaaErrorCode::OK) {
     dev_->get_msg_error(ret);
     return;
   }
@@ -85,35 +85,51 @@ void CommsDriversMaster::run() {
     std::int32_t client_msg_lenth{sizeof(msg_for_remot)};
     ciaa_size_t lenth{sizeof(std::int32_t)};
     memcpy(data, &client_msg_lenth, lenth);
-    if ((ret = dev_->write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+    if ((ret = dev_->write(100, data, &lenth)) != ciaaErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
-    printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+    std::printf("checking transitioned... %d\n", lenth);
+#else
+    std::printf("checking transitioned... %lld\n", lenth);
+#endif
     dev_->disconnect(100);
     return;
     }
     memset(data, 0, sizeof(data));
     memcpy(data, msg_for_remot, sizeof(msg_for_remot));
     lenth = sizeof(msg_for_remot);
-    if ((ret = dev_->write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+    if ((ret = dev_->write(100, data, &lenth)) != ciaaErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
-    printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+    std::printf("checking transitioned... %d\n", lenth);
+#else
+    std::printf("checking transitioned... %lld\n", lenth);
+#endif
     dev_->disconnect(100);
     return;
     }
 
     memset(data, 0, sizeof(data));
     lenth = sizeof(std::int32_t);
-    if ((ret = dev_->read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+    if ((ret = dev_->read(100, data, &lenth)) != ciaaErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
-    printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+    std::printf("checking transitioned... %d\n", lenth);
+#else
+    std::printf("checking transitioned... %lld\n", lenth);
+#endif
     dev_->disconnect(100);
     return;
     }
     memcpy(&lenth, data, sizeof(std::int32_t));
     memset(data, 0, sizeof(data));
-    if ((ret = dev_->read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+    if ((ret = dev_->read(100, data, &lenth)) != ciaaErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
-    printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+    std::printf("checking transitioned... %d\n", lenth);
+#else
+    std::printf("checking transitioned... %lld\n", lenth);
+#endif
     dev_->disconnect(100);
     return;
     }

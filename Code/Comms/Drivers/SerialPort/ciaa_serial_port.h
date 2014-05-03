@@ -38,68 +38,82 @@
 #define COMMS_DRIVERS_SERIALPORT_H
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
+#include "Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h"
+#ifdef USE_BOOST_ASIO
+#include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
+#else
 #include "Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h"
-// #include "Code/Comms/Drivers/SerialPort/ciaa_boostserialport_adapter.h"
+#endif
 
-/*! \brief ciaaSerialPort is a class for the Serial Port communication.
- *  \ingroup SerialPort
- *  \brief This class is for the Serial Port communication using RS-232
- *  \brief standard(ANSI/EIA­232) in the Comms module.
- * \ingroup SerialPort
- */
-class ciaaSerialPort : public ciaaCommInterface {
- public:
-  explicit ciaaSerialPort(std::string device,
-                          SerialPortAdaptor::BaudRate baudrt,
-                          SerialPortAdaptor::DataBits databs,
-                          SerialPortAdaptor::FlowControl flowctl,
-                          SerialPortAdaptor::Parity prt,
-                          SerialPortAdaptor::StopBits stbs);
-  ~ciaaSerialPort();
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      /*! \brief ciaaSerialPort is a class for the Serial Port communication.
+       *  \ingroup SerialPort
+       *  \brief This class is for the Serial Port communication using RS-232
+       *  \brief standard(ANSI/EIA­232) in the Comms module.
+       * \ingroup SerialPort
+       */
+      class ciaaSerialPort : public ciaaCommInterface {
+       public:
+        explicit ciaaSerialPort(std::string device,
+                                SerialPortAdaptor::BaudRate baudrt,
+                                SerialPortAdaptor::DataBits databs,
+                                SerialPortAdaptor::FlowControl flowctl,
+                                SerialPortAdaptor::Parity prt,
+                                SerialPortAdaptor::StopBits stbs);
+        ~ciaaSerialPort();
 
-  ciaaSerialPort(const ciaaSerialPort&) = delete;
-  ciaaSerialPort& operator=(const ciaaSerialPort&) = delete;
+        ciaaSerialPort(const ciaaSerialPort&) = delete;
+        ciaaSerialPort& operator=(const ciaaSerialPort&) = delete;
 
-  ciaaSerialPort(const ciaaSerialPort&&) = delete;
-  ciaaSerialPort& operator=(const ciaaSerialPort&&) = delete;
+        ciaaSerialPort(const ciaaSerialPort&&) = delete;
+        ciaaSerialPort& operator=(const ciaaSerialPort&&) = delete;
 
-  inline CommDriverErrorCode connect(std::int32_t timeout) const override {
-    return serial_->connect(timeout) ;
-  }
+        inline ciaaErrorCode connect(std::int32_t timeout) const override {
+          return serial_->connect(timeout) ;
+        }
 
-  inline CommDriverErrorCode disconnect(std::int32_t timeout) const override {
-    return serial_->disconnect(timeout);
-  }
+        inline ciaaErrorCode disconnect(std::int32_t timeout) const override {
+          return serial_->disconnect(timeout);
+        }
 
-  inline CommDriverErrorCode read(std::int32_t timeout,
-                                  char *data,
-                                  ciaa_size_t *n_bytes) const override {
-    return serial_->read(timeout, data, n_bytes);
-  }
+        inline ciaaErrorCode read(std::int32_t timeout,
+                                        char *data,
+                                        ciaa_size_t *n_bytes) const override {
+          return serial_->read(timeout, data, n_bytes);
+        }
 
-  inline void read(char *data,
-                   ciaa_size_t *n_bytes,
-                   std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
-    serial_->read(data, n_bytes, callback);
-  }
+        inline void read(char *data,
+                         ciaa_size_t *n_bytes,
+                         std::function<void(ciaaErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+          serial_->read(data, n_bytes, callback);
+        }
 
-  inline CommDriverErrorCode write(std::int32_t timeout,
-                                   const char *data,
-                                   ciaa_size_t *n_bytes) const override {
-    return serial_->write(timeout, data, n_bytes) ;
-  }
+        inline ciaaErrorCode write(std::int32_t timeout,
+                                         const char *data,
+                                         ciaa_size_t *n_bytes) const override {
+          return serial_->write(timeout, data, n_bytes) ;
+        }
 
-  inline void write(const char *data,
-                    ciaa_size_t *n_bytes,
-                    std::function<void(CommDriverErrorCode,
-                                       ciaa_size_t)> callback) override {
-    return serial_->write(data, n_bytes, callback);
-  }
+        inline void write(const char *data,
+                          ciaa_size_t *n_bytes,
+                          std::function<void(ciaaErrorCode,
+                                             ciaa_size_t)> callback) override {
+          return serial_->write(data, n_bytes, callback);
+        }
 
 
- private:
-  ciaaQSerialPortAdapter *serial_;
-  // ciaaBoostSerialPortAdapter *serial_;
-};
+       private:
+      #ifdef USE_BOOST_ASIO
+        ciaaBoostSerialPortAdapter *serial_;
+      #else
+        ciaaQSerialPortAdapter *serial_;
+      #endif
+
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 
 #endif  // COMMS_DRIVERS_SERIALPORT_H

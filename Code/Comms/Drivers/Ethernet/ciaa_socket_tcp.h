@@ -39,71 +39,74 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_interface.h"
 #ifdef USE_BOOST_ASIO
-// #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+ #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #else
-// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
-#endif
-// #include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
 #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
-
-
-/*! \brief TODO <denisacostaq\@gmail.com>
- * \brief The ciaaSocket class
- * \ingroup Ethernet
- */
-class ciaaSocketTCP : public ciaaCommInterface {
- public:
-    ciaaSocketTCP(std::string host, std::uint16_t port);
-    ~ciaaSocketTCP();
-
-    ciaaSocketTCP(const ciaaSocketTCP&) = delete;
-    ciaaSocketTCP& operator=(const ciaaSocketTCP&) = delete;
-
-    ciaaSocketTCP(const ciaaSocketTCP&&) = delete;
-    ciaaSocketTCP& operator=(const ciaaSocketTCP&&) = delete;
-
-    inline CommDriverErrorCode connect(std::int32_t timeout) const override {
-      return socket_->connect(timeout) ;
-    }
-
-    inline CommDriverErrorCode disconnect(std::int32_t timeout) const override {
-      return socket_->disconnect(timeout);
-    }
-
-    inline CommDriverErrorCode read(std::int32_t timeout,
-                                    char *data,
-                                    ciaa_size_t *n_bytes) const override {
-      return socket_->read(timeout, data, n_bytes);
-    }
-
-    inline void read(char *data,
-                     ciaa_size_t *n_bytes,
-                     std::function<void(CommDriverErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
-      socket_->read(data, n_bytes, callback);
-    }
-
-    inline CommDriverErrorCode write(std::int32_t timeout,
-                                     const char *data,
-                                     ciaa_size_t *n_bytes) const override {
-      return socket_->write(timeout, data, n_bytes) ;
-    }
-
-    inline void write(const char *data,
-                      ciaa_size_t *n_bytes,
-                      std::function<void(CommDriverErrorCode,
-                                         ciaa_size_t)> callback) override {
-      return socket_->write(data, n_bytes, callback);
-    }
-
-
- private:
-#ifdef USE_BOOST_ASIO
-    // ciaaQtcpSocketAdapter *socket_;
-#else
-    // ciaaBoostAsiotcpSocketAdapter *socket_;
 #endif
-    ciaaQtcpSocketAdapter *socket_;
 
-};
 
+
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      /*! \brief TODO <denisacostaq\@gmail.com>
+       * \brief The ciaaSocket class
+       * \ingroup Ethernet
+       */
+      class ciaaSocketTCP : public ciaaCommInterface {
+       public:
+          ciaaSocketTCP(std::string host, std::uint16_t port);
+          ~ciaaSocketTCP();
+
+          ciaaSocketTCP(const ciaaSocketTCP&) = delete;
+          ciaaSocketTCP& operator=(const ciaaSocketTCP&) = delete;
+
+          ciaaSocketTCP(const ciaaSocketTCP&&) = delete;
+          ciaaSocketTCP& operator=(const ciaaSocketTCP&&) = delete;
+
+          inline ciaaErrorCode connect(std::int32_t timeout) const override {
+            return socket_->connect(timeout) ;
+          }
+
+          inline ciaaErrorCode disconnect(std::int32_t timeout) const override {
+            return socket_->disconnect(timeout);
+          }
+
+          inline ciaaErrorCode read(std::int32_t timeout,
+                                          char *data,
+                                          ciaa_size_t *n_bytes) const override {
+            return socket_->read(timeout, data, n_bytes);
+          }
+
+          inline void read(char *data,
+                           ciaa_size_t *n_bytes,
+                           std::function<void(ciaaErrorCode, ciaa_size_t)> callback) {  // NOLINT(whitespace/line_length)
+            socket_->read(data, n_bytes, callback);
+          }
+
+          inline ciaaErrorCode write(std::int32_t timeout,
+                                           const char *data,
+                                           ciaa_size_t *n_bytes) const override {
+            return socket_->write(timeout, data, n_bytes) ;
+          }
+
+          inline void write(const char *data,
+                            ciaa_size_t *n_bytes,
+                            std::function<void(ciaaErrorCode,
+                                               ciaa_size_t)> callback) override {
+            return socket_->write(data, n_bytes, callback);
+          }
+
+
+       private:
+      #ifdef USE_BOOST_ASIO
+          ciaaBoostAsiotcpSocketAdapter *socket_;
+      #else
+          ciaaQtcpSocketAdapter *socket_;
+      #endif
+
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_ETHERNET_SOCKETTCP_H

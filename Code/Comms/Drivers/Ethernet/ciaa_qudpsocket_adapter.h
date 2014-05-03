@@ -40,19 +40,24 @@
 
 #include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
 
-class ciaaQudpSocketAdapater : public ciaaCommQIODeviceAdapter {
- public:
-  ciaaQudpSocketAdapater();
-  ~ciaaQudpSocketAdapater() = default;
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      class ciaaQudpSocketAdapater : public ciaaCommQIODeviceAdapter {
+       public:
+        ciaaQudpSocketAdapater();
+        ~ciaaQudpSocketAdapater() = default;
 
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&) = delete;
+        ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
+        ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&) = delete;
 
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
+        ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
+        ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
 
- private:
-  QUdpSocket socket_;
-};
-
+       private:
+        QUdpSocket socket_;
+      };
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H

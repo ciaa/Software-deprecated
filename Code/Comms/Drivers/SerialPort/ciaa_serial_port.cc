@@ -35,15 +35,29 @@
 
 
 #include "Code/Comms/Drivers/SerialPort/ciaa_serial_port.h"
-ciaaSerialPort::ciaaSerialPort(std::string device,
-                               SerialPortAdaptor::BaudRate baudrt,
-                               SerialPortAdaptor::DataBits databs,
-                               SerialPortAdaptor::FlowControl flowctl,
-                               SerialPortAdaptor::Parity prt,
-                               SerialPortAdaptor::StopBits stbs)
-  : serial_{new ciaaQSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
-}
 
-ciaaSerialPort::~ciaaSerialPort() {
-  delete serial_;
-}
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaSerialPort::ciaaSerialPort(std::string device,
+                                     SerialPortAdaptor::BaudRate baudrt,
+                                     SerialPortAdaptor::DataBits databs,
+                                     SerialPortAdaptor::FlowControl flowctl,
+                                     SerialPortAdaptor::Parity prt,
+                                     SerialPortAdaptor::StopBits stbs)
+        : serial_{
+      #ifdef USE_BOOST_ASIO
+      // FIXME(denisacostaq\@gmail.com):
+                  new ciaaBoostSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}
+      #else
+                  new ciaaQSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}  // NOLINT(whitespace/line_length)
+      #endif
+          } {
+      }
+
+      ciaaSerialPort::~ciaaSerialPort() {
+        delete serial_;
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

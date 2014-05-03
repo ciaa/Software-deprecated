@@ -39,6 +39,8 @@
 
 #include <Code/Comms/Drivers/ciaa_comm_facade.h>
 
+using namespace ciaa::comms::drivers;
+
 const std::int32_t kDataBufferSize{256};
 const std::int32_t kIters{10};
 class CommsDriversMaster : public QThread {

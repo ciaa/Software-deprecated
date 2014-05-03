@@ -35,31 +35,37 @@
 
 #include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
 
-ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host,
-                                             std::uint16_t port)
-  : ciaaCommQIODeviceAdapter{&socket_},
-    host_{host.c_str()},
-    port_(port) {
-}
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host,
+                                                   std::uint16_t port)
+        : ciaaCommQIODeviceAdapter{&socket_},
+          host_{host.c_str()},
+          port_(port) {
+      }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
-  // TODO<denisacostaq\@gmail.com>: socket_reset() || others
-  socket_.connectToHost(host_, port_);
-  socket_.waitForConnected(timeout);
-  if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
-    return CommDriverErrorCode::OK;
-  }
-  return CommDriverErrorCode::connection_error;
-}
+      ciaaErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
+        // TODO<denisacostaq\@gmail.com>: socket_reset() || others
+        socket_.connectToHost(host_, port_);
+        socket_.waitForConnected(timeout);
+        if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
+          return ciaaErrorCode::OK;
+        }
+        return ciaaErrorCode::connection_error;
+      }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
-  socket_.disconnectFromHost();
-  if (socket_.state() == QAbstractSocket::ConnectedState) {
-    socket_.waitForDisconnected(timeout);
-  }
-  if (socket_.state() == QAbstractSocket::UnconnectedState) {
-    return CommDriverErrorCode::OK;
-  }
-  // TODO(denisacostaq\@gmail.com): socket_reset()
-  return CommDriverErrorCode::disconnect_error;
-}
+      ciaaErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
+        socket_.disconnectFromHost();
+        if (socket_.state() == QAbstractSocket::ConnectedState) {
+          socket_.waitForDisconnected(timeout);
+        }
+        if (socket_.state() == QAbstractSocket::UnconnectedState) {
+          return ciaaErrorCode::OK;
+        }
+        // TODO(denisacostaq\@gmail.com): socket_reset()
+        return ciaaErrorCode::disconnect_error;
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

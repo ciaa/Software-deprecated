@@ -35,14 +35,27 @@
 
 
 #include "Code/Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
-ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-  : socket_{new ciaaQtcpSocketAdapter{host, port}} {
-}
 
-// ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-//  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
-// }
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
+      ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
+        : socket_{
+      #ifdef USE_BOOST_ASIO
+            new ciaaBoostAsiotcpSocketAdapter(host, port)
+      #else
+            new ciaaQtcpSocketAdapter{host, port}
+      #endif
+            } {
+      }
 
-ciaaSocketTCP::~ciaaSocketTCP() {
-  delete socket_;
-}
+      // ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
+      //  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
+      // }
+
+      ciaaSocketTCP::~ciaaSocketTCP() {
+        delete socket_;
+      }
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers

@@ -61,7 +61,7 @@ para lograr una apropiación colectiva de este desarrollo tecnológico nacional.
 
 - \subpage history "Historia"
 - \subpage about "Acerca de"
-- \subpage license "Lisencia"
+- \subpage license "Licencia"
 - \subpage source_code "Descargar código fuente"
 - \subpage contribution "¿Cómo contribuir?"
 */

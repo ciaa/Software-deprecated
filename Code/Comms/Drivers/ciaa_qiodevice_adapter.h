@@ -38,6 +38,9 @@
 
 #include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
 
+namespace ciaa {
+  namespace comms {
+    namespace drivers {
 class ciaaCommQIODeviceAdapter : public ciaaCommAdapterInterface {
  public:
   explicit ciaaCommQIODeviceAdapter(QIODevice *conexion);
@@ -58,25 +61,27 @@ class ciaaCommQIODeviceAdapter : public ciaaCommAdapterInterface {
    *  beafore.
    * \return
    */
-  CommDriverErrorCode read(std::int32_t timeout,
+  ciaaErrorCode read(std::int32_t timeout,
                            char *data,
                            ciaa_size_t *n_bytes) override;
   void read(char *data,
             ciaa_size_t *n_bytes,
-            std::function<void(CommDriverErrorCode, ciaa_size_t)> callback);
+            std::function<void(ciaaErrorCode, ciaa_size_t)> callback);
 
 
-  CommDriverErrorCode write(std::int32_t timeout,
+  ciaaErrorCode write(std::int32_t timeout,
                             const char *data,
                             ciaa_size_t *n_bytes) override;
 
   void write(const char *data,
              ciaa_size_t *n_bytes,
-             std::function<void(CommDriverErrorCode, ciaa_size_t)> callback);
+             std::function<void(ciaaErrorCode, ciaa_size_t)> callback);
 
  private:
-  // WARNING(denisacostaq\@gmail.com): do not make this visible fot chields
+  // WARNING(denisacostaq\@gmail.com): do not make this visible for chields
     QIODevice *conexion_;
 };
-
+    }  // namespace ciaa
+  }  // namespace comms
+}  // namespace drivers
 #endif  // COMMS_DRIVERS_CIAA_QIODEVICE_ADAPTER_H
