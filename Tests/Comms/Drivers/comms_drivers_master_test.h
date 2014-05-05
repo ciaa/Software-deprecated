@@ -37,7 +37,9 @@
 
 #include <QtCore/QThread>
 
-#include <Code/Comms/Drivers/ciaa_comm_facade.h>
+#include <Code/Comms/Drivers/ciaa_drivers_facade.h>
+
+using namespace ciaa::comms::drivers;
 
 const std::int32_t kDataBufferSize{256};
 const std::int32_t kIters{10};
@@ -61,7 +63,7 @@ class CommsDriversMaster : public QThread {
   void run() override;
 
  private:
-  ciaaCommFacade *dev_;
+  ciaaDriversFacade *dev_;
   std::string host_;
   std::uint16_t port_{0};
   std::string serial_device_name_;

@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaQudpSocketAdapater functionality.
-    \file ciaa_qudpsocket_adapter.cc
-    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:42:12 CDT 2014
+/*! \brief This file gives a ciaaDriversSocketTCP functionality.
+    \file ciaa_drivers_socket_tcp.cc
+    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
+    \date Thu Jan 9 14:28:58 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.cc
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_tcp.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,7 +33,30 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h"
-ciaaQudpSocketAdapater::ciaaQudpSocketAdapater()
-  : ciaaCommQIODeviceAdapter{&socket_} {
+
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_socket_tcp.h"
+
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversSocketTCP::ciaaDriversSocketTCP(std::string host, std::uint16_t port)
+  : socket_{
+#ifdef USE_BOOST_ASIO
+      new ciaaBATCPSocketAdapter(host, port)
+#else
+      new ciaaDriversQSocketTCPAdapater {host, port}
+#endif
+      } {
 }
+
+// ciaaDriversSocketTCP::ciaaDriversSocketTCP(
+// std::string host, std::uint16_t port)
+//  : socket_{new ciaaBATCPSocketAdapter{host, port}} {
+// }
+
+ciaaDriversSocketTCP::~ciaaDriversSocketTCP() {
+  delete socket_;
+}
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

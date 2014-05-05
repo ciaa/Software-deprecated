@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaBoostAsiotcpSocketAdapter functionality.
-    \file ciaa_boosttcp_adapter.cc
+/*! \brief This file gives a ciaaBATCPSocketAdapter functionality.
+    \file ciaa_drivers_basockettcp_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr 27 22:51:04 CDT 2014
 
     \brief This file is part of Comms/Drivers module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.cc
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_basockettcp_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,4 +33,27 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+#include <sstream>
+
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_basockettcp_adapter.h"
+
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaBATCPSocketAdapter::ciaaBATCPSocketAdapter(std::string host,
+                                               std::uint16_t port)
+  : host_{host}
+  , port_{port}
+  , io_service_{}
+  , socket_{io_service_}
+  , deadline_{io_service_} {
+  // set the deadline to positive infinity so that the actor takes no action
+  // until a specific deadline is set.
+    deadline_.expires_at(boost::posix_time::pos_infin);
+
+    // Start the persistent actor that checks for deadline expiry.
+    this->check_deadline();
+}
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

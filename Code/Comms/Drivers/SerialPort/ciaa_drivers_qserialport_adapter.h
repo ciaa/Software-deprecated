@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_qserialport_adapter.h
+    \file ciaa_drivers_qserialport_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Fri Mar 21 00:46:11 CDT 2014
 
     \brief This file is part of Comms/SerialPort module.
-    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_qserialport_adapter.h
+    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_drivers_qserialport_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -40,32 +40,36 @@
 
 #include <QtSerialPort/QtSerialPort>
 
-#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
-#include "Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h"
+#include "Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.h"
+#include "Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_config.h"
 
-/*! \brief TODO<denisacostaq\@gmail.com>
- * \brief The ciaaQSerialPortAdapter class
- * \ingroup SerialPort
- */
-class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
+namespace ciaa {
+namespace comms {
+namespace drivers {
+  /*! \brief TODO<denisacostaq\@gmail.com>
+  * \brief The ciaaDriversQSerialPortAdapter class
+  * \ingroup SerialPort
+  */
+class ciaaDriversQSerialPortAdapter : public ciaaDriversQIODeviceAdapter {
  public:
-  // explicit ciaaQSerialPortAdapter(std::string device);
-  ciaaQSerialPortAdapter(std::string device,
-                         SerialPortAdaptor::BaudRate baudrt,
-                         SerialPortAdaptor::DataBits databs,
-                         SerialPortAdaptor::FlowControl flowctl,
-                         SerialPortAdaptor::Parity prt,
-                         SerialPortAdaptor::StopBits stbs);
-  ~ciaaQSerialPortAdapter() = default;
+  ciaaDriversQSerialPortAdapter(std::string device,
+                                SerialPortAdaptor::BaudRate baudrt,
+                                SerialPortAdaptor::DataBits databs,
+                                SerialPortAdaptor::FlowControl flowctl,
+                                SerialPortAdaptor::Parity prt,
+                                SerialPortAdaptor::StopBits stbs);
+  ~ciaaDriversQSerialPortAdapter() = default;
 
-  ciaaQSerialPortAdapter(const ciaaQSerialPortAdapter&) = delete;
-  ciaaQSerialPortAdapter& operator=(const ciaaQSerialPortAdapter&) = delete;
+  ciaaDriversQSerialPortAdapter(const ciaaDriversQSerialPortAdapter&) = delete;
+  ciaaDriversQSerialPortAdapter& operator=(
+      const ciaaDriversQSerialPortAdapter&) = delete;
 
-  ciaaQSerialPortAdapter(const ciaaQSerialPortAdapter&&) = delete;
-  ciaaQSerialPortAdapter& operator=(const ciaaQSerialPortAdapter&&) = delete;
+  ciaaDriversQSerialPortAdapter(const ciaaDriversQSerialPortAdapter&&) = delete;
+  ciaaDriversQSerialPortAdapter& operator=(
+      const ciaaDriversQSerialPortAdapter&&) = delete;
 
-  CommDriverErrorCode connect(std::int32_t timeout) override;
-  CommDriverErrorCode disconnect(std::int32_t timeout) override;
+  ciaaDriversErrorCode connect(std::int32_t timeout) override;
+  ciaaDriversErrorCode disconnect(std::int32_t timeout) override;
 
  private:
 
@@ -123,8 +127,7 @@ class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
       QSerialPort::Parity::OddParity
     },
     std::pair<SerialPortAdaptor::Parity, QSerialPort::Parity> {
-      SerialPortAdaptor::Parity::SpaceParity,
-      QSerialPort::Parity::SpaceParity
+      SerialPortAdaptor::Parity::SpaceParity, QSerialPort::Parity::SpaceParity
     },
     std::pair<SerialPortAdaptor::Parity, QSerialPort::Parity> {
       SerialPortAdaptor::Parity::MarkParity,
@@ -161,7 +164,8 @@ class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
   }
 
   // TODO(denisacostaq@gmail.com): hacer const
-  inline QSerialPort::FlowControl flow_control(SerialPortAdaptor::FlowControl flowcontrol) {  // NOLINT(whitespace/line_length)
+  inline QSerialPort::FlowControl flow_control(
+      SerialPortAdaptor::FlowControl flowcontrol) {
     return flow_control_.find(flowcontrol)->second;
   }
 
@@ -185,5 +189,7 @@ class ciaaQSerialPortAdapter : public ciaaCommQIODeviceAdapter {
 //   return msg_error_.find(err_code)->second;
 // }
 };
-
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_QSERIALPORT_ADAPTER_H

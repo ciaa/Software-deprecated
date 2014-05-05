@@ -5,7 +5,7 @@
 
     \brief This are some enums for serial por configuration.
     \brief This file is part of Comms Drivers module.
-    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h
+    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_config.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -55,7 +55,7 @@ struct SerialPortAdaptor {
       Baud38400 = 38400,
       Baud57600 = 57600,
       Baud115200 = 115200,
-      UnknownBaud = -1
+      UnknownBaud = -1  // TODO(denisacostaq\@gmail.com): remove this option
   };
 
   enum class DataBits {
@@ -63,7 +63,7 @@ struct SerialPortAdaptor {
       Data6 = 6,
       Data7 = 7,
       Data8 = 8,
-      UnknownDataBits = -1
+      UnknownDataBits = -1  // TODO(denisacostaq\@gmail.com): remove this option
   };
 
   enum class Parity {
@@ -72,21 +72,21 @@ struct SerialPortAdaptor {
       OddParity = 3,
       SpaceParity = 4,
       MarkParity = 5,
-      UnknownParity = -1
+      UnknownParity = -1  // TODO(denisacostaq\@gmail.com): remove this option
   };
 
   enum class StopBits {
       OneStop = 1,
       OneAndHalfStop = 3,
       TwoStop = 2,
-      UnknownStopBits = -1
+      UnknownStopBits = -1  // TODO(denisacostaq\@gmail.com): remove this option
   };
 
   enum class FlowControl {
       NoFlowControl,
       HardwareControl,
       SoftwareControl,
-      UnknownFlowControl = -1
+      UnknownFlowControl = -1  // TODO(denisacostaq\@gmail.com): remove this option  // NOLINT(whitespace/line_length)
   };
 };
 

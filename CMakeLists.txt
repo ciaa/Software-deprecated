@@ -12,6 +12,9 @@ endif(POLICY CMP0020)
 
 set(CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE} "-o3")
 
+option(USE_BOOST_ASIO "Use boost-asio for Comms/Drivers module?,
+                       if not use qt5 instead" ON)
+
 option(DEBUG_MODE "Debug or release?" ON)
 if(DEBUG_MODE)
   set(CMAKE_BUILD_TYPE DEBUG)

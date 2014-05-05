@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketUDP functionality.
-    \file ciaa_socket_udp.cc
+/*! \brief This file gives a ciaaDriversQSocketUDPAdapater functionality.
+    \file ciaa_drivers_qsocketudp_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+    \date Sun Apr  6 16:42:12 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.cc
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_drivers_qsocketudp_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,6 +33,14 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_qsocketudp_adapter.h"
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_socket_udp.h"
-
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversQSocketUDPAdapater::ciaaDriversQSocketUDPAdapater()
+  : ciaaDriversQIODeviceAdapter{&socket_} {
+}
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Mon Jan 27 12:08:11 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/IEC61131Standard/Variables/ciaaIECStructures.cpp
 
     \attention <h1><center>&copy; COPYRIGHT

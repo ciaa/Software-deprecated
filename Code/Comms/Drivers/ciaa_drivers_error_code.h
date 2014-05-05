@@ -1,11 +1,11 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_comm_driver_error_code.h
+    \file ciaa_drivers_error_code.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Fri Mar 21 00:44:09 CDT 2014
 
     \brief A enum class for errors in Comms.
     \brief This file is part of Comms module.
-    \brief This file become from: Code/Comms/Drivers/ciaa_comm_driver_error_code.h
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_error_code.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -37,10 +37,13 @@
 #ifndef COMM_DRIVER_ERROR_CODE_H
 #define COMM_DRIVER_ERROR_CODE_H
 
-/*! \brief The CommDriverErrorCode enum.
+namespace ciaa {
+namespace comms {
+namespace drivers {
+/*! \brief The ciaaDriversErrorCode enum.
  * \ingroup Drivers
  */
-enum class CommDriverErrorCode {
+enum class ciaaDriversErrorCode {
   OK,                          /**< General operation without errors. */
   access_error,                /**< Application lacked the required privileges. */  // NOLINT(whitespace/line_length)
   resource_error,              /**< The local system ran out of resources (e.g., too many fd). */  // NOLINT(whitespace/line_length)
@@ -55,4 +58,7 @@ enum class CommDriverErrorCode {
   timeout_error,               /**< The operation fail by timeout. */
   unknown_error                /**< An unidentified error occurred. */
 };
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMM_DRIVER_ERROR_CODE_H

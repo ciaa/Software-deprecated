@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaQtcpSocketAdapter functionality.
-    \file ciaa_qtcpsocket_adapter.cc
+/*! \brief This file gives a ciaaDriversQSocketTCPAdapater functionality.
+    \file ciaa_drivers_qsockettcp_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Fri Mar 21 00:44:09 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.cc
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_drivers_qsockettcp_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,33 +33,41 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_qtcpsocket_adapter.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_qsockettcp_adapter.h"
 
-ciaaQtcpSocketAdapter::ciaaQtcpSocketAdapter(std::string host,
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversQSocketTCPAdapater::ciaaDriversQSocketTCPAdapater(std::string host,
                                              std::uint16_t port)
-  : ciaaCommQIODeviceAdapter{&socket_},
+  : ciaaDriversQIODeviceAdapter{&socket_},
     host_{host.c_str()},
     port_(port) {
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::connect(std::int32_t timeout) {
+ciaaDriversErrorCode ciaaDriversQSocketTCPAdapater::connect(
+    std::int32_t timeout) {
   // TODO<denisacostaq\@gmail.com>: socket_reset() || others
   socket_.connectToHost(host_, port_);
   socket_.waitForConnected(timeout);
   if (socket_.state() == QAbstractSocket::SocketState::ConnectedState) {
-    return CommDriverErrorCode::OK;
+    return ciaaDriversErrorCode::OK;
   }
-  return CommDriverErrorCode::connection_error;
+  return ciaaDriversErrorCode::connection_error;
 }
 
-CommDriverErrorCode ciaaQtcpSocketAdapter::disconnect(std::int32_t timeout) {
+ciaaDriversErrorCode ciaaDriversQSocketTCPAdapater::disconnect(
+    std::int32_t timeout) {
   socket_.disconnectFromHost();
   if (socket_.state() == QAbstractSocket::ConnectedState) {
     socket_.waitForDisconnected(timeout);
   }
   if (socket_.state() == QAbstractSocket::UnconnectedState) {
-    return CommDriverErrorCode::OK;
+    return ciaaDriversErrorCode::OK;
   }
   // TODO(denisacostaq\@gmail.com): socket_reset()
-  return CommDriverErrorCode::disconnect_error;
+  return ciaaDriversErrorCode::disconnect_error;
 }
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

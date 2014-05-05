@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSerialPort functionality.
-    \file ciaa_serial_port.cc
-    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
+/*! \brief This file gives a ciaaCommFacade functionality.
+    \file ciaa_drivers_facade.cc
+    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is for the ethernet communication in the Comms module.
-    \brief This file become from: Comms/Drivers/SerialPort/ciaa_serial_port.cc
+    \brief This file is part of Comms module.
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_facade.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,17 +33,27 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "Code/Comms/Drivers/ciaa_drivers_facade.h"
 
-#include "Code/Comms/Drivers/SerialPort/ciaa_serial_port.h"
-ciaaSerialPort::ciaaSerialPort(std::string device,
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversFacade::ciaaDriversFacade(std::string host, std::uint16_t port)
+  : transporter_{new ciaaDriversSocketTCP{host, port}} {
+}
+
+ciaaDriversFacade::ciaaDriversFacade(std::string device,
                                SerialPortAdaptor::BaudRate baudrt,
                                SerialPortAdaptor::DataBits databs,
                                SerialPortAdaptor::FlowControl flowctl,
                                SerialPortAdaptor::Parity prt,
                                SerialPortAdaptor::StopBits stbs)
-  : serial_{new ciaaQSerialPortAdapter{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
+  : transporter_{new ciaaDriversSerialPort{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
 }
 
-ciaaSerialPort::~ciaaSerialPort() {
-  delete serial_;
+ciaaDriversFacade::~ciaaDriversFacade() {
+  delete transporter_;
 }
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

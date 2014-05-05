@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_qudpsocket_adapter.h
+    \file ciaa_drivers_qsocketudp_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr  6 16:42:12 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_drivers_qsocketudp_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -38,21 +38,28 @@
 
 #include <QtNetwork/QUdpSocket>
 
-#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
+#include "Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.h"
 
-class ciaaQudpSocketAdapater : public ciaaCommQIODeviceAdapter {
+namespace ciaa {
+namespace comms {
+namespace drivers {
+class ciaaDriversQSocketUDPAdapater : public ciaaDriversQIODeviceAdapter {
  public:
-  ciaaQudpSocketAdapater();
-  ~ciaaQudpSocketAdapater() = default;
+  ciaaDriversQSocketUDPAdapater();
+  ~ciaaDriversQSocketUDPAdapater() = default;
 
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&) = delete;
+  ciaaDriversQSocketUDPAdapater(const ciaaDriversQSocketUDPAdapater&) = delete;
+  ciaaDriversQSocketUDPAdapater& operator =(
+      const ciaaDriversQSocketUDPAdapater&) = delete;
 
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
+  ciaaDriversQSocketUDPAdapater(const ciaaDriversQSocketUDPAdapater&&) = delete;
+  ciaaDriversQSocketUDPAdapater& operator =(
+      const ciaaDriversQSocketUDPAdapater&&) = delete;
 
  private:
   QUdpSocket socket_;
 };
-
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H

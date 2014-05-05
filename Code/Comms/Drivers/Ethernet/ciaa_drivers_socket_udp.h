@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketTCP functionality.
-    \file ciaa_socket_tcp.cc
-    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
-    \date Thu Jan 9 14:28:58 CDT 2014
+/*! \brief Do not include this file directly in external modules.
+    \file ciaa_drivers_socket_udp.h
+    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
+    \date Sun Apr  6 16:44:41 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_tcp.cc
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_udp.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -34,15 +34,26 @@
  */
 
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
-ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-  : socket_{new ciaaQtcpSocketAdapter{host, port}} {
-}
+#ifndef COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
+#define COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
 
-// ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-//  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
-// }
+#include "Code/Comms/Drivers/ciaa_drivers_interface.h"
 
-ciaaSocketTCP::~ciaaSocketTCP() {
-  delete socket_;
-}
+namespace ciaa {
+namespace comms {
+namespace drivers {
+class ciaaDriversSocketUDP : public ciaaDriversInterface {
+ public:
+  ciaaDriversSocketUDP() = delete;
+  ~ciaaDriversSocketUDP() = default;
+
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&) = delete;
+
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&&) = delete;
+};
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
+#endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H

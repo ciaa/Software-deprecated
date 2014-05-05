@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaCommFacade functionality.
-    \file ciaa_comm_facade.cc
-    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
+/*! \brief This file gives a ciaaDriversSerialPort functionality.
+    \file ciaa_drivers_serial_port.cc
+    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is part of Comms module.
-    \brief This file become from: Code/Comms/Drivers/ciaa_comm_facade.cc
+    \brief This file is for the ethernet communication in the Comms module.
+    \brief This file become from: Comms/Drivers/SerialPort/ciaa_drivers_serial_port.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,21 +33,31 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/ciaa_comm_facade.h"
 
-ciaaCommFacade::ciaaCommFacade(std::string host, std::uint16_t port)
-  : transporter_{new ciaaSocketTCP{host, port}} {
-}
+#include "Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_port.h"
 
-ciaaCommFacade::ciaaCommFacade(std::string device,
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversSerialPort::ciaaDriversSerialPort(std::string device,
                                SerialPortAdaptor::BaudRate baudrt,
                                SerialPortAdaptor::DataBits databs,
                                SerialPortAdaptor::FlowControl flowctl,
                                SerialPortAdaptor::Parity prt,
                                SerialPortAdaptor::StopBits stbs)
-  : transporter_{new ciaaSerialPort{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
+  : serial_{
+#ifdef USE_BOOST_ASIO
+// FIXME(denisacostaq\@gmail.com):
+  new ciaaBASerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#else
+  new ciaaDriversQSerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#endif
+    } {
 }
 
-ciaaCommFacade::~ciaaCommFacade() {
-  delete transporter_;
+ciaaDriversSerialPort::~ciaaDriversSerialPort() {
+  delete serial_;
 }
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

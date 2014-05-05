@@ -38,7 +38,7 @@
 
 #include <QtCore/QThread>
 
-#include <Code/Comms/Drivers/ciaa_comm_facade.h>
+#include <Code/Comms/Drivers/ciaa_drivers_facade.h>
 
 #include "Tests/Comms/Drivers/comms_drivers_master_test.h"
 
@@ -58,15 +58,15 @@ class Slave : public QThread {
 
  protected:
   void run() override {
-    ciaaCommFacade s_dev{device_,
+    ciaaDriversFacade s_dev{device_,
                        SerialPortAdaptor::BaudRate::Baud1200,
                        SerialPortAdaptor::DataBits::Data8,
                        SerialPortAdaptor::FlowControl::NoFlowControl,
                        SerialPortAdaptor::Parity::SpaceParity,
                        SerialPortAdaptor::StopBits::TwoStop};
 
-    CommDriverErrorCode ret = s_dev.connect(100);
-    if (ret != CommDriverErrorCode::OK) {
+    ciaaDriversErrorCode ret = s_dev.connect(100);
+    if (ret != ciaaDriversErrorCode::OK) {
       fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str())  ;
       return;
     }
@@ -75,17 +75,25 @@ class Slave : public QThread {
     while (iters--) {
       char data[100]{0};
       ciaa_size_t lenth{sizeof(std::int32_t)};
-      if ((ret = s_dev.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+      if ((ret = s_dev.read(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
         std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+        printf("checking transitioned... %d\n", lenth);
+#else
         printf("checking transitioned... %lld\n", lenth);
+#endif
         s_dev.disconnect(100);
         return;
       }
       memcpy(&lenth, data, sizeof(std::int32_t));
       memset(data, 0, sizeof(data));
-      if ((ret = s_dev.read(100, data, &lenth)) != CommDriverErrorCode::OK) {
+      if ((ret = s_dev.read(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
         std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+        std::printf("checking transitioned... %d\n", lenth);
+#else
+        std::printf("checking transitioned... %lld\n", lenth);
+#endif
         s_dev.disconnect(100);
         return;
       }
@@ -96,18 +104,26 @@ class Slave : public QThread {
       lenth = sizeof(std::int32_t);
       memset(data, 0, sizeof(data));
       memcpy(data, &client_msg_lenth, lenth);
-      if ((ret = s_dev.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+      if ((ret = s_dev.write(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
         std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+        std::printf("checking transitioned... %d\n", lenth);
+#else
+        std::printf("checking transitioned... %lld\n", lenth);
+#endif
         s_dev.disconnect(100);
         return;
       }
       memset(data, 0, sizeof(data));
       memcpy(data, msg_for_remot, sizeof(msg_for_remot));
       lenth = sizeof(msg_for_remot);
-      if ((ret = s_dev.write(100, data, &lenth)) != CommDriverErrorCode::OK) {
+      if ((ret = s_dev.write(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
         std::fprintf(stderr, "%s\n", s_dev.get_msg_error(ret).c_str());
-        printf("checking transitioned... %lld\n", lenth);
+#ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
+        std::printf("checking transitioned... %d\n", lenth);
+#else
+        std::printf("checking transitioned... %lld\n", lenth);
+#endif
         s_dev.disconnect(100);
         return;
       }
