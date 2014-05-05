@@ -12,20 +12,19 @@ if(USE_BOOST_ASIO)
   set(ciaa_comm_drivers_R_W_size_t "size_t")
   set(ciaa_comm_drivers_R_W_size_t_header_file "stddef.h")
   set(BASE_MODULES_FOR_COMMS_SRC
-    Ethernet/ciaa_boosttcp_adapter.cc
-    SerialPort/ciaa_boostserialport_adapter.cc
-    ciaa_ioservice_adapter.cc)
+    Ethernet/ciaa_drivers_basockettcp_adapter.cc
+    SerialPort/ciaa_drivers_baserialport_adapter.cc
+    ciaa_drivers_ioservice_adapter.cc)
 else(USE_BOOST_ASIO)
   set(ciaa_comm_drivers_R_W_size_t "qint64")
   set(ciaa_comm_drivers_R_W_size_t_header_file "QtCore/QtGlobal")
   find_package(Qt5Network REQUIRED)
   find_package(Qt5SerialPort REQUIRED)
   set(BASE_MODULES_FOR_COMMS_SRC
-    Ethernet/ciaa_qtcpsocket_adapter.cc
-    Ethernet/ciaa_qudpsocket_adapter.cc
-    SerialPort/ciaa_qserialport_adapter.cc
-    ciaa_qiodevice_adapter.cc
-    )
+    Ethernet/ciaa_drivers_qsockettcp_adapter.cc
+    Ethernet/ciaa_drivers_qsocketudp_adapter.cc
+    SerialPort/ciaa_drivers_qserialport_adapter.cc
+    ciaa_drivers_qiodevice_adapter.cc)
 endif(USE_BOOST_ASIO)
 
 configure_file(

@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaBoostAsiotcpSocketAdapter functionality.
-    \file ciaa_boosttcp_adapter.cc
+/*! \brief This file gives a ciaaCommFacade functionality.
+    \file ciaa_drivers_facade.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr 27 22:51:04 CDT 2014
+    \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is part of Comms/Drivers module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.cc
+    \brief This file is part of Comms module.
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_facade.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,27 +33,27 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h"
+#include "Code/Comms/Drivers/ciaa_drivers_facade.h"
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-      ciaaBoostAsiotcpSocketAdapter::ciaaBoostAsiotcpSocketAdapter(
-          std::string host,
-          std::uint16_t port)
-        : host_{host}
-        , port_{port}
-        , io_service_{}
-        , socket_{io_service_}
-        , deadline_{io_service_}
-       {
-        // set the deadline to positive infinity so that the actor takes no action
-        // until a specific deadline is set.
-         deadline_.expires_at(boost::posix_time::pos_infin);
+namespace comms {
+namespace drivers {
+ciaaDriversFacade::ciaaDriversFacade(std::string host, std::uint16_t port)
+  : transporter_{new ciaaDriversSocketTCP{host, port}} {
+}
 
-        // Start the persistent actor that checks for deadline expiry.
-         this->check_deadline();
-      }
-    }  // namespace ciaa
-  }  // namespace comms
+ciaaDriversFacade::ciaaDriversFacade(std::string device,
+                               SerialPortAdaptor::BaudRate baudrt,
+                               SerialPortAdaptor::DataBits databs,
+                               SerialPortAdaptor::FlowControl flowctl,
+                               SerialPortAdaptor::Parity prt,
+                               SerialPortAdaptor::StopBits stbs)
+  : transporter_{new ciaaDriversSerialPort{device, baudrt, databs, flowctl, prt, stbs}} {  // NOLINT(whitespace/line_length)
+}
+
+ciaaDriversFacade::~ciaaDriversFacade() {
+  delete transporter_;
+}
 }  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

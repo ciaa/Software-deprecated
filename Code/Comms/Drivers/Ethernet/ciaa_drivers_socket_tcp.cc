@@ -1,10 +1,10 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_socket_udp.h
-    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:44:41 CDT 2014
+/*! \brief This file gives a ciaaDriversSocketTCP functionality.
+    \file ciaa_drivers_socket_tcp.cc
+    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
+    \date Thu Jan 9 14:28:58 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.h
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_tcp.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -34,26 +34,29 @@
  */
 
 
-#ifndef COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
-#define COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
-
-#include "Code/Comms/Drivers/ciaa_comm_interface.h"
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_socket_tcp.h"
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-      class ciaaSocketUDP : public ciaaCommInterface {
-       public:
-        ciaaSocketUDP() = delete;
-        ~ciaaSocketUDP() = default;
+namespace comms {
+namespace drivers {
+ciaaDriversSocketTCP::ciaaDriversSocketTCP(std::string host, std::uint16_t port)
+  : socket_{
+#ifdef USE_BOOST_ASIO
+      new ciaaBATCPSocketAdapter(host, port)
+#else
+      new ciaaDriversQSocketTCPAdapater {host, port}
+#endif
+      } {
+}
 
-        ciaaSocketUDP(const ciaaSocketUDP&) = delete;
-        ciaaSocketUDP& operator =(const ciaaSocketUDP&) = delete;
+// ciaaDriversSocketTCP::ciaaDriversSocketTCP(
+// std::string host, std::uint16_t port)
+//  : socket_{new ciaaBATCPSocketAdapter{host, port}} {
+// }
 
-        ciaaSocketUDP(const ciaaSocketUDP&&) = delete;
-        ciaaSocketUDP& operator =(const ciaaSocketUDP&&) = delete;
-      };
-    }  // namespace ciaa
-  }  // namespace comms
+ciaaDriversSocketTCP::~ciaaDriversSocketTCP() {
+  delete socket_;
+}
 }  // namespace drivers
-#endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
+}  // namespace comms
+}  // namespace ciaa

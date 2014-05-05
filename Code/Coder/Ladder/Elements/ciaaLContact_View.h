@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/Ladder/Elements/ciaaLContact_View.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -33,8 +33,8 @@
 
 #include "ciaaLElement_View.h"
 
-/*! \brief TODO: in one line description. see ciaaSerialPort
- * \brief The ciaaLContact_View class TODO: document here. see ciaaSerialPort
+/*! \brief TODO: in one line description. see ciaaDriversSerialPort
+ * \brief The ciaaLContact_View class TODO: document here. see ciaaDriversSerialPort
  * \ingroup TODO: see
  */
 class ciaaLContact_View : public ciaaLElement_View

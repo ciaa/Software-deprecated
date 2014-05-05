@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Mon Jan 27 12:08:11 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/IEC61131Standard/Operators/ciaaIECBBinaryOperator.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -33,8 +33,8 @@
 
 #include "Code/Coder/IEC61131Standard/ciaaIECBaseElement.h"
 
-/*! \brief TODO: in one line description. see ciaaSerialPort
- * \brief The ciaaIECBBinaryOperator class TODO: document here. see ciaaSerialPort
+/*! \brief TODO: in one line description. see ciaaDriversSerialPort
+ * \brief The ciaaIECBBinaryOperator class TODO: document here. see ciaaDriversSerialPort
  * \ingroup TODO: see
  */
 class ciaaIECBBinaryOperator : ciaaIECBaseElement

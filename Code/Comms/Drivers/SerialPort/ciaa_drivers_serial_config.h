@@ -5,7 +5,7 @@
 
     \brief This are some enums for serial por configuration.
     \brief This file is part of Comms Drivers module.
-    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_comm_drivers_serial_config.h
+    \brief This file become from: Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_config.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -86,7 +86,7 @@ struct SerialPortAdaptor {
       NoFlowControl,
       HardwareControl,
       SoftwareControl,
-      UnknownFlowControl = -1  // TODO(denisacostaq\@gmail.com): remove this option
+      UnknownFlowControl = -1  // TODO(denisacostaq\@gmail.com): remove this option  // NOLINT(whitespace/line_length)
   };
 };
 

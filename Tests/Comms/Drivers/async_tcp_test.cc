@@ -35,7 +35,7 @@
 
 #include <QtNetwork/QTcpServer>
 
-#include <Code/Comms/Drivers/ciaa_comm_facade.h>
+#include <Code/Comms/Drivers/ciaa_drivers_facade.h>
 
 const std::int32_t kTcpPort{8881};
 const std::string kHost{"127.0.0.1"};
@@ -128,14 +128,14 @@ class Master : public QThread {
   Master& operator=(const Master&&) = delete;
 
  protected:
-  ciaaCommFacade *connection;
+  ciaaDriversFacade *connection;
 
   void run() override {
 
-    connection = {new ciaaCommFacade{kHost, kTcpPort}};
+    connection = {new ciaaDriversFacade{kHost, kTcpPort}};
 
-    ciaaErrorCode err{connection->connect(100)};
-    if (err != ciaaErrorCode::OK) {
+    ciaaDriversErrorCode err{connection->connect(100)};
+    if (err != ciaaDriversErrorCode::OK) {
       printf("%s\n", connection->get_msg_error(err).c_str());
     }
 
@@ -143,29 +143,29 @@ class Master : public QThread {
     ciaa_size_t data_length{10};
 
     connection->write(write_data, &data_length, [this](
-                     ciaaErrorCode err,
+                     ciaaDriversErrorCode err,
                      ciaa_size_t n){
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
       std::printf("CLIENT: writed %d bytes\n", n);
 #else
       std::printf("CLIENT: writed %lld bytes\n", n);
 #endif
-      if (err != ciaaErrorCode::OK) {
+      if (err != ciaaDriversErrorCode::OK) {
         std::printf("%s\n", connection->get_msg_error(err).c_str());
       }
     });
 
     char read_data[100]{0};
     connection->read(read_data, &data_length, [this](
-                    ciaaErrorCode err,
+                    ciaaDriversErrorCode err,
                     ciaa_size_t n) {
-      if (ciaaErrorCode::OK == err) {
+      if (ciaaDriversErrorCode::OK == err) {
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
       std::printf("CLIENT: readed %d bytes\n", n);
 #else
       std::printf("CLIENT: readed %lld bytes\n", n);
 #endif
-      } else if (err != ciaaErrorCode::OK) {
+      } else if (err != ciaaDriversErrorCode::OK) {
         std::printf("%s\n", connection->get_msg_error(err).c_str());
       }
     });

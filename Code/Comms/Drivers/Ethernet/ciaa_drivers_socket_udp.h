@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_qudpsocket_adapter.h
+    \file ciaa_drivers_socket_udp.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:42:12 CDT 2014
+    \date Sun Apr  6 16:44:41 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_udp.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,31 +33,27 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
-#define COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
 
-#include <QtNetwork/QUdpSocket>
+#ifndef COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
+#define COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
 
-#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
+#include "Code/Comms/Drivers/ciaa_drivers_interface.h"
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-      class ciaaQudpSocketAdapater : public ciaaCommQIODeviceAdapter {
-       public:
-        ciaaQudpSocketAdapater();
-        ~ciaaQudpSocketAdapater() = default;
+namespace comms {
+namespace drivers {
+class ciaaDriversSocketUDP : public ciaaDriversInterface {
+ public:
+  ciaaDriversSocketUDP() = delete;
+  ~ciaaDriversSocketUDP() = default;
 
-        ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
-        ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&) = delete;
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&) = delete;
 
-        ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
-        ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
-
-       private:
-        QUdpSocket socket_;
-      };
-    }  // namespace ciaa
-  }  // namespace comms
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&&) = delete;
+};
 }  // namespace drivers
-#endif  // COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
+}  // namespace comms
+}  // namespace ciaa
+#endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H

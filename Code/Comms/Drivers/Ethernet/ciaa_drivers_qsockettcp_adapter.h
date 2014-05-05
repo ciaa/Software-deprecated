@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_boosttcp_adapter.h
+    \file ciaa_drivers_qsockettcp_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr 27 22:20:34 CDT 2014
 
     \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_boosttcp_adapter.h
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_drivers_qsockettcp_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -41,38 +41,40 @@
 
 #include <QtNetwork/QTcpSocket>
 
-#include "Code/Comms/Drivers/ciaa_qiodevice_adapter.h"
+#include "Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.h"
 #include "Code/config.h"  // NOLINT
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-      /*! \brief TODO<denisacostaq\@gmail.com>
-       * \brief The ciaaQtcpSocketAdapter class
-       * \ingroup Ethernet
-       */
-      class ciaaQtcpSocketAdapter : public ciaaCommQIODeviceAdapter {
-        // TODO<denisacostaq@gmail.com>: ciaaQSerialPortAdapter ->
-        // ciaaQTCPSocketAdapter !ciaaQtcpSocketAdapter == udp
-       public:
-        ciaaQtcpSocketAdapter(std::string host, std::uint16_t port);
-        ~ciaaQtcpSocketAdapter() = default;
+namespace comms {
+namespace drivers {
+/*! \brief TODO<denisacostaq\@gmail.com>
+ * \brief The ciaaDriversQSocketTCPAdapater class
+ * \ingroup Ethernet
+ */
+class ciaaDriversQSocketTCPAdapater : public ciaaDriversQIODeviceAdapter {
+  // TODO(denisacostaq@gmail.com): ciaaDriversQSerialPortAdapter ->
+  // ciaaDriversQSocketTCPAdapater !ciaaDriversQSocketTCPAdapater == udp
+ public:
+  ciaaDriversQSocketTCPAdapater(std::string host, std::uint16_t port);
+  ~ciaaDriversQSocketTCPAdapater() = default;
 
-        ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&) = delete;
-        ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&) = delete;
+  ciaaDriversQSocketTCPAdapater(const ciaaDriversQSocketTCPAdapater&) = delete;
+  ciaaDriversQSocketTCPAdapater& operator=(
+      const ciaaDriversQSocketTCPAdapater&) = delete;
 
-        ciaaQtcpSocketAdapter(const ciaaQtcpSocketAdapter&&) = delete;
-        ciaaQtcpSocketAdapter& operator=(const ciaaQtcpSocketAdapter&&) = delete;
+  ciaaDriversQSocketTCPAdapater(const ciaaDriversQSocketTCPAdapater&&) = delete;
+  ciaaDriversQSocketTCPAdapater& operator=(
+      const ciaaDriversQSocketTCPAdapater&&) = delete;
 
-        ciaaErrorCode connect(std::int32_t timeout) override;
-        ciaaErrorCode disconnect(std::int32_t timeout) override;
+  ciaaDriversErrorCode connect(std::int32_t timeout) override;
+  ciaaDriversErrorCode disconnect(std::int32_t timeout) override;
 
-       private:
-        QString host_;
-        quint16 port_;
-        QTcpSocket socket_;
-      };
-    }  // namespace ciaa
-  }  // namespace comms
+ private:
+  QString host_;
+  quint16 port_;
+  QTcpSocket socket_;
+};
 }  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_ETHERNET_QTCPSOCKET_ADAPTER_H

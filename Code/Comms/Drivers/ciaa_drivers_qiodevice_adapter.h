@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_qiodevice_adapter.h
+    \file ciaa_drivers_qiodevice_adapter.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Mon Apr 28 14:09:31 CDT 2014
 
     \brief This file is part of Comms module.
-    \brief This file become from: Code/Comms/Drivers/ciaa_qiodevice_adapter.h
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -36,52 +36,54 @@
 
 #include <QtNetwork/QTcpSocket>
 
-#include "Code/Comms/Drivers/ciaa_comm_adapter_interface.h"
+#include "Code/Comms/Drivers/ciaa_drivers_adapter_interface.h"
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-class ciaaCommQIODeviceAdapter : public ciaaCommAdapterInterface {
+namespace comms {
+namespace drivers {
+class ciaaDriversQIODeviceAdapter : public ciaaDriversAdapterInterface {
  public:
-  explicit ciaaCommQIODeviceAdapter(QIODevice *conexion);
-  ~ciaaCommQIODeviceAdapter();
+  explicit ciaaDriversQIODeviceAdapter(QIODevice *conexion);
+  ~ciaaDriversQIODeviceAdapter();
 
-  ciaaCommQIODeviceAdapter(const ciaaCommQIODeviceAdapter&) = delete;
-  ciaaCommQIODeviceAdapter& operator=(const ciaaCommQIODeviceAdapter&) = delete;
+  ciaaDriversQIODeviceAdapter(const ciaaDriversQIODeviceAdapter&) = delete;
+  ciaaDriversQIODeviceAdapter& operator=(
+      const ciaaDriversQIODeviceAdapter&) = delete;
 
-  ciaaCommQIODeviceAdapter(const ciaaCommQIODeviceAdapter&&) = delete;
-  ciaaCommQIODeviceAdapter& operator=(const ciaaCommQIODeviceAdapter&&) =delete;
+  ciaaDriversQIODeviceAdapter(const ciaaDriversQIODeviceAdapter&&) = delete;
+  ciaaDriversQIODeviceAdapter& operator=(
+      const ciaaDriversQIODeviceAdapter&&) =delete;
 
   /*! \brief read Read n_bytes and put it into data.
-   * \param timeout
-   * \param data
-   * \param n_bytes
-   * \warning Is very important fot itself implementation try read first
-   *  beacause if tha data are available the readyRead() signal no are performed
-   *  beafore.
-   * \return
-   */
-  ciaaErrorCode read(std::int32_t timeout,
-                           char *data,
-                           ciaa_size_t *n_bytes) override;
+  * \param timeout
+  * \param data
+  * \param n_bytes
+  * \warning Is very important for it self implementation try read first
+  *  beacause if tha data are available the readyRead() signal no are performed
+  *  beafore.
+  * \return
+  */
+  ciaaDriversErrorCode read(std::int32_t timeout,
+                         char *data,
+                         ciaa_size_t *n_bytes) override;
   void read(char *data,
-            ciaa_size_t *n_bytes,
-            std::function<void(ciaaErrorCode, ciaa_size_t)> callback);
+          ciaa_size_t *n_bytes,
+          std::function<void(ciaaDriversErrorCode, ciaa_size_t)> callback);
 
 
-  ciaaErrorCode write(std::int32_t timeout,
-                            const char *data,
-                            ciaa_size_t *n_bytes) override;
+  ciaaDriversErrorCode write(std::int32_t timeout,
+                          const char *data,
+                          ciaa_size_t *n_bytes) override;
 
   void write(const char *data,
-             ciaa_size_t *n_bytes,
-             std::function<void(ciaaErrorCode, ciaa_size_t)> callback);
+           ciaa_size_t *n_bytes,
+           std::function<void(ciaaDriversErrorCode, ciaa_size_t)> callback);
 
  private:
   // WARNING(denisacostaq\@gmail.com): do not make this visible for chields
-    QIODevice *conexion_;
+  QIODevice *conexion_;
 };
-    }  // namespace ciaa
-  }  // namespace comms
 }  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_CIAA_QIODEVICE_ADAPTER_H

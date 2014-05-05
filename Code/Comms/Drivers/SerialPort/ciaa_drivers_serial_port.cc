@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketTCP functionality.
-    \file ciaa_socket_tcp.cc
+/*! \brief This file gives a ciaaDriversSerialPort functionality.
+    \file ciaa_drivers_serial_port.cc
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is part of Comms/Driversrnet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_tcp.cc
+    \brief This file is for the ethernet communication in the Comms module.
+    \brief This file become from: Comms/Drivers/SerialPort/ciaa_drivers_serial_port.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -34,28 +34,30 @@
  */
 
 
-#include "Code/Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
+#include "Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_port.h"
 
 namespace ciaa {
-  namespace comms {
-    namespace drivers {
-      ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-        : socket_{
-      #ifdef USE_BOOST_ASIO
-            new ciaaBoostAsiotcpSocketAdapter(host, port)
-      #else
-            new ciaaQtcpSocketAdapter{host, port}
-      #endif
-            } {
-      }
+namespace comms {
+namespace drivers {
+ciaaDriversSerialPort::ciaaDriversSerialPort(std::string device,
+                               SerialPortAdaptor::BaudRate baudrt,
+                               SerialPortAdaptor::DataBits databs,
+                               SerialPortAdaptor::FlowControl flowctl,
+                               SerialPortAdaptor::Parity prt,
+                               SerialPortAdaptor::StopBits stbs)
+  : serial_{
+#ifdef USE_BOOST_ASIO
+// FIXME(denisacostaq\@gmail.com):
+  new ciaaBASerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#else
+  new ciaaDriversQSerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#endif
+    } {
+}
 
-      // ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-      //  : socket_{new ciaaBoostAsiotcpSocketAdapter{host, port}} {
-      // }
-
-      ciaaSocketTCP::~ciaaSocketTCP() {
-        delete socket_;
-      }
-    }  // namespace ciaa
-  }  // namespace comms
+ciaaDriversSerialPort::~ciaaDriversSerialPort() {
+  delete serial_;
+}
 }  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
