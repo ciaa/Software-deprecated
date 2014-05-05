@@ -31,7 +31,7 @@
 #ifndef CIAAMODBUS_H
 #define CIAAMODBUS_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! 
  * @ingroup Modbus

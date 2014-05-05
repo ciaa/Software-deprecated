@@ -1,15 +1,13 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_qudpsocket_adapter.h
+/*! \brief This file gives a ciaaBAIOServiceAdapter functionality.
+    \file ciaa_drivers_ioservice_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:42:12 CDT 2014
+    \date Sat May  3 15:05:41 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h
+    \brief This file is part of Comms module.
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_ioservice_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
-
-    \copyright
 
     <a class="el" href="http://proyecto-ciaa.com.ar">
       This file is part of CIAA Project.
@@ -33,21 +31,4 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
-#define COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
-
-#include "Comms/Drivers/ciaa_comm_adapter_interface.h"
-
-class ciaaQudpSocketAdapater : public ciaaCommAdapterInterface {
- public:
-  ciaaQudpSocketAdapater() = delete;
-  ~ciaaQudpSocketAdapater() = default;
-
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&) = delete;
-
-  ciaaQudpSocketAdapater(const ciaaQudpSocketAdapater&&) = delete;
-  ciaaQudpSocketAdapater& operator =(const ciaaQudpSocketAdapater&&) = delete;
-};
-
-#endif  // COMMS_DRIVERS_ETHERNET_QUDPSOCKET_ADAPTER_H
+#include "Code/Comms/Drivers/ciaa_drivers_ioservice_adapter.h"

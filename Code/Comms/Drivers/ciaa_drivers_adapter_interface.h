@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_comm_adapter_interface.h
+    \file ciaa_drivers_adapter_interface.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Fri Mar 21 00:32:43 CDT 2014
 
     \brief This file is part of Comms module.
-    \brief This file become from: Code/Comms/Drivers/ciaa_comm_adapter_interface.h
+    \brief This file become from: Code/Comms/Drivers/ciaa_drivers_adapter_interface.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -35,35 +35,55 @@
 #define COMMS_DRIVERS_ADAPTER_INTERFACE_H
 
 #include <cstdint>
+#include <functional>
 
-#include "Defines/ciaaGlobalMacros.h"
-#include "Comms/Drivers/ciaa_comm_drivers_config.h" //NOLINT
-#include "Comms/Drivers/ciaa_comm_driver_error_code.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
+#include "Code/Comms/Drivers/ciaa_comm_drivers_config.h"
+#include "Code/Comms/Drivers/ciaa_drivers_error_code.h"
 
+namespace ciaa {
+namespace comms {
+namespace drivers {
 /*!
  * \brief The ciaaCommAdapterInterface class is a common innterface for the
  * adaptor pattern.
  * \ingroup Drivers
  */
-class ciaaCommAdapterInterface {
+class ciaaDriversAdapterInterface {
  public:
-  ciaaCommAdapterInterface() = default;
-  virtual ~ciaaCommAdapterInterface() = default;
+  ciaaDriversAdapterInterface() = default;
+  virtual ~ciaaDriversAdapterInterface() = default;
 
-  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&) = delete;
-  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&) = delete;
+  ciaaDriversAdapterInterface(const ciaaDriversAdapterInterface&) = delete;
+  ciaaDriversAdapterInterface& operator=(
+      const ciaaDriversAdapterInterface&) = delete;
 
-  ciaaCommAdapterInterface(const ciaaCommAdapterInterface&&) = delete;
-  ciaaCommAdapterInterface& operator=(const ciaaCommAdapterInterface&&) =delete;
+  ciaaDriversAdapterInterface(const ciaaDriversAdapterInterface&&) = delete;
+  ciaaDriversAdapterInterface& operator=(
+      const ciaaDriversAdapterInterface&&) = delete;
 
-  virtual CommDriverErrorCode connect(std::int32_t timeout) = 0;
-  virtual CommDriverErrorCode disconnect(std::int32_t timeout) = 0;
-  virtual CommDriverErrorCode read(std::int32_t timeout,
+  virtual ciaaDriversErrorCode connect(std::int32_t timeout) = 0;
+
+  virtual ciaaDriversErrorCode disconnect(std::int32_t timeout) = 0;
+
+  virtual ciaaDriversErrorCode read(std::int32_t timeout,
                                    char *data,
                                    ciaa_size_t *n_bytes) = 0;
-  virtual CommDriverErrorCode write(std::int32_t timeout,
+  virtual void read(char *data,
+                    ciaa_size_t *n_bytes,
+                    std::function<void(ciaaDriversErrorCode,
+                                        ciaa_size_t)> callback) = 0;
+
+  virtual ciaaDriversErrorCode write(std::int32_t timeout,
                                     const char *data,
                                     ciaa_size_t *n_bytes) = 0;
-};
 
+  virtual void write(const char *data,
+                     ciaa_size_t *n_bytes,
+                     std::function<void(ciaaDriversErrorCode,
+                                        ciaa_size_t)> callback) = 0;
+};
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_ADAPTER_INTERFACE_H

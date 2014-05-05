@@ -1,10 +1,10 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_socket_udp.h
+    \file ciaa_drivers_socket_udp.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Apr  6 16:44:41 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_udp.h
+    \brief This file is part of Comms/Driversrnet module.
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_udp.h
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -37,18 +37,23 @@
 #ifndef COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
 #define COMMS_DRIVERS_ETHERNET_SOCKETUDP_H
 
-#include "Comms/Drivers/ciaa_comm_interface.h"
+#include "Code/Comms/Drivers/ciaa_drivers_interface.h"
 
-class ciaaSocketUDP : public ciaaCommInterface {
+namespace ciaa {
+namespace comms {
+namespace drivers {
+class ciaaDriversSocketUDP : public ciaaDriversInterface {
  public:
-  ciaaSocketUDP() = delete;
-  ~ciaaSocketUDP() = default;
+  ciaaDriversSocketUDP() = delete;
+  ~ciaaDriversSocketUDP() = default;
 
-  ciaaSocketUDP(const ciaaSocketUDP&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&) = delete;
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&) = delete;
 
-  ciaaSocketUDP(const ciaaSocketUDP&&) = delete;
-  ciaaSocketUDP& operator =(const ciaaSocketUDP&&) = delete;
+  ciaaDriversSocketUDP(const ciaaDriversSocketUDP&&) = delete;
+  ciaaDriversSocketUDP& operator =(const ciaaDriversSocketUDP&&) = delete;
 };
-
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa
 #endif  // COMMS_DRIVERS_ETHERNET_SOCKETUDP_H

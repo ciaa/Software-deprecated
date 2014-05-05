@@ -32,3 +32,6 @@ build/
 #doc directory
 Doc/html/
 **/*.html
+
+
+git.rar

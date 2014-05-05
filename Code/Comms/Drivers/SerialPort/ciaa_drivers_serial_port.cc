@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSerialPort functionality.
-    \file ciaa_serial_port.cc
+/*! \brief This file gives a ciaaDriversSerialPort functionality.
+    \file ciaa_drivers_serial_port.cc
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
     \brief This file is for the ethernet communication in the Comms module.
-    \brief This file become from: Comms/Drivers/SerialPort/ciaa_serial_port.cc
+    \brief This file become from: Comms/Drivers/SerialPort/ciaa_drivers_serial_port.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -34,11 +34,30 @@
  */
 
 
-#include "Comms/Drivers/SerialPort/ciaa_serial_port.h"
-ciaaSerialPort::ciaaSerialPort(std::string device)
-  : serial_{new ciaaQSerialPortAdapter{device}} {
+#include "Code/Comms/Drivers/SerialPort/ciaa_drivers_serial_port.h"
+
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversSerialPort::ciaaDriversSerialPort(std::string device,
+                               SerialPortAdaptor::BaudRate baudrt,
+                               SerialPortAdaptor::DataBits databs,
+                               SerialPortAdaptor::FlowControl flowctl,
+                               SerialPortAdaptor::Parity prt,
+                               SerialPortAdaptor::StopBits stbs)
+  : serial_{
+#ifdef USE_BOOST_ASIO
+// FIXME(denisacostaq\@gmail.com):
+  new ciaaBASerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#else
+  new ciaaDriversQSerialPortAdapter {device, baudrt, databs, flowctl, prt, stbs}
+#endif
+    } {
 }
 
-ciaaSerialPort::~ciaaSerialPort() {
+ciaaDriversSerialPort::~ciaaDriversSerialPort() {
   delete serial_;
 }
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

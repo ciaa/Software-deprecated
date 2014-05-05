@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/IEC61131Standard/ciaaIECBaseElement.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -33,7 +33,7 @@
 
 #include <cstdint>
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 /*! \brief ciaaIECBaseElement is the base class for all IEC 61131 standard's elements
  *  \brief ciaaIECBaseElement has the private struct ciaaIECBaseElement_TSerializable.
@@ -63,7 +63,7 @@ class ciaaIECBaseElement
          */
         virtual uint8_t* Serialize (uint8_t pBuffer)
         {
-          //FIXME<Ezequiel>: esto lo puso alvaro para que compilara.
+          //FIXME(Ezequiel): esto lo puso alvaro para que compilara.
         }
 };
 
