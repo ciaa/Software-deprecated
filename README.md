@@ -12,10 +12,12 @@ BUILD:
 	- cd build
 	- sudo apt-get install cmake
 	- ccmake .. -DCMAKE_PREFIX_PATH=your_path -DUSE_BOOST_ASIO=OFF
-	- make
-  Donde &quot;PATH_TO_QT_CMAKE_MODULES&quot; es el directorio donde est&eacute;n
-  instalados los m&oacute;dulos de cmake para qt, en mi caso por ejemplo
-  ser&iacute;a cmake .. -DCMAKE_PREFIX_PATH=/opt/Qt5.2.0/5.2.0/gcc/lib/cmake.
+  + cmake ..
+  En adici&oacute;n pudieras necesitar especificar la variable
+  &quot;PATH_TO_QT_CMAKE_MODULES&quot; que es el directorio donde
+  est&eacute;n instalados los m&oacute;dulos de cmake para qt, en mi
+  caso por ejemplo ser&iacute;a:
+	cmake .. -DCMAKE_PREFIX_PATH=/opt/Qt5.2.0/5.2.0/gcc/lib/cmake.
 
 - Para compilar en windows:
   Abres el proyecto, c&oacute;modamente pudiera ser abriendo el qtcreator

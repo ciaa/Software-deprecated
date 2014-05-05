@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Mon Jan 27 12:08:11 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/IEC61131Standard/Blocks/FunctionsBlocks/ciaaIECBaseFB.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -31,10 +31,10 @@
 #ifndef CIAAIECBASEFB_H
 #define CIAAIECBASEFB_H
 
-#include "Coder/IEC61131Standard/Blocks/ciaaIECBaseBlock.h"
+#include "Code/Coder/IEC61131Standard/Blocks/ciaaIECBaseBlock.h"
 
-/*! \brief TODO: in one line description. see ciaaSerialPort
- * \brief The ciaaIECBaseFB class TODO: document here. see ciaaSerialPort
+/*! \brief TODO: in one line description. see ciaaDriversSerialPort
+ * \brief The ciaaIECBaseFB class TODO: document here. see ciaaDriversSerialPort
  * \ingroup TODO: see
  */
 class ciaaIECBaseFB : ciaaIECBaseBlock

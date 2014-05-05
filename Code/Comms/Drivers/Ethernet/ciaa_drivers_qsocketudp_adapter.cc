@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaSocketTCP functionality.
-    \file ciaa_socket_tcp.cc
-    \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
-    \date Thu Jan 9 14:28:58 CDT 2014
+/*! \brief This file gives a ciaaDriversQSocketUDPAdapater functionality.
+    \file ciaa_drivers_qsocketudp_adapter.cc
+    \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
+    \date Sun Apr  6 16:42:12 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Comms/Drivers/Ethernet/ciaa_socket_tcp.cc
+    \brief This file is part of Comms/Driversrnet module.
+    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_drivers_qsocketudp_adapter.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,12 +33,14 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_qsocketudp_adapter.h"
 
-#include "Comms/Drivers/Ethernet/ciaa_socket_tcp.h"
-ciaaSocketTCP::ciaaSocketTCP(std::string host, std::uint16_t port)
-  : socket_{new ciaaQtcpSocketAdapter{host, port}} {
+namespace ciaa {
+namespace comms {
+namespace drivers {
+ciaaDriversQSocketUDPAdapater::ciaaDriversQSocketUDPAdapater()
+  : ciaaDriversQIODeviceAdapter{&socket_} {
 }
-
-ciaaSocketTCP::~ciaaSocketTCP() {
-  delete socket_;
-}
+}  // namespace drivers
+}  // namespace comms
+}  // namespace ciaa

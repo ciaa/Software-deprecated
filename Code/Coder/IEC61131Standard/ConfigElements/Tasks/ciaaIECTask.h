@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Mon Jan 27 12:08:11 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/IEC61131Standard/ConfigElements/Tasks/ciaaIECTask.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -33,9 +33,9 @@
 
 #include <vector>
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
-#include "Coder/IEC61131Standard/ciaaIECBaseElement.h"
+#include "Code/Coder/IEC61131Standard/ciaaIECBaseElement.h"
 
 /*! \brief ciaIECTask has the program in terms of structs.
  *  \brief Those structs are saved in a vector of ciaaIECBaseElement.

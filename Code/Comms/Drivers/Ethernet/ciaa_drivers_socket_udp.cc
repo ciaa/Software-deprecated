@@ -1,10 +1,10 @@
-/*! \brief This file gives a ciaaQudpSocketAdapater functionality.
-    \file ciaa_qudpsocket_adapter.cc
+/*! \brief This file gives a ciaaDriversSocketUDP functionality.
+    \file ciaa_drivers_socket_udp.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Apr  6 16:42:12 CDT 2014
+    \date Sun Apr  6 16:44:41 CDT 2014
 
-    \brief This file is part of Comms/Ethernet module.
-    \brief This file become from: Code/Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.cc
+    \brief This file is part of Comms/Driversrnet module.
+    \brief This file become from: Comms/Drivers/Ethernet/ciaa_drivers_socket_udp.cc
 
     \attention <h1><center>&copy; COPYRIGHT
     GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
@@ -33,4 +33,6 @@
   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Comms/Drivers/Ethernet/ciaa_qudpsocket_adapter.h"
+
+#include "Code/Comms/Drivers/Ethernet/ciaa_drivers_socket_udp.h"
+

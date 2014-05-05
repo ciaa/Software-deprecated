@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/Coder/Ladder/Elements/ciaaLF.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -31,10 +31,10 @@
 #ifndef CIAALF_H
 #define CIAALF_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
-/*! \brief TODO: in one line description. see ciaaSerialPort
- * \brief The ciaaLF class TODO: document here. see ciaaSerialPort
+/*! \brief TODO: in one line description. see ciaaDriversSerialPort
+ * \brief The ciaaLF class TODO: document here. see ciaaDriversSerialPort
  * \ingroup TODO: see
  */
 class ciaaLF

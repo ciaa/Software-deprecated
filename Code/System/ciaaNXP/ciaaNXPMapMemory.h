@@ -2,7 +2,7 @@
     \author Ezequiel Esposito <ejesposito\@debtech.com.ar>
     \date Thu Jan 9 14:28:58 CDT 2014
 
-    \brief This file is TODO: see ciaaSerialPort
+    \brief This file is TODO: see ciaaDriversSerialPort
     \brief This file become from: CIAA_v1_0/System/ciaaNXP/ciaaNXPMapMemory.h
 
     \attention <h1><center>&copy; COPYRIGHT
@@ -31,7 +31,7 @@
 #ifndef CIAANXPMAPMEMORY_H
 #define CIAANXPMAPMEMORY_H
 
-#include "Defines/ciaaGlobalMacros.h"
+#include "Code/Defines/ciaaGlobalMacros.h"
 
 class ciaaNXPMapMemory
 {
