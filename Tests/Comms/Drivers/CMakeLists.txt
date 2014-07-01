@@ -9,7 +9,8 @@ add_executable(tcp_test
                comms_drivers_master_test.cc)
 target_link_libraries(tcp_test comms_drivers)
 
-
+#FIXME(denisacostaq@gmail.com): Si no tienes instalado QtSerial port, este test te lo pide
+#ya que no esta reciviendo la flag add_definitions(-DUSE_BOOST_ASIO)
 add_executable(async_tcp_test async_tcp_test.cc)
 target_link_libraries(async_tcp_test comms_drivers)
 
