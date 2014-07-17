@@ -37,6 +37,7 @@
 #include <cstdint>
 
 #include <functional>
+#include <chrono>
 
 #include "Code/Comms/Drivers/ciaa_comm_drivers_config.h" // NOLINT
 #include "Code/Comms/Drivers/ciaa_drivers_error_code.h"
@@ -59,11 +60,11 @@ class ciaaDriversInterface {
   ciaaDriversInterface(const ciaaDriversInterface&&) = delete;
   ciaaDriversInterface& operator=(const ciaaDriversInterface&&) = delete;
 
-  virtual ciaaDriversErrorCode connect(std::int32_t timeout) const = 0;
+  virtual ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) const = 0;
 
-  virtual ciaaDriversErrorCode disconnect(std::int32_t timeout) const = 0;
+  virtual ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) const = 0;
 
-  virtual ciaaDriversErrorCode read(std::int32_t timeout,
+  virtual ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                                    char *data,
                                    ciaa_size_t *n_bytes) const = 0;
   virtual void read(char *data,
@@ -71,7 +72,7 @@ class ciaaDriversInterface {
                     std::function<void(ciaaDriversErrorCode,
                                         ciaa_size_t)> callback) = 0;
 
-  virtual ciaaDriversErrorCode write(std::int32_t timeout,
+  virtual ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                                     const char *data,
                                     ciaa_size_t *n_bytes) const = 0;
 

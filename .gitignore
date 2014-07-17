@@ -33,5 +33,7 @@ build/
 Doc/html/
 **/*.html
 
+#dolphin
+.directory
 
 git.rar

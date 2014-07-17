@@ -70,7 +70,7 @@ class ciaaBASerialPortAdapter : public ciaaBAIOServiceAdapter {
   ciaaBASerialPortAdapter& operator=(
       const ciaaBASerialPortAdapter&&) = delete;
 
-  ciaaDriversErrorCode connect(std::int32_t timeout) override {
+  ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) override {
     // TODO(denisacostaq\@gmail.com): use the timeout for retry.
     CIAA_UNUSED_PARAM(timeout);
     boost::system::error_code ec;
@@ -104,14 +104,14 @@ class ciaaBASerialPortAdapter : public ciaaBAIOServiceAdapter {
     return ret;
   }
 
-  ciaaDriversErrorCode disconnect(std::int32_t timeout) override {
+  ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) override {
     // TODO(denisacostaq\@gmail.com): use the timeout for retry.
     CIAA_UNUSED_PARAM(timeout);
 
     ciaaDriversErrorCode ret{ciaaDriversErrorCode::OK};
     // TODO(denisacostaq\@gmail.com): replace this implementation by using
     // boost::system::error_code close(boost::system::error_code& ec)
-    // same as ciaaDriversErrorCode connect(std::int32_t timeout) override.
+    // same as ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) override.
     try {
      serial_.close();
     } catch (std::exception ex) {
@@ -122,10 +122,10 @@ class ciaaBASerialPortAdapter : public ciaaBAIOServiceAdapter {
     return ret;
   }
 
-  ciaaDriversErrorCode read(std::int32_t timeout,
+  ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                            char *data,
                            ciaa_size_t *n_bytes) override {
-    deadline_.expires_from_now(boost::posix_time::millisec{timeout});
+    deadline_.expires_from_now(boost::posix_time::millisec{timeout.count()});
     boost::system::error_code ec = ba::error::would_block;
     ba::async_read(serial_, ba::buffer(data, *n_bytes),
                             [&data, &ec](const boost::system::error_code& err,
@@ -171,10 +171,10 @@ class ciaaBASerialPortAdapter : public ciaaBAIOServiceAdapter {
     io_service_.run_one();
   }
 
-  ciaaDriversErrorCode write(std::int32_t timeout,
+  ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                             const char *data,
                             ciaa_size_t *n_bytes) override {
-    deadline_.expires_from_now(boost::posix_time::millisec{timeout});
+    deadline_.expires_from_now(boost::posix_time::millisec{timeout.count()});
     boost::system::error_code ec = ba::error::would_block;
 
     // FIXME(denisacostaq\@gmail.com):

@@ -134,7 +134,7 @@ class Master : public QThread {
 
     connection = {new ciaaDriversFacade{kHost, kTcpPort}};
 
-    ciaaDriversErrorCode err{connection->connect(100)};
+    ciaaDriversErrorCode err{connection->connect(std::chrono::milliseconds{100})};
     if (err != ciaaDriversErrorCode::OK) {
       printf("%s\n", connection->get_msg_error(err).c_str());
     }

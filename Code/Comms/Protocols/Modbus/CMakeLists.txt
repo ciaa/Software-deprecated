@@ -1,5 +1,5 @@
 #poner un include de cmake
-option(USE_QT_MODULES "Use Qt Modules?" ON)
+option(USE_QT_MODULES "Use Qt Modules?" OFF)
 if(USE_QT_MODULES)
     find_package(Qt5Network)
     find_package(Qt5SerialPort)

@@ -64,15 +64,15 @@ class ciaaDriversSocketTCP : public ciaaDriversInterface {
   ciaaDriversSocketTCP(const ciaaDriversSocketTCP&&) = delete;
   ciaaDriversSocketTCP& operator=(const ciaaDriversSocketTCP&&) = delete;
 
-  inline ciaaDriversErrorCode connect(std::int32_t timeout) const override {
+  inline ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) const override {
     return socket_->connect(timeout) ;
   }
 
-  inline ciaaDriversErrorCode disconnect(std::int32_t timeout) const override {
+  inline ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) const override {
     return socket_->disconnect(timeout);
   }
 
-  inline ciaaDriversErrorCode read(std::int32_t timeout,
+  inline ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                                   char *data,
                                   ciaa_size_t *n_bytes) const override {
     return socket_->read(timeout, data, n_bytes);
@@ -84,7 +84,7 @@ class ciaaDriversSocketTCP : public ciaaDriversInterface {
     socket_->read(data, n_bytes, callback);
   }
 
-  inline ciaaDriversErrorCode write(std::int32_t timeout,
+  inline ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) const override {
     return socket_->write(timeout, data, n_bytes) ;
