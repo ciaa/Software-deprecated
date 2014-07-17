@@ -102,7 +102,7 @@ class ciaaDriversFacade {
    * \return ciaaDriversErrorCode::OK If no error found.
    * \sa get_msg_error(), disconnect()
    */
-  inline ciaaDriversErrorCode connect(std::int32_t timeout) {
+  inline ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) {
     return transporter_->connect(timeout);
   }
 
@@ -114,7 +114,7 @@ class ciaaDriversFacade {
    * \warning Call this function for resource release, the destructor do not
    * perform this action by default.
    */
-  inline ciaaDriversErrorCode disconnect(std::int32_t timeout) {
+  inline ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) {
     return transporter_->disconnect(timeout);
   }
 
@@ -127,7 +127,7 @@ class ciaaDriversFacade {
    * of bytes readed.
    * \sa write(), get_msg_error(), connect()
    */
-  inline ciaaDriversErrorCode read(std::int32_t timeout,
+  inline ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                                   char *data,
                                   ciaa_size_t *n_bytes) {
     return transporter_->read(timeout, data, n_bytes);
@@ -157,7 +157,7 @@ class ciaaDriversFacade {
    * of bytes writed.
    * \sa write(), get_msg_error(), connect()
    */
-  inline ciaaDriversErrorCode write(std::int32_t timeout,
+  inline ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                                    const char *data,
                                    ciaa_size_t *n_bytes) {
     return transporter_->write(timeout, data, n_bytes);

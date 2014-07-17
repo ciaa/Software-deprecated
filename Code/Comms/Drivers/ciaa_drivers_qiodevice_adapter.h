@@ -63,7 +63,7 @@ class ciaaDriversQIODeviceAdapter : public ciaaDriversAdapterInterface {
   *  beafore.
   * \return
   */
-  ciaaDriversErrorCode read(std::int32_t timeout,
+  ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                          char *data,
                          ciaa_size_t *n_bytes) override;
   void read(char *data,
@@ -71,7 +71,7 @@ class ciaaDriversQIODeviceAdapter : public ciaaDriversAdapterInterface {
           std::function<void(ciaaDriversErrorCode, ciaa_size_t)> callback);
 
 
-  ciaaDriversErrorCode write(std::int32_t timeout,
+  ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                           const char *data,
                           ciaa_size_t *n_bytes) override;
 

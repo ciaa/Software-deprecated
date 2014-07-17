@@ -46,7 +46,7 @@ namespace drivers {
   }
 
   // FIXME(denisacostaq\@gmail.com): arreglar esto, ver el .h \warning
-  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::read(std::int32_t timeout,
+  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::read(std::chrono::milliseconds timeout,
                                                      char *data,
                                                      ciaa_size_t *n_bytes) {
     ciaa_size_t total_readed = conexion_->read(data, *n_bytes);
@@ -101,7 +101,7 @@ namespace drivers {
     conexion_->waitForReadyRead(-1);
   }
 
-  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::write(std::int32_t timeout,
+  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::write(std::chrono::milliseconds timeout,
                                                       const char *data,
                                                       ciaa_size_t *n_bytes) {
     ciaa_size_t total_writed = conexion_->write(data, *n_bytes);

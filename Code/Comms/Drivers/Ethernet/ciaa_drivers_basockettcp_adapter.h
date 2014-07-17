@@ -69,7 +69,7 @@ class ciaaBATCPSocketAdapter : public ciaaBAIOServiceAdapter {
   ciaaBATCPSocketAdapter& operator=(
       const ciaaBATCPSocketAdapter&&) = delete;
 
-  ciaaDriversErrorCode connect(std::int32_t timeout) override {
+  ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) override {
     CIAA_UNUSED_PARAM(timeout);
 //    ba::io_service io_service;
     ba::ip::tcp::resolver resolver{io_service_};
@@ -88,7 +88,7 @@ class ciaaBATCPSocketAdapter : public ciaaBAIOServiceAdapter {
     return ret;
   }
 
-  ciaaDriversErrorCode disconnect(std::int32_t timeout) override {
+  ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) override {
     CIAA_UNUSED_PARAM(timeout);
     ciaaDriversErrorCode ret{ciaaDriversErrorCode::OK};
     try {
@@ -100,10 +100,10 @@ class ciaaBATCPSocketAdapter : public ciaaBAIOServiceAdapter {
     return ret;
   }
 
-  ciaaDriversErrorCode read(std::int32_t timeout,
+  ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                            char *data,
                            ciaa_size_t *n_bytes) override {
-    deadline_.expires_from_now(boost::posix_time::millisec{timeout});
+    deadline_.expires_from_now(boost::posix_time::millisec{timeout.count()});
     boost::system::error_code ec = ba::error::would_block;
     ba::async_read(socket_, ba::buffer(data, *n_bytes),
                             [&data, &ec](
@@ -150,10 +150,10 @@ class ciaaBATCPSocketAdapter : public ciaaBAIOServiceAdapter {
     io_service_.run_one();
   }
 
-  ciaaDriversErrorCode write(std::int32_t timeout,
+  ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                             const char *data,
                             ciaa_size_t *n_bytes) override {
-    deadline_.expires_from_now(boost::posix_time::millisec{timeout});
+    deadline_.expires_from_now(boost::posix_time::millisec{timeout.count()});
     boost::system::error_code ec = ba::error::would_block;
 
     // FIXME(denisacostaq\@gmail.com):

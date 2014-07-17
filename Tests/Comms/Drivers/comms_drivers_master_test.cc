@@ -70,7 +70,7 @@ void CommsDriversMaster::run() {
     if (dev_ == nullptr) dev_ = new ciaaDriversFacade (host_, port_);
   }
 
-  ciaaDriversErrorCode ret = dev_->connect(100);
+  ciaaDriversErrorCode ret = dev_->connect(std::chrono::milliseconds{100});
   if (ret != ciaaDriversErrorCode::OK) {
     dev_->get_msg_error(ret);
     return;
@@ -85,56 +85,64 @@ void CommsDriversMaster::run() {
     std::int32_t client_msg_lenth{sizeof(msg_for_remot)};
     ciaa_size_t lenth{sizeof(std::int32_t)};
     memcpy(data, &client_msg_lenth, lenth);
-    if ((ret = dev_->write(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
+    if ((ret = dev_->write(std::chrono::milliseconds{100},
+                           data,
+                           &lenth)) != ciaaDriversErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
     std::printf("checking transitioned... %d\n", lenth);
 #else
     std::printf("checking transitioned... %lld\n", lenth);
 #endif
-    dev_->disconnect(100);
+    dev_->disconnect(std::chrono::milliseconds{100});
     return;
     }
     memset(data, 0, sizeof(data));
     memcpy(data, msg_for_remot, sizeof(msg_for_remot));
     lenth = sizeof(msg_for_remot);
-    if ((ret = dev_->write(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
+    if ((ret = dev_->write(std::chrono::milliseconds{100},
+                           data,
+                           &lenth)) != ciaaDriversErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
     std::printf("checking transitioned... %d\n", lenth);
 #else
     std::printf("checking transitioned... %lld\n", lenth);
 #endif
-    dev_->disconnect(100);
+    dev_->disconnect(std::chrono::milliseconds{100});
     return;
     }
 
     memset(data, 0, sizeof(data));
     lenth = sizeof(std::int32_t);
-    if ((ret = dev_->read(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
+    if ((ret = dev_->read(std::chrono::milliseconds{100},
+                          data,
+                          &lenth)) != ciaaDriversErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
     std::printf("checking transitioned... %d\n", lenth);
 #else
     std::printf("checking transitioned... %lld\n", lenth);
 #endif
-    dev_->disconnect(100);
+    dev_->disconnect(std::chrono::milliseconds{100});
     return;
     }
     memcpy(&lenth, data, sizeof(std::int32_t));
     memset(data, 0, sizeof(data));
-    if ((ret = dev_->read(100, data, &lenth)) != ciaaDriversErrorCode::OK) {
+    if ((ret = dev_->read(std::chrono::milliseconds{100},
+                          data,
+                          &lenth)) != ciaaDriversErrorCode::OK) {
     std::fprintf(stderr, "%s\n", dev_->get_msg_error(ret).c_str());
 #ifdef USE_BOOST_ASIO_WITH_CMAKE_BUG
     std::printf("checking transitioned... %d\n", lenth);
 #else
     std::printf("checking transitioned... %lld\n", lenth);
 #endif
-    dev_->disconnect(100);
+    dev_->disconnect(std::chrono::milliseconds{100});
     return;
     }
     printf("%s", data);
   }
   correct_ = true;
-  dev_->disconnect(100);
+  dev_->disconnect(std::chrono::milliseconds{100});
 }

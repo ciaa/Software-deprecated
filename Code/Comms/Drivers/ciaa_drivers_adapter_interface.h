@@ -35,6 +35,8 @@
 #define COMMS_DRIVERS_ADAPTER_INTERFACE_H
 
 #include <cstdint>
+
+#include <chrono>
 #include <functional>
 
 #include "Code/Defines/ciaaGlobalMacros.h"
@@ -62,11 +64,11 @@ class ciaaDriversAdapterInterface {
   ciaaDriversAdapterInterface& operator=(
       const ciaaDriversAdapterInterface&&) = delete;
 
-  virtual ciaaDriversErrorCode connect(std::int32_t timeout) = 0;
+  virtual ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) = 0;
 
-  virtual ciaaDriversErrorCode disconnect(std::int32_t timeout) = 0;
+  virtual ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) = 0;
 
-  virtual ciaaDriversErrorCode read(std::int32_t timeout,
+  virtual ciaaDriversErrorCode read(std::chrono::milliseconds timeout,
                                    char *data,
                                    ciaa_size_t *n_bytes) = 0;
   virtual void read(char *data,
@@ -74,7 +76,7 @@ class ciaaDriversAdapterInterface {
                     std::function<void(ciaaDriversErrorCode,
                                         ciaa_size_t)> callback) = 0;
 
-  virtual ciaaDriversErrorCode write(std::int32_t timeout,
+  virtual ciaaDriversErrorCode write(std::chrono::milliseconds timeout,
                                     const char *data,
                                     ciaa_size_t *n_bytes) = 0;
 

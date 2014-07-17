@@ -46,7 +46,7 @@ ciaaDriversQSocketTCPAdapater::ciaaDriversQSocketTCPAdapater(std::string host,
 }
 
 ciaaDriversErrorCode ciaaDriversQSocketTCPAdapater::connect(
-    std::int32_t timeout) {
+    std::chrono::milliseconds timeout) {
   // TODO<denisacostaq\@gmail.com>: socket_reset() || others
   socket_.connectToHost(host_, port_);
   socket_.waitForConnected(timeout);
@@ -57,7 +57,7 @@ ciaaDriversErrorCode ciaaDriversQSocketTCPAdapater::connect(
 }
 
 ciaaDriversErrorCode ciaaDriversQSocketTCPAdapater::disconnect(
-    std::int32_t timeout) {
+    std::chrono::milliseconds timeout) {
   socket_.disconnectFromHost();
   if (socket_.state() == QAbstractSocket::ConnectedState) {
     socket_.waitForDisconnected(timeout);

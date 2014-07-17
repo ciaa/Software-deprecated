@@ -66,8 +66,8 @@ class ciaaDriversQSocketTCPAdapater : public ciaaDriversQIODeviceAdapter {
   ciaaDriversQSocketTCPAdapater& operator=(
       const ciaaDriversQSocketTCPAdapater&&) = delete;
 
-  ciaaDriversErrorCode connect(std::int32_t timeout) override;
-  ciaaDriversErrorCode disconnect(std::int32_t timeout) override;
+  ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) override;
+  ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) override;
 
  private:
   QString host_;

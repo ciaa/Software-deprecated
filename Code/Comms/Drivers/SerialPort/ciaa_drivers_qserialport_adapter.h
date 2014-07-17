@@ -68,8 +68,8 @@ class ciaaDriversQSerialPortAdapter : public ciaaDriversQIODeviceAdapter {
   ciaaDriversQSerialPortAdapter& operator=(
       const ciaaDriversQSerialPortAdapter&&) = delete;
 
-  ciaaDriversErrorCode connect(std::int32_t timeout) override;
-  ciaaDriversErrorCode disconnect(std::int32_t timeout) override;
+  ciaaDriversErrorCode connect(std::chrono::milliseconds timeout) override;
+  ciaaDriversErrorCode disconnect(std::chrono::milliseconds timeout) override;
 
  private:
 

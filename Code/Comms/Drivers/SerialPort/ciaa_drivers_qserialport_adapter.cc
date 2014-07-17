@@ -61,7 +61,7 @@ namespace drivers {
   }
 
   ciaaDriversErrorCode ciaaDriversQSerialPortAdapter::connect(
-      std::int32_t timeout) {
+      std::chrono::milliseconds timeout) {
     // TODO<denisacostaq\@gmail.com>: todo
     CIAA_UNUSED_PARAM(timeout);
     if (serial_.open(QIODevice::ReadWrite)) {
@@ -77,7 +77,7 @@ namespace drivers {
   }
 
   ciaaDriversErrorCode ciaaDriversQSerialPortAdapter::disconnect(
-      std::int32_t timeout) {
+      std::chrono::milliseconds timeout) {
     // TODO<denisacostaq\@gmail.com>: usar flush y wait
     CIAA_UNUSED_PARAM(timeout);
 
