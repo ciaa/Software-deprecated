@@ -35,5 +35,5 @@ else(USE_BOOST_ASIO)
 endif(USE_BOOST_ASIO)
 
 if(PYTHONINTERP_FOUND)
-  add_style_check_target(style_check_comms_drivers ${CMAKE_CURRENT_SOURCE_DIR})
+  add_style_check_target(style_check_code_comms_drivers ${CMAKE_CURRENT_SOURCE_DIR})
 endif(PYTHONINTERP_FOUND)

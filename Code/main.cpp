@@ -80,6 +80,10 @@
 /** \defgroup Compiler
  * 	\brief TODO: it is ....
  *  \{
+ *    \defgroup CompilerIL
+ *  	\brief TODO: it is ....
+ *  	\{
+ *  	\}
  *  \}
 */
 
