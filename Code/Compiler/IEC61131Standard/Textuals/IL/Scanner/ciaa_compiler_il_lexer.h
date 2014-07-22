@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
     \file ciaa_compiler_il_lexer.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Thu Jul 17 21:44:46 UTC 2014
+    \date Mon Jul 21 22:54:58 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -50,27 +50,16 @@
 #include <boost/spirit/include/lex_lexertl.hpp>
 namespace lex = boost::spirit::lex;
 
-#include "Code/Compiler/IEC61131Standard/IL/ASTIL.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
 
 namespace ciaa {
 namespace compiler {
 namespace il {
 
-enum tk_id_ {
-  LETTER,
-  IDENTIFIER,
-  LINE_JUMP,
-  TYPE,
-  BINARY_INTEGER,
-  OCTAL_INTEGER,
-  HEX_INTEGER,
-  REAL_LITERAL,
-  REAL_RW,
-  LREAL_RW,
-  COMMON_TYPE_LIT,
-  COMMON_TYPE_END_LIT,
-  COMMON_COLON,
-  COMMON_DOCOLON
+enum class tk_id_ {
+  jmp,
+  jmpc,
+  jmpcn
 };
 
 /*! \brief The ciaaLexer class provide a tocken flow.
@@ -83,32 +72,13 @@ struct ciaaLexer : lex::lexer<Lexer> {
   ciaaLexer()
       : _space{R"***( )***"}
       , _comment{R"***(coment)***"}
-      //, _identifier{R"***((([A-Za-z])|(_([A-Za-z]|[0-9])))(_?([A-Za-z]|[0-9]))*)***"} //FIXME(denisacostaq\@gmail.com)
-      , _identifier{R"***(_(([A-Za-z])|(_([A-Za-z]|[0-9])))(_?([A-Za-z]|[0-9]))*)***"} //FIXME(denisacostaq\@gmail.com) ponerle precedencia a los tokens para que las palabras reservadas no choquen con los identificacadores
-      , _line_jump{R"***(\n)***"}
-      , _binary_integer{R"***(2#[01](_?[01])*)***"}
-      , _octal_integer{R"***(8#[1-8](_?[1-8])*)***"}
-      , _hex_integer{R"***(16#[0-9A-Fa-f](_?[0-9A-Fa-f])*)***"}
-      , _real_literal{R"***((("REAL"|"LREAL")#)?([\+\-])?[0-9](_?[0-9])*\.([0-9])(_?[0-9])*([eE]([\+\-])?[0-9](_?[0-9])*)?)***"}
-      , _real_rw{R"***(REAL)***"}
-      , _lreal_rw{R"***(LREAL)***"}
-      , _common_type_lit {R"***(TYPE)***"}
-      , _common_type_end_lit {R"***(TYPE_END)***"}
-      , _common_colon_lit{R"***(;)***"}
-      , _common_docolon_lit{R"***(:)***"} {
+      , _jmp   {R"***(JMP)***"}
+      , _jmpc  {R"***(JMPC)***"}
+      , _jmpcn {R"***(JMPCN)***"} {
     this->self.add
-      (_identifier, static_cast<std::size_t>(tk_id_::IDENTIFIER))
-      (_line_jump, static_cast<std::size_t>(tk_id_::LINE_JUMP))
-      (_binary_integer, static_cast<std::size_t>(tk_id_::BINARY_INTEGER))
-      (_octal_integer, static_cast<std::size_t>(tk_id_::OCTAL_INTEGER))
-      (_hex_integer, static_cast<std::size_t>(tk_id_::HEX_INTEGER))
-      (_real_literal, static_cast<std::size_t>(tk_id_::REAL_LITERAL))
-      (_real_rw, static_cast<std::size_t>(tk_id_::REAL_RW))
-      (_lreal_rw, static_cast<std::size_t>(tk_id_::LREAL_RW))
-      (_common_type_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_LIT))
-      (_common_type_end_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_END_LIT))
-      (_common_colon_lit, static_cast<std::size_t>(tk_id_::COMMON_COLON))
-      (_common_docolon_lit, static_cast<std::size_t>(tk_id_::COMMON_DOCOLON));
+      (_jmp  , static_cast<std::size_t>(tk_id_::jmp))
+      (_jmpc , static_cast<std::size_t>(tk_id_::jmpc))
+      (_jmpcn, static_cast<std::size_t>(tk_id_::jmpcn));
 
       this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
       this->self += _comment [lex::_pass = lex::pass_flags::pass_ignore];
@@ -121,20 +91,12 @@ struct ciaaLexer : lex::lexer<Lexer> {
   ciaaLexer(const ciaaLexer&&) = delete;
   ciaaLexer& operator=(const ciaaLexer&&) = delete;
 
-  lex::token_def<char> _space;
-  lex::token_def<char> _comment;
-  lex::token_def<std::string> _identifier;
-  lex::token_def<char> _line_jump;
-  lex::token_def<std::string> _binary_integer;
-  lex::token_def<std::string> _octal_integer;
-  lex::token_def<std::string> _hex_integer;
-  lex::token_def<double> _real_literal;
-  lex::token_def<std::string> _real_rw;
-  lex::token_def<std::string> _lreal_rw;
-  lex::token_def<std::string> _common_type_lit;
-  lex::token_def<std::string> _common_type_end_lit;
-  lex::token_def<char> _common_colon_lit;
-  lex::token_def<char> _common_docolon_lit;
+  lex::token_def<std::string> _space;
+  lex::token_def<std::string> _comment;
+
+  lex::token_def<std::string> _jmp;
+  lex::token_def<std::string> _jmpc;
+  lex::token_def<std::string> _jmpcn;
 };
 typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace il

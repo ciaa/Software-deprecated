@@ -1,5 +1,5 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_il_parcer.h
+    \file ciaa_compiler_parcer.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Fri Jul 18 19:03:14 UTC 2014
 
@@ -35,8 +35,8 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/IL/Parser/ciaa_compiler_il_parcer.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Parser/ciaa_compiler_parcer.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -44,8 +44,8 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_IL_PARCER_H
-#define CIAA_COMPILER_IEC_IL_PARCER_H
+#ifndef CIAA_COMPILER_IEC_PARCER_H
+#define CIAA_COMPILER_IEC_PARCER_H
 
 ///*! \brief The ciaaParcer class provide an AST and a SymbolTable.
 // * \brief The ciaaParcer class take a flow of tockens and transorm
@@ -88,11 +88,14 @@
 #include <boost/spirit/home/lex/argument.hpp>
 
 #include <boost/spirit/include/lex.hpp>
-#include "Code/Compiler/IEC61131Standard/IL/Scanner/ciaa_compiler_il_lexer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
 #include "AST.h"
 
 
 namespace qi  = boost::spirit::qi;
+
+namespace ciaa {
+namespace compiler {
 
 struct declaration
 {
@@ -193,5 +196,7 @@ struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
   qi::rule<Iterator, boost::spirit::utree()> non_generic_type_name;
   qi::rule<Iterator, boost::spirit::utree()> data_type_name;
 };
+}  // namespace compiler
+}  // namespace ciaa
 
-#endif // CIAA_COMPILER_IEC_IL_PARCER_H
+#endif  // CIAA_COMPILER_IEC_PARCER_H

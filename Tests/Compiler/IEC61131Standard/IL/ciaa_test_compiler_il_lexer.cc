@@ -53,7 +53,7 @@
 #include <fstream>
 #include <functional>
 
-#include "Code/Compiler/IEC61131Standard/IL/Scanner/ciaa_compiler_il_lexer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
 
 std::string read_from_file(char const* infile) {
     std::ifstream instream(infile);
@@ -73,7 +73,7 @@ int main(int argc,  char *argv[]) {
     files.push_back(std::string{argv[i]});
   }
 
-  ciaa::compiler::il::Scanner scanner;
+  ciaa::compiler::Scanner scanner;
   for (std::string file : files) {
     std::printf("Building file: %s\n", file.c_str());
     std::string str{read_from_file(file.c_str())};

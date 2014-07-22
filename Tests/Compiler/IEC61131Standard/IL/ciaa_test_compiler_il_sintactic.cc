@@ -91,7 +91,7 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-#include "Code/Compiler/IEC61131Standard/IL/Parser/ciaa_compiler_il_parcer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Parser/ciaa_compiler_parcer.h"
 
 std::string
 read_from_file(char const* infile) {
@@ -133,14 +133,14 @@ int main(int argc, char *argv[]) {
   std::string str = read_from_file(1 == argc ? "/home/adacosta/WORK/Project/CIAA/Software/Tests/Coder/IL/source.in" : argv[1]);
 
   // create the token definition instance needed to invoke the lexical analyzer
-  typedef ciaa::compiler::il::ciaaLexer<lex::lexertl::actor_lexer<>> lexer_type;
+  typedef ciaa::compiler::ciaaLexer<boost::spirit::lex::lexertl::actor_lexer<>> lexer_type;
   lexer_type lexer;
 
   char const* first = str.c_str();
   char const* last = &first[str.size()];
 
   //AST::program ut;
-  li_grammar<lexer_type::iterator_type> parser{lexer /*&ut*/};
+  ciaa::compiler::li_grammar<lexer_type::iterator_type> parser{lexer /*&ut*/};
 
    bool r = qi::parse(lexer.begin(first, last), lexer.end(), parser);
 

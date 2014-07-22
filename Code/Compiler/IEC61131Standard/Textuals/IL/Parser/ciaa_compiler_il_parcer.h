@@ -1,7 +1,7 @@
-/*! \brief This file give the functionality to ciaaLexer class.
-    \file ciaa_compiler_il_lexer.cc
+/*! \brief Do not include this file directly in external modules.
+    \file ciaa_compiler_il_parcer.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Thu Jul 17 21:44:46 UTC 2014
+    \date Mon Jul 21 22:23:25 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -32,10 +32,11 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 
+
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/IL/Scanner//ciaa_compiler_il_lexer.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/IL/Parser/ciaa_compiler_il_parcer.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,4 +44,71 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/IL/Scanner/ciaa_compiler_il_lexer.h"
+#ifndef CIAA_COMPILER_IEC_IL_PARCER_H
+#define CIAA_COMPILER_IEC_IL_PARCER_H
+
+///*! \brief The ciaaParcer class provide an AST and a SymbolTable.
+// * \brief The ciaaParcer class take a flow of tockens and transorm
+// * \brief it in an AST strcut and fill a the SymbolTable.
+// * \ingroup CompilerIL
+// */
+//class ciaaParcer {
+// public:
+//  ciaaParcer() = default;
+//  ~ciaaParcer() = default;
+
+//  ciaaParcer(const ciaaParcer&) = delete;
+//  ciaaParcer& operator=(const ciaaParcer&) = delete;
+
+//  ciaaParcer(const ciaaParcer&&) = delete;
+//  ciaaParcer& operator=(const ciaaParcer&&) = delete;
+//};
+
+
+
+
+
+
+
+
+
+
+
+#include <boost/spirit/include/qi.hpp>
+namespace qi = boost::spirit::qi;
+
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_il_lexer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Parser/ciaa_compiler_parcer.h"
+
+
+namespace ciaa {
+namespace compiler {
+namespace il {
+template <typename Iterator>
+struct li_grammar : qi::grammar<Iterator, ciaa::compiler::il::instruction_list> {
+  template <typename TokenDef>
+  li_grammar(const TokenDef& token)
+    : li_grammar::base_type(_instruction_list) {
+    _il_jump_operator = token._jmp;
+ // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
+ // _label = token._identifier;
+    //_instruction_list = /*_label >> */qi::char_(":");
+    _instruction_list = token._jmp;
+
+    //il_jump_operator ::= 'JMP' | 'JMPC' | 'JMPCN'
+
+  }
+
+
+  qi::rule<Iterator, ciaa::compiler::il::instruction_list> _instruction_list;
+//  qi::rule<Iterator, int> _il_jump_operation;
+//  qi::rule<Iterator, int> _il_jump_operator;
+  qi::rule<Iterator, ciaa::compiler::il::label> _label;
+  qi::rule<Iterator, std::string> _il_jump_operator;
+};
+}  // namespace il
+}  // namespace compiler
+}  // namespcae ciaa
+
+#endif // CIAA_COMPILER_IEC_IL_PARCER_H
