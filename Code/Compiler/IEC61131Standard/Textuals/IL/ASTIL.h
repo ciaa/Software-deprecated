@@ -57,6 +57,8 @@
 
 namespace ciaa {
 namespace compiler {
+namespace iec61131_3 {
+namespace text {
 namespace il {
 /*
  *     typedef boost::variant<
@@ -116,6 +118,8 @@ typedef boost::variant<il_simple_operation,
 typedef std::list<il_instruction> instruction_list;
 
 }  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
 

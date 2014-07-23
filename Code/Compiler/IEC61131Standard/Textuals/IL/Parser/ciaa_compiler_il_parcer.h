@@ -77,37 +77,73 @@
 #include <boost/spirit/include/qi.hpp>
 namespace qi = boost::spirit::qi;
 
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_il_lexer.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Common/Parser/ciaa_compiler_parcer.h"
 
 
 namespace ciaa {
 namespace compiler {
+namespace iec61131_3 {
+namespace text {
 namespace il {
 template <typename Iterator>
-struct li_grammar : qi::grammar<Iterator, ciaa::compiler::il::instruction_list> {
+struct li_grammar_chield : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
+    Iterator,
+    ciaa::compiler::iec61131_3::text::il::instruction_list> {
   template <typename TokenDef>
-  li_grammar(const TokenDef& token)
-    : li_grammar::base_type(_instruction_list) {
-    _il_jump_operator = token._jmp;
- // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
- // _label = token._identifier;
-    //_instruction_list = /*_label >> */qi::char_(":");
-    _instruction_list = token._jmp;
+  li_grammar_chield(const TokenDef& token)
+    : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
+      Iterator,
+      ciaa::compiler::iec61131_3::text::il::instruction_list>(token, _instruction_list) {
+//    _il_jump_operator = token._jmp;
+// // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
 
-    //il_jump_operator ::= 'JMP' | 'JMPC' | 'JMPCN'
+//    // _instruction_list = /*_label >> */qi::char_(":");
+//    _instruction_list = token._jmp;
+
+//    // il_jump_operator ::= 'JMP' | 'JMPC' | 'JMPCN'
+
+//    //_il_simple_operation = il_simple_operator
+
+//    _label = token._identifier;
+
+//    _il_instruction = _il_simple_operation  |
+//                      _il_expression        |
+//                      _il_jump_operation    |
+//                      _il_fb_call           |
+//                      _il_formal_funct_call |
+//                      _il_return_operator;
+//    _instruction_list = _il_instruction     >>
+//                        *_il_instruction;
+
 
   }
 
 
-  qi::rule<Iterator, ciaa::compiler::il::instruction_list> _instruction_list;
+
 //  qi::rule<Iterator, int> _il_jump_operation;
 //  qi::rule<Iterator, int> _il_jump_operator;
-  qi::rule<Iterator, ciaa::compiler::il::label> _label;
+
   qi::rule<Iterator, std::string> _il_jump_operator;
+
+
+
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::instruction_list> _instruction_list;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_instruction> _il_instruction;
+
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_simple_operation> _il_simple_operation;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_expression> _il_expression;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_jump_operation> _il_jump_operation;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_fb_call> _il_fb_call;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_formal_funct_call> _il_formal_funct_call;
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_return_operator> _il_return_operator;
+
+  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::label> _label;
+
 };
 }  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
 

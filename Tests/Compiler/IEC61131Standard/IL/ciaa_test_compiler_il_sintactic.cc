@@ -133,14 +133,14 @@ int main(int argc, char *argv[]) {
   std::string str = read_from_file(1 == argc ? "/home/adacosta/WORK/Project/CIAA/Software/Tests/Coder/IL/source.in" : argv[1]);
 
   // create the token definition instance needed to invoke the lexical analyzer
-  typedef ciaa::compiler::ciaaLexer<boost::spirit::lex::lexertl::actor_lexer<>> lexer_type;
+  typedef ciaa::compiler::iec61131_3::text::ciaaLexer<boost::spirit::lex::lexertl::actor_lexer<>> lexer_type;
   lexer_type lexer;
 
   char const* first = str.c_str();
   char const* last = &first[str.size()];
 
   //AST::program ut;
-  ciaa::compiler::li_grammar<lexer_type::iterator_type> parser{lexer /*&ut*/};
+  ciaa::compiler::iec61131_3::text::ciaaTextualParser<lexer_type::iterator_type> parser{lexer /*&ut*/};
 
    bool r = qi::parse(lexer.begin(first, last), lexer.end(), parser);
 

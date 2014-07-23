@@ -52,28 +52,6 @@
 // * \brief it in an AST strcut and fill a the SymbolTable.
 // * \ingroup CompilerIL
 // */
-//class ciaaParcer {
-// public:
-//  ciaaParcer() = default;
-//  ~ciaaParcer() = default;
-
-//  ciaaParcer(const ciaaParcer&) = delete;
-//  ciaaParcer& operator=(const ciaaParcer&) = delete;
-
-//  ciaaParcer(const ciaaParcer&&) = delete;
-//  ciaaParcer& operator=(const ciaaParcer&&) = delete;
-//};
-
-
-
-
-
-
-
-
-
-
-
 
 
 #include <functional>
@@ -89,15 +67,17 @@
 
 #include <boost/spirit/include/lex.hpp>
 #include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
-#include "AST.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
 
 
 namespace qi  = boost::spirit::qi;
 
 namespace ciaa {
 namespace compiler {
+namespace iec61131_3 {
+namespace text {
 
-struct declaration
+/*struct declaration
 {
     template <typename T1, typename T2 = void>
     struct result { typedef void type; };
@@ -129,8 +109,8 @@ boost::phoenix::function<ids> iddd;
 template <typename Iterator>
 struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
   template <typename TokenDef>
-  li_grammar(const TokenDef& token/*,
-             boost::spirit::utree *ut*/)
+  li_grammar(const TokenDef& token,
+             boost::spirit::utree *ut)
     : li_grammar::base_type(data_type_declaration) {
 
     real_type_name
@@ -194,8 +174,27 @@ struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
 
   qi::rule<Iterator, boost::spirit::utree()> real_type_name;
   qi::rule<Iterator, boost::spirit::utree()> non_generic_type_name;
-  qi::rule<Iterator, boost::spirit::utree()> data_type_name;
+  qi::rule<Iterator, boost::spirit::utree()> data_type_name;*/
+
+
+
+template <typename Iterator, typename Structure>
+struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
+  template <typename TokenDef>
+  ciaaTextualParser(const TokenDef& token, const qi::rule<Iterator, Structure>& vv)
+    : ciaaTextualParser::base_type(vv) {
+
+  }
+  ~ciaaTextualParser() = default;
+
+  ciaaTextualParser(const ciaaTextualParser&) = delete;
+  ciaaTextualParser& operator=(const ciaaTextualParser&) = delete;
+
+  ciaaTextualParser(const ciaaTextualParser&&) = delete;
+  ciaaTextualParser& operator=(const ciaaTextualParser&&) = delete;
 };
+}  // namespace text
+}  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
 

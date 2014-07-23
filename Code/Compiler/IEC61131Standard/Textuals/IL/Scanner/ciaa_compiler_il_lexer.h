@@ -51,9 +51,12 @@
 namespace lex = boost::spirit::lex;
 
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
 
 namespace ciaa {
 namespace compiler {
+namespace iec61131_3 {
+namespace text {
 namespace il {
 
 enum class tk_id_ {
@@ -68,8 +71,8 @@ enum class tk_id_ {
  * \ingroup CompilerIL
  */
 template <typename Lexer>
-struct ciaaLexer : lex::lexer<Lexer> {
-  ciaaLexer()
+struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
+  ciaaILLexer()
       : _space{R"***( )***"}
       , _comment{R"***(coment)***"}
       , _jmp   {R"***(JMP)***"}
@@ -83,13 +86,13 @@ struct ciaaLexer : lex::lexer<Lexer> {
       this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
       this->self += _comment [lex::_pass = lex::pass_flags::pass_ignore];
   }
-  ~ciaaLexer() = default;
+  ~ciaaILLexer() = default;
 
-  ciaaLexer(const ciaaLexer&) = delete;
-  ciaaLexer& operator=(const ciaaLexer&) = delete;
+  ciaaILLexer(const ciaaILLexer&) = delete;
+  ciaaILLexer& operator=(const ciaaILLexer&) = delete;
 
-  ciaaLexer(const ciaaLexer&&) = delete;
-  ciaaLexer& operator=(const ciaaLexer&&) = delete;
+  ciaaILLexer(const ciaaILLexer&&) = delete;
+  ciaaILLexer& operator=(const ciaaILLexer&&) = delete;
 
   lex::token_def<std::string> _space;
   lex::token_def<std::string> _comment;
@@ -98,8 +101,10 @@ struct ciaaLexer : lex::lexer<Lexer> {
   lex::token_def<std::string> _jmpc;
   lex::token_def<std::string> _jmpcn;
 };
-typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;
+typedef ciaaILLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
 #endif  // COMPILER_IEC_IL_LEXER_H

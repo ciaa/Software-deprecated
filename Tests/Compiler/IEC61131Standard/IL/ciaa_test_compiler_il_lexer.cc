@@ -73,7 +73,7 @@ int main(int argc,  char *argv[]) {
     files.push_back(std::string{argv[i]});
   }
 
-  ciaa::compiler::Scanner scanner;
+  ciaa::compiler::iec61131_3::text::Scanner scanner;
   for (std::string file : files) {
     std::printf("Building file: %s\n", file.c_str());
     std::string str{read_from_file(file.c_str())};

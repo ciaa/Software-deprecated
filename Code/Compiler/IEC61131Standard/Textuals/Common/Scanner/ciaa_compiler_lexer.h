@@ -54,22 +54,86 @@ namespace lex = boost::spirit::lex;
 
 namespace ciaa {
 namespace compiler {
+namespace iec61131_3 {
+namespace text {
 
-enum tk_id_ {
-  LETTER,
-  IDENTIFIER,
-  LINE_JUMP,
-  TYPE,
-  BINARY_INTEGER,
-  OCTAL_INTEGER,
-  HEX_INTEGER,
-  REAL_LITERAL,
-  REAL_RW,
-  LREAL_RW,
-  COMMON_TYPE_LIT,
-  COMMON_TYPE_END_LIT,
-  COMMON_COLON,
-  COMMON_DOCOLON
+//enum tk_id_ {
+//  LETTER,
+//  LINE_JUMP,
+//  TYPE,
+//  BINARY_INTEGER,
+//  OCTAL_INTEGER,
+//  HEX_INTEGER,
+//  REAL_LITERAL,
+//  REAL_RW,
+//  LREAL_RW,
+//  COMMON_TYPE_LIT,
+//  COMMON_TYPE_END_LIT,
+//  COMMON_COLON,
+//  COMMON_DOCOLON
+//};
+
+///*! \brief The ciaaLexer class provide a tocken flow.
+// * \brief The ciaaLexer class take a flow of characters and transorm
+// * \brief it in a tocken flow.
+// * \ingroup CompilerIL
+// */
+//template <typename Lexer>
+//struct ciaaLexer : lex::lexer<Lexer> {
+//  ciaaLexer()
+//      , _comment{R"***(coment)***"}
+//      , _line_jump{R"***(\n)***"}
+//      , _binary_integer{R"***(2#[01](_?[01])*)***"}
+//      , _octal_integer{R"***(8#[1-8](_?[1-8])*)***"}
+//      , _hex_integer{R"***(16#[0-9A-Fa-f](_?[0-9A-Fa-f])*)***"}
+//      , _real_literal{R"***((("REAL"|"LREAL")#)?([\+\-])?[0-9](_?[0-9])*\.([0-9])(_?[0-9])*([eE]([\+\-])?[0-9](_?[0-9])*)?)***"}
+//      , _real_rw{R"***(REAL)***"}
+//      , _lreal_rw{R"***(LREAL)***"}
+//      , _common_type_lit {R"***(TYPE)***"}
+//      , _common_type_end_lit {R"***(TYPE_END)***"}
+//      , _common_colon_lit{R"***(;)***"}
+//      , _common_docolon_lit{R"***(:)***"} {
+//    this->self.add
+//      (_identifier, static_cast<std::size_t>(tk_id_::IDENTIFIER))
+//      (_line_jump, static_cast<std::size_t>(tk_id_::LINE_JUMP))
+//      (_binary_integer, static_cast<std::size_t>(tk_id_::BINARY_INTEGER))
+//      (_octal_integer, static_cast<std::size_t>(tk_id_::OCTAL_INTEGER))
+//      (_hex_integer, static_cast<std::size_t>(tk_id_::HEX_INTEGER))
+//      (_real_literal, static_cast<std::size_t>(tk_id_::REAL_LITERAL))
+//      (_real_rw, static_cast<std::size_t>(tk_id_::REAL_RW))
+//      (_lreal_rw, static_cast<std::size_t>(tk_id_::LREAL_RW))
+//      (_common_type_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_LIT))
+//      (_common_type_end_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_END_LIT))
+//      (_common_colon_lit, static_cast<std::size_t>(tk_id_::COMMON_COLON))
+//      (_common_docolon_lit, static_cast<std::size_t>(tk_id_::COMMON_DOCOLON));
+
+
+//      this->self += _comment [lex::_pass = lex::pass_flags::pass_ignore];
+//  }
+//  ~ciaaLexer() = default;
+
+//  ciaaLexer(const ciaaLexer&) = delete;
+//  ciaaLexer& operator=(const ciaaLexer&) = delete;
+
+//  ciaaLexer(const ciaaLexer&&) = delete;
+//  ciaaLexer& operator=(const ciaaLexer&&) = delete;
+
+//  lex::token_def<char> _comment;
+//  lex::token_def<char> _line_jump;
+//  lex::token_def<std::string> _binary_integer;
+//  lex::token_def<std::string> _octal_integer;
+//  lex::token_def<std::string> _hex_integer;
+//  lex::token_def<double> _real_literal;
+//  lex::token_def<std::string> _real_rw;
+//  lex::token_def<std::string> _lreal_rw;
+//  lex::token_def<std::string> _common_type_lit;
+//  lex::token_def<std::string> _common_type_end_lit;
+//  lex::token_def<char> _common_colon_lit;
+//  lex::token_def<char> _common_docolon_lit;
+//};
+
+enum class tk_id {
+  identifier
 };
 
 /*! \brief The ciaaLexer class provide a tocken flow.
@@ -81,61 +145,19 @@ template <typename Lexer>
 struct ciaaLexer : lex::lexer<Lexer> {
   ciaaLexer()
       : _space{R"***( )***"}
-      , _comment{R"***(coment)***"}
-      //, _identifier{R"***((([A-Za-z])|(_([A-Za-z]|[0-9])))(_?([A-Za-z]|[0-9]))*)***"} //FIXME(denisacostaq\@gmail.com)
       , _identifier{R"***(_(([A-Za-z])|(_([A-Za-z]|[0-9])))(_?([A-Za-z]|[0-9]))*)***"} //FIXME(denisacostaq\@gmail.com) ponerle precedencia a los tokens para que las palabras reservadas no choquen con los identificacadores
-      , _line_jump{R"***(\n)***"}
-      , _binary_integer{R"***(2#[01](_?[01])*)***"}
-      , _octal_integer{R"***(8#[1-8](_?[1-8])*)***"}
-      , _hex_integer{R"***(16#[0-9A-Fa-f](_?[0-9A-Fa-f])*)***"}
-      , _real_literal{R"***((("REAL"|"LREAL")#)?([\+\-])?[0-9](_?[0-9])*\.([0-9])(_?[0-9])*([eE]([\+\-])?[0-9](_?[0-9])*)?)***"}
-      , _real_rw{R"***(REAL)***"}
-      , _lreal_rw{R"***(LREAL)***"}
-      , _common_type_lit {R"***(TYPE)***"}
-      , _common_type_end_lit {R"***(TYPE_END)***"}
-      , _common_colon_lit{R"***(;)***"}
-      , _common_docolon_lit{R"***(:)***"} {
+  {
     this->self.add
-      (_identifier, static_cast<std::size_t>(tk_id_::IDENTIFIER))
-      (_line_jump, static_cast<std::size_t>(tk_id_::LINE_JUMP))
-      (_binary_integer, static_cast<std::size_t>(tk_id_::BINARY_INTEGER))
-      (_octal_integer, static_cast<std::size_t>(tk_id_::OCTAL_INTEGER))
-      (_hex_integer, static_cast<std::size_t>(tk_id_::HEX_INTEGER))
-      (_real_literal, static_cast<std::size_t>(tk_id_::REAL_LITERAL))
-      (_real_rw, static_cast<std::size_t>(tk_id_::REAL_RW))
-      (_lreal_rw, static_cast<std::size_t>(tk_id_::LREAL_RW))
-      (_common_type_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_LIT))
-      (_common_type_end_lit, static_cast<std::size_t>(tk_id_::COMMON_TYPE_END_LIT))
-      (_common_colon_lit, static_cast<std::size_t>(tk_id_::COMMON_COLON))
-      (_common_docolon_lit, static_cast<std::size_t>(tk_id_::COMMON_DOCOLON));
-
-      this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
-      this->self += _comment [lex::_pass = lex::pass_flags::pass_ignore];
+        (_identifier, static_cast<int>(tk_id::identifier));
   }
-  ~ciaaLexer() = default;
-
-  ciaaLexer(const ciaaLexer&) = delete;
-  ciaaLexer& operator=(const ciaaLexer&) = delete;
-
-  ciaaLexer(const ciaaLexer&&) = delete;
-  ciaaLexer& operator=(const ciaaLexer&&) = delete;
-
+    //this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
   lex::token_def<char> _space;
-  lex::token_def<char> _comment;
   lex::token_def<std::string> _identifier;
-  lex::token_def<char> _line_jump;
-  lex::token_def<std::string> _binary_integer;
-  lex::token_def<std::string> _octal_integer;
-  lex::token_def<std::string> _hex_integer;
-  lex::token_def<double> _real_literal;
-  lex::token_def<std::string> _real_rw;
-  lex::token_def<std::string> _lreal_rw;
-  lex::token_def<std::string> _common_type_lit;
-  lex::token_def<std::string> _common_type_end_lit;
-  lex::token_def<char> _common_colon_lit;
-  lex::token_def<char> _common_docolon_lit;
 };
+
 typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;
+}  // namespace text
+}  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
 #endif   // COMPILER_IEC_LEXER_H
