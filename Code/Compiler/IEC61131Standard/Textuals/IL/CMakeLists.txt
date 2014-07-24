@@ -1,8 +1,10 @@
 set(compiler_il_Code
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Scanner/ciaa_compiler_lexer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Parser/ciaa_compiler_parcer.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/ciaa_compiler_symbol_table.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Scanner/ciaa_compiler_symbol_info.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/AST.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scanner/ciaa_compiler_symbol_table.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Scanner/ciaa_compiler_token.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Scanner/ciaa_compiler_il_lexer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Parser/ciaa_compiler_il_parcer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ASTIL.h

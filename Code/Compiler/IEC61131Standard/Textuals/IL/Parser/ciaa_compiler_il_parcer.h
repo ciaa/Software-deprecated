@@ -32,7 +32,6 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 
-
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
@@ -86,15 +85,19 @@ namespace compiler {
 namespace iec61131_3 {
 namespace text {
 namespace il {
+
+/*! \brief pnp Parent namespace
+ */
+namespace pnp = ciaa::compiler::iec61131_3::text;
+/*! \brief tnp This namespace
+ */
+namespace tnp = pnp::il;
+
 template <typename Iterator>
-struct li_grammar_chield : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
-    Iterator,
-    ciaa::compiler::iec61131_3::text::il::instruction_list> {
+struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruction_list> {
   template <typename TokenDef>
   li_grammar_chield(const TokenDef& token)
-    : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
-      Iterator,
-      ciaa::compiler::iec61131_3::text::il::instruction_list>(token, _instruction_list) {
+    : pnp::ciaaTextualParser<Iterator, tnp::instruction_list>(token, _instruction_list) {
 //    _il_jump_operator = token._jmp;
 // // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
 
@@ -105,16 +108,59 @@ struct li_grammar_chield : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
 
 //    //_il_simple_operation = il_simple_operator
 
-//    _label = token._identifier;
+    _il_operand
+        = pnp::ciaaTextualParser<Iterator, tnp::instruction_list>::_constant;
+//        | variable
+//        | enumerated_value;
 
-//    _il_instruction = _il_simple_operation  |
-//                      _il_expression        |
-//                      _il_jump_operation    |
-//                      _il_fb_call           |
-//                      _il_formal_funct_call |
-//                      _il_return_operator;
-//    _instruction_list = _il_instruction     >>
-//                        *_il_instruction;
+    _il_expr_operator
+        = token._and
+        | token._and_symbol
+        | token._or
+        | token._xor
+        | token._andn
+        | token._and_symbol_n
+        | token._orn
+        | token._xorn
+        | token._add
+        | token._sub
+        | token._mul
+        | token._div
+        | token._mod
+        | token._gt
+        | token._ge
+        | token._eq
+        | token._lt
+        | token._le
+        | token._ne;
+    _il_simple_operator
+        = token._ld
+        | token._ldn
+        | token._st
+        | token._stn
+        | token._not
+        | token._s
+        | token._r
+        | token._s1
+        | token._r1
+        | token._clk
+        | token._cu
+        | token._cd
+        | token._pv
+        | token._in
+        | token._pt
+        | _il_expr_operator;
+
+    _label = token._identifier;
+
+    _il_instruction = _il_simple_operation  |
+                      _il_expression        |
+                      _il_jump_operation    |
+                      _il_fb_call           |
+                      _il_formal_funct_call |
+                      _il_return_operator;
+    _instruction_list = _il_instruction
+                          >> *_il_instruction;
 
 
   }
@@ -128,17 +174,22 @@ struct li_grammar_chield : ciaa::compiler::iec61131_3::text::ciaaTextualParser<
 
 
 
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::instruction_list> _instruction_list;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_instruction> _il_instruction;
+  qi::rule<Iterator, tnp::instruction_list> _instruction_list;
+  qi::rule<Iterator, tnp::il_instruction> _il_instruction;
 
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_simple_operation> _il_simple_operation;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_expression> _il_expression;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_jump_operation> _il_jump_operation;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_fb_call> _il_fb_call;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_formal_funct_call> _il_formal_funct_call;
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::il_return_operator> _il_return_operator;
+  qi::rule<Iterator, tnp::il_simple_operation> _il_simple_operation;
+  qi::rule<Iterator, tnp::il_expression> _il_expression;
+  qi::rule<Iterator, tnp::il_jump_operation> _il_jump_operation;
+  qi::rule<Iterator, tnp::il_fb_call> _il_fb_call;
+  qi::rule<Iterator, tnp::il_formal_funct_call> _il_formal_funct_call;
+  qi::rule<Iterator, tnp::il_return_operator> _il_return_operator;
 
-  qi::rule<Iterator, ciaa::compiler::iec61131_3::text::il::label> _label;
+  qi::rule<Iterator, tnp::label> _label;
+
+  qi::rule<Iterator, std::string> _il_simple_operator;
+  qi::rule<Iterator, std::string> _il_expr_operator;
+  qi::rule<Iterator, std::string> _il_operand;
+
 
 };
 }  // namespace il

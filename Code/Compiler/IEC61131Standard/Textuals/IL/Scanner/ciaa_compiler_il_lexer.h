@@ -32,7 +32,6 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 
-
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
@@ -59,12 +58,6 @@ namespace iec61131_3 {
 namespace text {
 namespace il {
 
-enum class tk_id_ {
-  jmp,
-  jmpc,
-  jmpcn
-};
-
 /*! \brief The ciaaLexer class provide a tocken flow.
  * \brief The ciaaLexer class take a flow of characters and transorm
  * \brief it in a tocken flow.
@@ -72,19 +65,123 @@ enum class tk_id_ {
  */
 template <typename Lexer>
 struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
-  ciaaILLexer()
-      : _space{R"***( )***"}
-      , _comment{R"***(coment)***"}
-      , _jmp   {R"***(JMP)***"}
-      , _jmpc  {R"***(JMPC)***"}
-      , _jmpcn {R"***(JMPCN)***"} {
-    this->self.add
-      (_jmp  , static_cast<std::size_t>(tk_id_::jmp))
-      (_jmpc , static_cast<std::size_t>(tk_id_::jmpc))
-      (_jmpcn, static_cast<std::size_t>(tk_id_::jmpcn));
+  enum class tk_kind_chiekd {
+    jmp,
+    jmpc,
+    jmpcn,
+    ld,
+    ldn,
+    st,
+    stn,
+    not_,
+    s,
+    r,
+    s1,
+    r1,
+    clk,
+    cu,
+    cd,
+    pv,
+    in,
+    pt,
+    and_,
+    and_symbol,
+    or_,
+    xor_,
+    andn,
+    and_symbol_n,
+    orn,
+    xorn,
+    add,
+    sub,
+    mul,
+    div,
+    mod,
+    gt,
+    ge,
+    eq,
+    lt,
+    le,
+    ne
+  };
 
-      this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
-      this->self += _comment [lex::_pass = lex::pass_flags::pass_ignore];
+  ciaaILLexer()
+      : _jmp{R"***(JMP)***"}
+      , _jmpc{R"***(JMPC)***"}
+      , _jmpcn{R"***(JMPCN)***"}
+      , _ld{R"***(LD)***"}
+      , _ldn{R"***(LDN)***"}
+      , _st{R"***(ST)***"}
+      , _stn{R"***(STN)***"}
+      , _not{R"***(NOT)***"}
+      , _s{R"***(S)***"}
+      , _r{R"***(R)***"}
+      , _s1{R"***(S1)***"}
+      , _r1{R"***(R1)***"}
+      , _clk{R"***(CLK)***"}
+      , _cu{R"***(CU)***"}
+      , _cd{R"***(CD)***"}
+      , _pv{R"***(PV)***"}
+      , _in{R"***(IN)***"}
+      , _pt{R"***(PT)***"}
+      , _and{R"***(AND)***"}
+      , _and_symbol{R"***(&)***"}
+      , _or{R"***(OR)***"}
+      , _xor{R"***(XOR)***"}
+      , _andn{R"***(ANDN)***"}
+      , _and_symbol_n{R"***(&N)***"}
+      , _orn{R"***(ORN)***"}
+      , _xorn{R"***(XORN)***"}
+      , _add{R"***(ADD)***"}
+      , _sub{R"***(SUB)***"}
+      , _mul{R"***(MUL)***"}
+      , _div{R"***(DIV)***"}
+      , _mod{R"***(MOD)***"}
+      , _gt{R"***(GT)***"}
+      , _ge{R"***(GE)***"}
+      , _eq{R"***(EQ)***"}
+      , _lt{R"***(LT)***"}
+      , _le{R"***(LE)***"}
+      , _ne{R"***(NE)***"}
+{
+    this->self.add
+      (_jmp, static_cast<std::size_t>(tk_kind_chiekd::jmp))
+      (_jmpc, static_cast<std::size_t>(tk_kind_chiekd::jmpc))
+      (_jmpcn, static_cast<std::size_t>(tk_kind_chiekd::jmpcn))
+      (_ld, static_cast<std::size_t>(tk_kind_chiekd::ld))
+      (_ldn, static_cast<std::size_t>(tk_kind_chiekd::ldn))
+      (_st, static_cast<std::size_t>(tk_kind_chiekd::st))
+      (_stn, static_cast<std::size_t>(tk_kind_chiekd::stn))
+      (_not, static_cast<std::size_t>(tk_kind_chiekd::not_))
+      (_s, static_cast<std::size_t>(tk_kind_chiekd::s))
+      (_r, static_cast<std::size_t>(tk_kind_chiekd::r))
+      (_s1, static_cast<std::size_t>(tk_kind_chiekd::s1))
+      (_r1, static_cast<std::size_t>(tk_kind_chiekd::r1))
+      (_clk, static_cast<std::size_t>(tk_kind_chiekd::clk))
+      (_cu, static_cast<std::size_t>(tk_kind_chiekd::cu))
+      (_cd, static_cast<std::size_t>(tk_kind_chiekd::cd))
+      (_pv, static_cast<std::size_t>(tk_kind_chiekd::pv))
+      (_in, static_cast<std::size_t>(tk_kind_chiekd::in))
+      (_pt, static_cast<std::size_t>(tk_kind_chiekd::pt))
+      (_and, static_cast<std::size_t>(tk_kind_chiekd::and_))
+      (_and_symbol, static_cast<std::size_t>(tk_kind_chiekd::and_symbol))
+      (_or, static_cast<std::size_t>(tk_kind_chiekd::or_))
+      (_xor, static_cast<std::size_t>(tk_kind_chiekd::xor_))
+      (_andn, static_cast<std::size_t>(tk_kind_chiekd::andn))
+      (_and_symbol_n, static_cast<std::size_t>(tk_kind_chiekd::and_symbol_n))
+      (_orn, static_cast<std::size_t>(tk_kind_chiekd::orn))
+      (_xorn, static_cast<std::size_t>(tk_kind_chiekd::xorn))
+      (_add, static_cast<std::size_t>(tk_kind_chiekd::add))
+      (_sub, static_cast<std::size_t>(tk_kind_chiekd::sub))
+      (_mul, static_cast<std::size_t>(tk_kind_chiekd::mul))
+      (_div, static_cast<std::size_t>(tk_kind_chiekd::div))
+      (_mod, static_cast<std::size_t>(tk_kind_chiekd::mod))
+      (_gt, static_cast<std::size_t>(tk_kind_chiekd::gt))
+      (_ge, static_cast<std::size_t>(tk_kind_chiekd::ge))
+      (_eq, static_cast<std::size_t>(tk_kind_chiekd::eq))
+      (_lt, static_cast<std::size_t>(tk_kind_chiekd::lt))
+      (_le, static_cast<std::size_t>(tk_kind_chiekd::le))
+      (_ne, static_cast<std::size_t>(tk_kind_chiekd::ne));
   }
   ~ciaaILLexer() = default;
 
@@ -94,12 +191,46 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
   ciaaILLexer(const ciaaILLexer&&) = delete;
   ciaaILLexer& operator=(const ciaaILLexer&&) = delete;
 
-  lex::token_def<std::string> _space;
-  lex::token_def<std::string> _comment;
-
   lex::token_def<std::string> _jmp;
   lex::token_def<std::string> _jmpc;
   lex::token_def<std::string> _jmpcn;
+
+  //il_simple_operator(il_expr_operator included)
+  lex::token_def<std::string> _ld;
+  lex::token_def<std::string> _ldn;
+  lex::token_def<std::string> _st;
+  lex::token_def<std::string> _stn;
+  lex::token_def<std::string> _not;
+  lex::token_def<std::string> _s;
+  lex::token_def<std::string> _r;
+  lex::token_def<std::string> _s1;
+  lex::token_def<std::string> _r1;
+  lex::token_def<std::string> _clk;
+  lex::token_def<std::string> _cu;
+  lex::token_def<std::string> _cd;
+  lex::token_def<std::string> _pv;
+  lex::token_def<std::string> _in;
+  lex::token_def<std::string> _pt;
+  //il_expr_operator
+  lex::token_def<std::string> _and;
+  lex::token_def<std::string> _and_symbol;
+  lex::token_def<std::string> _or;
+  lex::token_def<std::string> _xor;
+  lex::token_def<std::string> _andn;
+  lex::token_def<std::string> _and_symbol_n;
+  lex::token_def<std::string> _orn;
+  lex::token_def<std::string> _xorn;
+  lex::token_def<std::string> _add;
+  lex::token_def<std::string> _sub;
+  lex::token_def<std::string> _mul;
+  lex::token_def<std::string> _div;
+  lex::token_def<std::string> _mod;
+  lex::token_def<std::string> _gt;
+  lex::token_def<std::string> _ge;
+  lex::token_def<std::string> _eq;
+  lex::token_def<std::string> _lt;
+  lex::token_def<std::string> _le;
+  lex::token_def<std::string> _ne;
 };
 typedef ciaaILLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace il

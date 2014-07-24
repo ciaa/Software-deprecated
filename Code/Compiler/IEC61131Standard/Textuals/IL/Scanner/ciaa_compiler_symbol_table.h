@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file AST.h
+    \file ciaa_compiler_symbol_table.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 21 22:36:19 UTC 2014
+    \date Tue Jul 22 02:19:55 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,27 +34,50 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/AST.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_symbol_table.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
+#ifndef CIAA_COMPILER_SYMBOL_TABLE_HPP
+#define CIAA_COMPILER_SYMBOL_TABLE_HPP
 
-#ifndef COMPILER_IEC_AST_H
-#define COMPILER_IEC_AST_H
+#include <vector>
+#include <algorithm>
 
-#include <string>
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h"
 
 namespace ciaa {
 namespace compiler {
-struct identifier {
-  std::string _identifier;
+namespace iec61131_3 {
+namespace text {
+namespace il {
+class ciaaSymbolTable {
+ public:
+  ciaaSymbolTable() = default;
+  ~ciaaSymbolTable();
+
+  ciaaSymbolTable(const ciaaSymbolTable&) = delete;
+  ciaaSymbolTable& operator=(const ciaaSymbolTable&) = delete;
+
+  ciaaSymbolTable(const ciaaSymbolTable&&) = delete;
+  ciaaSymbolTable& operator=(const ciaaSymbolTable&&) = delete;
+
+  std::vector<ciaaSymbolInfo*>::iterator add(
+      std::string lexeme,
+      ciaaSymbolInfo::tk_kind kind);
+
+ private:
+  std::vector<ciaaSymbolInfo*>::iterator entry_of(
+      std::string lexeme);
+  std::vector<ciaaSymbolInfo*> _items;
 };
-}
-}
-
-
-#endif  // COMPILER_IEC_AST_H
+}  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespace ciaa
+#endif // CIAA_COMPILER_SYMBOL_TABLE_HPP

@@ -32,7 +32,6 @@
     ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
     POSSIBILITY OF SUCH DAMAGE.
 
-
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
@@ -177,13 +176,54 @@ struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
   qi::rule<Iterator, boost::spirit::utree()> data_type_name;*/
 
 
+/*! \brief tnp This namespace
+ */
+namespace tnp = ciaa::compiler::iec61131_3::text;
 
 template <typename Iterator, typename Structure>
 struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
   template <typename TokenDef>
   ciaaTextualParser(const TokenDef& token, const qi::rule<Iterator, Structure>& vv)
     : ciaaTextualParser::base_type(vv) {
+    qi::char_type char_;
 
+//    _character_string
+//        =
+
+    _unsigned_integer_type_name
+        = token._unsigned_integer_type_usint
+        | token._unsigned_integer_type_uint
+        | token._unsigned_integer_type_udint
+        | token._unsigned_integer_type_ulint;
+    _signed_integer_type_name
+        = token._signed_integer_type_sint
+        | token._signed_integer_type_int
+        | token._signed_integer_type_dint
+        | token._signed_integer_type_lint;
+    _integer_type_name
+        = _signed_integer_type_name
+        | _unsigned_integer_type_name;
+    _signed_integer
+        = (char_('-')|char_('+'))
+        >>token._integer;
+    _integer_literal
+        = -(_integer_type_name >> char_('#'))
+           >>(  _signed_integer
+              |  token._binary_integer
+              |  token._octal_integer
+              |  token._hex_integer
+             );
+
+    _numeric_literal
+        = _integer_literal
+        | token._real_literal;
+
+    _constant
+        = _numeric_literal
+        | _character_string;
+//        | time_literal
+//        | bit_string_literal
+//        | boolean_literal;
   }
   ~ciaaTextualParser() = default;
 
@@ -192,6 +232,17 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
 
   ciaaTextualParser(const ciaaTextualParser&&) = delete;
   ciaaTextualParser& operator=(const ciaaTextualParser&&) = delete;
+
+  qi::rule<Iterator, std::string> _constant;
+  qi::rule<Iterator, std::string> _numeric_literal;
+
+  qi::rule<Iterator, std::string> _integer_literal;
+  qi::rule<Iterator, std::string> _integer_type_name;
+  qi::rule<Iterator, std::string> _signed_integer_type_name;
+  qi::rule<Iterator, std::string> _unsigned_integer_type_name;
+  qi::rule<Iterator, std::string> _signed_integer;
+
+  qi::rule<Iterator, std::string> _character_string;
 };
 }  // namespace text
 }  // namespace iec61131_3

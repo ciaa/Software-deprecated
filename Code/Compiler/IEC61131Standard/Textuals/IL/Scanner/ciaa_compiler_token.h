@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file AST.h
+    \file ciaa_compiler_token.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 21 22:36:19 UTC 2014
+    \date Thu Jul 24 01:05:13 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,8 +34,8 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/AST.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_token.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,18 +43,38 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef COMPILER_IEC_AST_H
-#define COMPILER_IEC_AST_H
 
-#include <string>
+#ifndef CIAA_COMPILER_IEC_TEXTUAL_TOKEN_H
+#define CIAA_COMPILER_IEC_TEXTUAL_TOKEN_H
 
+#include <cinttypes>
+
+#include <vector>
+
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h"
 namespace ciaa {
 namespace compiler {
-struct identifier {
-  std::string _identifier;
+namespace iec61131_3 {
+namespace text {
+namespace il {
+class ciaaToken {
+ public:
+  ciaaToken() = delete;
+  ~ciaaToken() = delete;
+
+  ciaaToken(const ciaaToken&) = delete;
+  ciaaToken& operator=(const ciaaToken&) = delete;
+
+  ciaaToken(const ciaaToken&&) = delete;
+  ciaaToken& operator=(const ciaaToken&&) = delete;
+
+ private:
+  std::int32_t _line_in_text;
+  std::vector<ciaaSymbolInfo*>::iterator _table_entry;
 };
-}
-}
-
-
-#endif  // COMPILER_IEC_AST_H
+}  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespace ciaa
+#endif  // CIAA_COMPILER_IEC_TEXTUAL_TOKEN_H

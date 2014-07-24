@@ -174,22 +174,22 @@ struct ciaaLexer : lex::lexer<Lexer> {
   {
     lex::_pass_type _pass;
 
-    using tk = ciaa::compiler::iec61131_3::text::ciaaSymbolInfo::tk_kind;
+    using tk_id = ciaa::compiler::iec61131_3::text::ciaaSymbolInfo::tk_kind;
     this->self.add
-        (_identifier, static_cast<int>(tk::identifier))
-        (_signed_integer_type_sint, static_cast<int>(tk::signed_integer_type_sint))
-        (_signed_integer_type_int, static_cast<int>(tk::signed_integer_type_int))
-        (_signed_integer_type_dint, static_cast<int>(tk::signed_integer_type_dint))
-        (_signed_integer_type_lint, static_cast<int>(tk::signed_integer_type_lint))
-        (_unsigned_integer_type_usint, static_cast<int>(tk::unsigned_integer_type_usint))
-        (_unsigned_integer_type_uint, static_cast<int>(tk::unsigned_integer_type_uint))
-        (_unsigned_integer_type_udint, static_cast<int>(tk::unsigned_integer_type_udint))
-        (_unsigned_integer_type_ulint, static_cast<int>(tk::unsigned_integer_type_ulint))
-        (_integer, static_cast<int>(tk::integer))
-        (_binary_integer, static_cast<int>(tk::binary_integer))
-        (_octal_integer, static_cast<int>(tk::octal_integer))
-        (_hex_integer, static_cast<int>(tk::hex_integer))
-        (_real_literal, static_cast<int>(tk::real_literal));
+        (_identifier, static_cast<int>(tk_id::identifier))
+        (_signed_integer_type_sint, static_cast<int>(tk_id::signed_integer_type_sint))
+        (_signed_integer_type_int, static_cast<int>(tk_id::signed_integer_type_int))
+        (_signed_integer_type_dint, static_cast<int>(tk_id::signed_integer_type_dint))
+        (_signed_integer_type_lint, static_cast<int>(tk_id::signed_integer_type_lint))
+        (_unsigned_integer_type_usint, static_cast<int>(tk_id::unsigned_integer_type_usint))
+        (_unsigned_integer_type_uint, static_cast<int>(tk_id::unsigned_integer_type_uint))
+        (_unsigned_integer_type_udint, static_cast<int>(tk_id::unsigned_integer_type_udint))
+        (_unsigned_integer_type_ulint, static_cast<int>(tk_id::unsigned_integer_type_ulint))
+        (_integer, static_cast<int>(tk_id::integer))
+        (_binary_integer, static_cast<int>(tk_id::binary_integer))
+        (_octal_integer, static_cast<int>(tk_id::octal_integer))
+        (_hex_integer, static_cast<int>(tk_id::hex_integer))
+        (_real_literal, static_cast<int>(tk_id::real_literal));
 
     this->self += _space [_pass = lex::pass_flags::pass_ignore];
     this->self += _comment [_pass = lex::pass_flags::pass_ignore];

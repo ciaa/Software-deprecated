@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file AST.h
+/*! \brief This file give the functionality to ciaaSymbolTable class.
+    \file ciaa_compiler_symbol_table.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 21 22:36:19 UTC 2014
+    \date Tue Jul 22 02:19:55 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,8 +34,8 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/AST.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_symbol_table.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,18 +43,43 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef COMPILER_IEC_AST_H
-#define COMPILER_IEC_AST_H
-
-#include <string>
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_symbol_table.h"
 
 namespace ciaa {
 namespace compiler {
-struct identifier {
-  std::string _identifier;
-};
-}
+namespace iec61131_3 {
+namespace text {
+namespace il {
+
+ciaaSymbolTable::~ciaaSymbolTable() {
+  for (ciaaSymbolInfo* item : _items) {
+    delete item;
+  }
 }
 
+std::vector<ciaaSymbolInfo*>::iterator ciaaSymbolTable::entry_of(
+    std::string lexeme) {
+  return std::find_if(
+        _items.begin(),
+        _items.end(),
+        [&lexeme](ciaaSymbolInfo* a) {
+          return a->lexeme() == lexeme;
+        });
+}
 
-#endif  // COMPILER_IEC_AST_H
+std::vector<ciaaSymbolInfo*>::iterator ciaaSymbolTable::add(
+    std::string lexeme,
+    ciaaSymbolInfo::tk_kind kind) {
+  std::vector<ciaaSymbolInfo*>::iterator index{this->entry_of(lexeme)};
+  if (index == _items.end()) {
+      _items.push_back(new ciaaSymbolInfo(lexeme, kind));
+      return _items.end() - 1;
+  }
+  return index;
+}
+
+}  // namespace il
+}  // namespace text
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespace ciaa
