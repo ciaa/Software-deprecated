@@ -58,8 +58,8 @@
 std::string read_from_file(char const* infile) {
     std::ifstream instream(infile);
     if (!instream.is_open()) {
-        std::cerr << "Couldn't open file: " << infile << std::endl;
-        exit(-1);
+      std::cerr << "Couldn't open file: " << infile << std::endl;
+      std::exit(EXIT_FAILURE);
     }
     instream.unsetf(std::ios::skipws);      // No white space skipping!
     return std::string(std::istreambuf_iterator<char>(instream.rdbuf()),
@@ -69,20 +69,21 @@ std::string read_from_file(char const* infile) {
 int main(int argc,  char *argv[]) {
   assert(argc >= 2);
 
-
-  std::string str = read_from_file(1 == argc ? "/home/adacosta/WORK/Project/CIAA/Software/Tests/Coder/IL/source.in" : argv[1]);
+  std::string str{read_from_file(argv[1])};
 
   // create the token definition instance needed to invoke the lexical analyzer
   typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<lex::lexertl::actor_lexer<>> lexer_type;
   lexer_type lexer;
 
-  char const* first = str.c_str();
-  char const* last = &first[str.size()];
+  char const* first{str.c_str()};
+  char const* last{&first[str.size()]};
 
-  //AST::program ut;
-  ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type> parser{lexer /*&ut*/};
+  ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type> parser{lexer};
 
-   bool r = qi::parse(lexer.begin(first, last), lexer.end(), parser);
+  //ciaa::compiler::iec61131_3::text::il::instruction_list ast;
+  bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser)};
+
+  parser.check();
 
   if (r) {
     std::printf("OK\n");

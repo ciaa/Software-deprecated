@@ -69,7 +69,9 @@ class ciaaSymbolInfo {
     binary_integer,
     octal_integer,
     hex_integer,
-    real_literal
+    real_literal,
+    eol,
+    max_tk_id_val
   };
 
   ciaaSymbolInfo(std::string lexeme, ciaaSymbolInfo::tk_kind kind);
@@ -86,7 +88,7 @@ class ciaaSymbolInfo {
  private:
   tk_kind _kind;
   std::string _lexeme;
-  std::int32_t _address;
+  //std::int32_t _address;
   bool _declared;
   bool _initialized;
 

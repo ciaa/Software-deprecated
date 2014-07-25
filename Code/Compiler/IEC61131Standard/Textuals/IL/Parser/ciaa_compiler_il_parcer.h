@@ -93,11 +93,14 @@ namespace pnp = ciaa::compiler::iec61131_3::text;
  */
 namespace tnp = pnp::il;
 
+
 template <typename Iterator>
 struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruction_list> {
   template <typename TokenDef>
   li_grammar_chield(const TokenDef& token)
     : pnp::ciaaTextualParser<Iterator, tnp::instruction_list>(token, _instruction_list) {
+    using pc = pnp::ciaaTextualParser<Iterator, tnp::instruction_list>;
+    qi::char_type char_;
 //    _il_jump_operator = token._jmp;
 // // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
 
@@ -109,7 +112,7 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
 //    //_il_simple_operation = il_simple_operator
 
     _il_operand
-        = pnp::ciaaTextualParser<Iterator, tnp::instruction_list>::_constant;
+        = token._ld;//pc::_constant;
 //        | variable
 //        | enumerated_value;
 
@@ -150,6 +153,12 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
         | token._in
         | token._pt
         | _il_expr_operator;
+    _il_operand_list = _il_operand >> *(char_(',') >> _il_operand);
+
+    _il_simple_operation
+        = _il_simple_operator >> -_il_operand
+        | token._identifier;
+    //    | (pc::_function_name >> -_il_operand_list);
 
     _label = token._identifier;
 
@@ -159,8 +168,10 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
                       _il_fb_call           |
                       _il_formal_funct_call |
                       _il_return_operator;
-    _instruction_list = _il_instruction
-                          >> *_il_instruction;
+
+//        | token._ld;
+
+    _instruction_list = _il_instruction >> *_il_instruction;
 
 
   }
@@ -177,7 +188,7 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
   qi::rule<Iterator, tnp::instruction_list> _instruction_list;
   qi::rule<Iterator, tnp::il_instruction> _il_instruction;
 
-  qi::rule<Iterator, tnp::il_simple_operation> _il_simple_operation;
+  qi::rule<Iterator, tnp::il_simple_operation::variants> _il_simple_operation;
   qi::rule<Iterator, tnp::il_expression> _il_expression;
   qi::rule<Iterator, tnp::il_jump_operation> _il_jump_operation;
   qi::rule<Iterator, tnp::il_fb_call> _il_fb_call;
@@ -186,9 +197,11 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
 
   qi::rule<Iterator, tnp::label> _label;
 
-  qi::rule<Iterator, std::string> _il_simple_operator;
-  qi::rule<Iterator, std::string> _il_expr_operator;
-  qi::rule<Iterator, std::string> _il_operand;
+  qi::rule<Iterator, tnp::il_simple_operator> _il_simple_operator;
+  qi::rule<Iterator, tnp::il_expr_operator> _il_expr_operator;
+  qi::rule<Iterator, il_operand> _il_operand;
+  qi::rule<Iterator, std::string> _il_operand_list;
+
 
 
 };

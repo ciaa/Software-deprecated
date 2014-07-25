@@ -48,6 +48,8 @@
 
 #include <string>
 
+#include <boost/fusion/include/adapt_struct.hpp>
+
 namespace ciaa {
 namespace compiler {
 struct identifier {
@@ -56,5 +58,23 @@ struct identifier {
 }
 }
 
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::identifier,
+    (std::string, _identifier)
+)
 
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::constant,
+//    (std::string, _val)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::numeric_literal,
+//    (std::string, _val)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::character_string,
+//    (std::string, _val)
+//)
 #endif  // COMPILER_IEC_AST_H

@@ -183,10 +183,13 @@ namespace tnp = ciaa::compiler::iec61131_3::text;
 template <typename Iterator, typename Structure>
 struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
   template <typename TokenDef>
-  ciaaTextualParser(const TokenDef& token, const qi::rule<Iterator, Structure>& vv)
-    : ciaaTextualParser::base_type(vv) {
+  ciaaTextualParser(const TokenDef& token, const qi::rule<Iterator, Structure>& str)
+    : ciaaTextualParser::base_type(str) {
     qi::char_type char_;
 
+    _standard_function_name = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
+    _derived_function_name = token._identifier;
+    _function_name = _standard_function_name | _derived_function_name;
 //    _character_string
 //        =
 
@@ -243,6 +246,13 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
   qi::rule<Iterator, std::string> _signed_integer;
 
   qi::rule<Iterator, std::string> _character_string;
+
+  qi::rule<Iterator, std::string> _function_name;
+  qi::rule<Iterator, std::string> _standard_function_name;
+  qi::rule<Iterator, std::string> _derived_function_name;
+
+
+
 };
 }  // namespace text
 }  // namespace iec61131_3

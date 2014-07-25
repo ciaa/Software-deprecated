@@ -1,1 +1,1 @@
-JMP
+ST LD
