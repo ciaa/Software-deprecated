@@ -181,10 +181,12 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::i
 
 //    _instruction_list = _il_instruction >> *_il_instruction;
 
-BOOST_SPIRIT_DEBUG_NODES(
-        (_il_expr_operator)
-        (_str)
-      );
+//BOOST_SPIRIT_DEBUG_NODES(
+//        (_il_expr_operator)
+//        (_str)
+//      );
+  _il_expr_operator.name("holaaaaaaaa");
+  _str.name("holaaaaaaaa2222222");
 
 
     qi::_1_type _1;
