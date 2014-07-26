@@ -72,18 +72,26 @@ int main(int argc,  char *argv[]) {
   std::string str{read_from_file(argv[1])};
 
   // create the token definition instance needed to invoke the lexical analyzer
-  typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<lex::lexertl::actor_lexer<>> lexer_type;
+  typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<std::string::const_iterator> lexer_type;
   lexer_type lexer;
 
-  char const* first{str.c_str()};
-  char const* last{&first[str.size()]};
+  typedef std::string::const_iterator base_iterator_type2;
+  typedef lexer_type::iterator_type iterator_type2;
+  client::error_handler<base_iterator_type2, iterator_type2>
+      error_handler(str.begin(), str.end());             // Our error handler
 
-  ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type> parser{lexer};
+  ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type, lexer_type> parser{lexer, error_handler};
 
-  //ciaa::compiler::iec61131_3::text::il::instruction_list ast;
-  bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser)};
+  ciaa::compiler::iec61131_3::text::il::il_expr_operator ast;
 
-  parser.check();
+
+  typedef std::string::const_iterator base_iterator_type;
+  base_iterator_type first = str.begin();
+  base_iterator_type last = str.end();
+  bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser, ast)};
+
+  std::cout << "|" << ast._exp << "|" << std::endl;
+  parser.check(ast);
 
   if (r) {
     std::printf("OK\n");
@@ -95,6 +103,8 @@ int main(int argc,  char *argv[]) {
 //    }
   } else {
     std::fprintf(stderr, "Failed\n");
+    error_handler.dump_error_line(first);
+    std::cout << "Parse failure\n";
     return EXIT_FAILURE;
   }
 

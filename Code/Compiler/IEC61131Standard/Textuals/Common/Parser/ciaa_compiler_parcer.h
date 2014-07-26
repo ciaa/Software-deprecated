@@ -52,6 +52,8 @@
 // * \ingroup CompilerIL
 // */
 
+#define BOOST_SPIRIT_QI_DEBUG
+
 
 #include <functional>
 
@@ -65,8 +67,8 @@
 #include <boost/spirit/home/lex/argument.hpp>
 
 #include <boost/spirit/include/lex.hpp>
-#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_error_handler.h"
 
 
 namespace qi  = boost::spirit::qi;
@@ -180,53 +182,68 @@ struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
  */
 namespace tnp = ciaa::compiler::iec61131_3::text;
 
-template <typename Iterator, typename Structure>
-struct ciaaTextualParser : public qi::grammar<Iterator, Structure> {
+template <typename Iterator, typename Lexer, typename Structure>
+struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
   template <typename TokenDef>
-  ciaaTextualParser(const TokenDef& token, const qi::rule<Iterator, Structure>& str)
+  ciaaTextualParser(const TokenDef& token,
+                    client::error_handler<typename Lexer::base_iterator_type,
+                    Iterator>& error_handler,
+                    qi::rule<Iterator, Structure()>& str)
     : ciaaTextualParser::base_type(str) {
     qi::char_type char_;
 
-    _standard_function_name = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-    _derived_function_name = token._identifier;
-    _function_name = _standard_function_name | _derived_function_name;
-//    _character_string
-//        =
+//    _standard_function_name = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
+//    _derived_function_name = token._identifier;
+//    _function_name = _standard_function_name | _derived_function_name;
+////    _character_string
+////        =
 
-    _unsigned_integer_type_name
-        = token._unsigned_integer_type_usint
-        | token._unsigned_integer_type_uint
-        | token._unsigned_integer_type_udint
-        | token._unsigned_integer_type_ulint;
-    _signed_integer_type_name
-        = token._signed_integer_type_sint
-        | token._signed_integer_type_int
-        | token._signed_integer_type_dint
-        | token._signed_integer_type_lint;
-    _integer_type_name
-        = _signed_integer_type_name
-        | _unsigned_integer_type_name;
-    _signed_integer
-        = (char_('-')|char_('+'))
-        >>token._integer;
-    _integer_literal
-        = -(_integer_type_name >> char_('#'))
-           >>(  _signed_integer
-              |  token._binary_integer
-              |  token._octal_integer
-              |  token._hex_integer
-             );
+//    _unsigned_integer_type_name
+//        = token._unsigned_integer_type_usint
+//        | token._unsigned_integer_type_uint
+//        | token._unsigned_integer_type_udint
+//        | token._unsigned_integer_type_ulint;
+//    _signed_integer_type_name
+//        = token._signed_integer_type_sint
+//        | token._signed_integer_type_int
+//        | token._signed_integer_type_dint
+//        | token._signed_integer_type_lint;
+//    _integer_type_name
+//        = _signed_integer_type_name
+//        | _unsigned_integer_type_name;
+//    _signed_integer
+//        = (char_('-')|char_('+'))
+//        >>token._integer;
+//    _integer_literal
+//        = -(_integer_type_name >> char_('#'))
+//           >>(  _signed_integer
+//              |  token._binary_integer
+//              |  token._octal_integer
+//              |  token._hex_integer
+//             );
 
-    _numeric_literal
-        = _integer_literal
-        | token._real_literal;
+//    _numeric_literal
+//        = _integer_literal
+//        | token._real_literal;
 
-    _constant
-        = _numeric_literal
-        | _character_string;
+//    _constant
+//        = _numeric_literal
+//        | _character_string;
 //        | time_literal
 //        | bit_string_literal
 //        | boolean_literal;
+
+    qi::_1_type _1;
+    qi::_2_type _2;
+    qi::_3_type _3;
+    qi::_4_type _4;
+    ///////////////////////////////////////////////////////////////////////
+    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+        error_handler_type;
+    typedef boost::phoenix::function<error_handler_type> error_handler_function;
+
+    qi::on_error<qi::fail>(const_cast<qi::rule<Iterator, Structure()>&>(str),
+                           error_handler_function(error_handler)("Error! Expecting GGGGGGGGGGGGG ", _4, _3));
   }
   ~ciaaTextualParser() = default;
 

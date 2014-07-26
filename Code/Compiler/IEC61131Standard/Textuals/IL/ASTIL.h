@@ -95,6 +95,7 @@ struct il_operand {
 };
 
 struct il_expr_operator {
+  std::string _exp;
 };
 
 struct il_simple_operator{
@@ -137,13 +138,20 @@ using il_instruction =  boost::variant<il_simple_operation::variant1,
                                        il_formal_funct_call,
                                        il_return_operator>;
 
-struct instruction_list : std::list<il_instruction>{};
+struct instruction_list {
+  std::list<il_instruction> il;
+};
 
 }  // namespace il
 }  // namespace text
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
+
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::iec61131_3::text::il::instruction_list,
+    (std::list<ciaa::compiler::iec61131_3::text::il::il_instruction>, il)
+)
 
 BOOST_FUSION_ADAPT_STRUCT(
   ciaa::compiler::iec61131_3::text::il::label,
@@ -174,6 +182,11 @@ BOOST_FUSION_ADAPT_STRUCT(
 BOOST_FUSION_ADAPT_STRUCT(
   ciaa::compiler::iec61131_3::text::il::il_simple_operator,
     (ciaa::compiler::iec61131_3::text::il::il_simple_operator::simple_operator_type, op)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::iec61131_3::text::il::il_expr_operator,
+    (std::string, _exp)
 )
 
 //BOOST_FUSION_ADAPT_STRUCT(

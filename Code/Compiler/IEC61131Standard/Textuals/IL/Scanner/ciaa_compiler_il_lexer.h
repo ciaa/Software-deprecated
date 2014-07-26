@@ -46,11 +46,8 @@
 #ifndef COMPILER_IEC_IL_LEXER_H
 #define COMPILER_IEC_IL_LEXER_H
 
-#include <boost/spirit/include/lex_lexertl.hpp>
-namespace lex = boost::spirit::lex;
-
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer2.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_lexer.h"
 
 namespace ciaa {
 namespace compiler {
@@ -58,13 +55,16 @@ namespace iec61131_3 {
 namespace text {
 namespace il {
 
+namespace lex = boost::spirit::lex;
+
 /*! \brief The ciaaLexer class provide a tocken flow.
  * \brief The ciaaLexer class take a flow of characters and transorm
  * \brief it in a tocken flow.
  * \ingroup CompilerIL
  */
-template <typename Lexer>
-struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
+template <typename BaseIterator>
+struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
+  typedef std::string::const_iterator base_iterator_type;
   enum class tk_kind_chiekd {
     jmp = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val) + 1,  //TODO(denisacostaq/@gmail.com):
     jmpc = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 2,
@@ -124,7 +124,7 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
       , _pv{R"***(PV)***"}
       , _in{R"***(IN)***"}
       , _pt{R"***(PT)***"}
-      , _and{R"***(AND)***"}
+      ,  _and{R"***(AND)***"}
       , _and_symbol{R"***(&)***"}
       , _or{R"***(OR)***"}
       , _xor{R"***(XOR)***"}
@@ -195,7 +195,7 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
   lex::token_def<std::string> _jmpc;
   lex::token_def<std::string> _jmpcn;
 
-  //il_simple_operator(il_expr_operator included)
+//  //il_simple_operator(il_expr_operator included)
   lex::token_def<std::string> _ld;
   lex::token_def<std::string> _ldn;
   lex::token_def<std::string> _st;
@@ -211,7 +211,7 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
   lex::token_def<std::string> _pv;
   lex::token_def<std::string> _in;
   lex::token_def<std::string> _pt;
-  //il_expr_operator
+//  //il_expr_operator
   lex::token_def<std::string> _and;
   lex::token_def<std::string> _and_symbol;
   lex::token_def<std::string> _or;
@@ -232,7 +232,7 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<Lexer> {
   lex::token_def<std::string> _le;
   lex::token_def<std::string> _ne;
 };
-typedef ciaaILLexer<lex::lexertl::actor_lexer<>> Scanner;
+//typedef ciaaILLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace il
 }  // namespace text
 }  // namespace iec61131_3

@@ -1,5 +1,5 @@
 set(compiler_il_Code
-    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Scanner/ciaa_compiler_lexer.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Scanner/ciaa_compiler_lexer2.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Parser/ciaa_compiler_parcer.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/Scanner/ciaa_compiler_symbol_info.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/../Common/AST.h

@@ -67,18 +67,18 @@
 
 
 
+#define BOOST_SPIRIT_QI_DEBUG
 
 
 
 
-
-
+#include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/qi.hpp>
 namespace qi = boost::spirit::qi;
 
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_il_lexer.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Common/Parser/ciaa_compiler_parcer.h"
-
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
 
 namespace ciaa {
 namespace compiler {
@@ -94,12 +94,17 @@ namespace pnp = ciaa::compiler::iec61131_3::text;
 namespace tnp = pnp::il;
 
 
-template <typename Iterator>
-struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruction_list> {
+template <typename Iterator, typename Lexer>
+struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::il_expr_operator> {
   template <typename TokenDef>
-  li_grammar_chield(const TokenDef& token)
-    : pnp::ciaaTextualParser<Iterator, tnp::instruction_list>(token, _instruction_list) {
-    using pc = pnp::ciaaTextualParser<Iterator, tnp::instruction_list>;
+  li_grammar_chield(const TokenDef& token,
+                    client::error_handler<typename Lexer::base_iterator_type, Iterator>& error_handler)
+    : pnp::ciaaTextualParser<Iterator,
+                             Lexer,
+                             tnp::il_expr_operator>(token,
+                                                    error_handler,
+                                                    _il_expr_operator) {
+    //using pc = pnp::ciaaTextualParser<Lexer::iterator_type, tnp::instruction_list>;
     qi::char_type char_;
 //    _il_jump_operator = token._jmp;
 // // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
@@ -111,67 +116,90 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
 
 //    //_il_simple_operation = il_simple_operator
 
-    _il_operand
-        = token._ld;//pc::_constant;
+//    _il_operand
+//        = token._ld;//pc::_constant;
 //        | variable
 //        | enumerated_value;
 
     _il_expr_operator
-        = token._and
-        | token._and_symbol
-        | token._or
-        | token._xor
-        | token._andn
-        | token._and_symbol_n
-        | token._orn
-        | token._xorn
-        | token._add
-        | token._sub
-        | token._mul
-        | token._div
-        | token._mod
-        | token._gt
-        | token._ge
-        | token._eq
-        | token._lt
-        | token._le
-        | token._ne;
-    _il_simple_operator
-        = token._ld
-        | token._ldn
-        | token._st
-        | token._stn
-        | token._not
-        | token._s
-        | token._r
-        | token._s1
-        | token._r1
-        | token._clk
-        | token._cu
-        | token._cd
-        | token._pv
-        | token._in
-        | token._pt
-        | _il_expr_operator;
-    _il_operand_list = _il_operand >> *(char_(',') >> _il_operand);
+        = _str > _str;
 
-    _il_simple_operation
-        = _il_simple_operator >> -_il_operand
-        | token._identifier;
-    //    | (pc::_function_name >> -_il_operand_list);
+    _str
+        = token._and;
+//        | token._and_symbol
+//        | token._or
+//        | token._xor
+//        | token._andn
+//        | token._and_symbol_n
+//        | token._orn
+//        | token._xorn
+//        | token._add
+//        | token._sub
+//        | token._mul
+//        | token._div
+//        | token._mod
+//        | token._gt
+//        | token._ge
+//        | token._eq
+//        | token._lt
+//        | token._le
+//        | token._ne;
+//    _il_simple_operator
+//        = token._ld
+//        | token._ldn
+//        | token._st
+//        | token._stn
+//        | token._not
+//        | token._s
+//        | token._r
+//        | token._s1
+//        | token._r1
+//        | token._clk
+//        | token._cu
+//        | token._cd
+//        | token._pv
+//        | token._in
+//        | token._pt
+//        | _il_expr_operator;
+//    _il_operand_list = _il_operand >> *(char_(',') >> _il_operand);
 
-    _label = token._identifier;
+//    _il_simple_operation
+//        = _il_simple_operator >> -_il_operand
+//        | token._identifier;
+//    //    | (pc::_function_name >> -_il_operand_list);
 
-    _il_instruction = _il_simple_operation  |
-                      _il_expression        |
-                      _il_jump_operation    |
-                      _il_fb_call           |
-                      _il_formal_funct_call |
-                      _il_return_operator;
+//    _label = token._identifier;
+
+//    _il_instruction = _il_simple_operation  |
+//                      _il_expression        |
+//                      _il_jump_operation    |
+//                      _il_fb_call           |
+//                      _il_formal_funct_call |
+//                      _il_return_operator;
 
 //        | token._ld;
 
-    _instruction_list = _il_instruction >> *_il_instruction;
+//    _instruction_list = _il_instruction >> *_il_instruction;
+
+BOOST_SPIRIT_DEBUG_NODES(
+        (_il_expr_operator)
+        (_str)
+      );
+
+
+    qi::_1_type _1;
+    qi::_2_type _2;
+    qi::_3_type _3;
+    qi::_4_type _4;
+    ///////////////////////////////////////////////////////////////////////
+    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+        error_handler_type;
+    typedef boost::phoenix::function<error_handler_type> error_handler_function;
+
+
+    qi::on_error<qi::fail>(_il_expr_operator,
+                           error_handler_function(error_handler)("Error! Expecting DDDDDDDDD ", _4, _3));
+
 
 
   }
@@ -198,11 +226,40 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, tnp::instruct
   qi::rule<Iterator, tnp::label> _label;
 
   qi::rule<Iterator, tnp::il_simple_operator> _il_simple_operator;
-  qi::rule<Iterator, tnp::il_expr_operator> _il_expr_operator;
+  qi::rule<Iterator, tnp::il_expr_operator()> _il_expr_operator;
+  qi::rule<Iterator, std::string()> _str;
   qi::rule<Iterator, il_operand> _il_operand;
   qi::rule<Iterator, std::string> _il_operand_list;
 
 
+
+
+
+  void check(const ciaa::compiler::iec61131_3::text::il::il_expr_operator& ast) {
+    typedef struct {
+      bool operator()(tnp::il_instruction const& x) const {
+        std::printf("DDDDDDDDDDDD\n");
+        return true;
+      }
+
+      bool start(const tnp::il_expr_operator& ast) {
+        std::printf("|%s|\n", ast._exp.c_str());
+//        std::printf("size: %d\n", ast.il.size());
+//        for (tnp::il_instruction instr : ast.il) {
+//          std::printf("DDDDDDDDDDDD222222\n");
+//          if (!(*this)(instr)) {
+//            return false;
+//          }
+//        }
+//        std::printf("DDDDDDDDDDDD33333333\n");
+        return true;
+      }
+    } checker;
+    checker ch;
+    std::printf("DDDDDDDDDDDD4444444\n");
+    if (!ch.start(ast)) std::exit(EXIT_FAILURE);
+
+  }
 
 };
 }  // namespace il

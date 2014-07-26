@@ -43,8 +43,8 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_IL_LEXER_H
-#define CIAA_COMPILER_IEC_IL_LEXER_H
+#ifndef COMPILER_IEC_LEXER_H
+#define COMPILER_IEC_LEXER_H
 
 ////////////////////////////////////////////////////////////////////////////////
 // Spirit v2.5 allows you to suppress automatic generation
@@ -60,9 +60,9 @@
 // #define BOOST_SPIRIT_QI_DEBUG
 ////////////////////////////////////////////////////////////////////////////////
 
-
 #include <boost/spirit/include/lex_lexertl.hpp>
-namespace lex = boost::spirit::lex;
+#include <boost/spirit/include/lex_lexertl_position_token.hpp>
+#include <boost/mpl/vector.hpp>
 
 #include "Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Common/AST.h"
@@ -71,6 +71,50 @@ namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace text {
+
+namespace lex = boost::spirit::lex;
+
+
+
+///////////////////////////////////////////////////////////////////////////
+namespace detail
+{
+    template <typename BaseIterator>
+    struct get_lexer_type
+    {
+        // Our token needs to be able to carry several token values:
+        // std::string, unsigned int, and bool
+        typedef boost::mpl::vector<std::string>
+            token_value_types;
+
+        // Using the position_token class as the token type to be returned
+        // from the lexer iterators allows to retain positional information
+        // as every token instance stores an iterator pair pointing to the
+        // matched input sequence.
+        typedef lex::lexertl::position_token<
+            BaseIterator, token_value_types, boost::mpl::false_
+        > token_type;
+
+//#if CONJURE_LEXER_DYNAMIC_TABLES != 0
+        // use the lexer based on runtime generated DFA tables
+        typedef lex::lexertl::actor_lexer<token_type> type;
+/*#elif CONJURE_LEXER_STATIC_TABLES != 0
+        // use the lexer based on pre-generated static DFA tables
+        typedef lex::lexertl::static_actor_lexer<
+            token_type
+          , boost::spirit::lex::lexertl::static_::lexer_conjure_static
+        > type;
+#elif CONJURE_LEXER_STATIC_SWITCH != 0
+        // use the lexer based on pre-generated static code
+        typedef lex::lexertl::static_actor_lexer<
+            token_type
+          , boost::spirit::lex::lexertl::static_::lexer_conjure_static_switch
+        > type;
+#else
+#error "Configuration problem: please select exactly one type of lexer to build"
+#endif*/
+    };
+}
 
 //enum tk_id_ {
 //  LETTER,
@@ -148,8 +192,8 @@ namespace text {
  * \brief it in a tocken flow.
  * \ingroup CompilerIL
  */
-template <typename Lexer>
-struct ciaaLexer : lex::lexer<Lexer> {
+template <typename BaseIterator>
+struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::type> {
   ciaaLexer()
       : _space{R"***( )***"}
       , _comment{R"***(coment)***"}
@@ -195,7 +239,7 @@ struct ciaaLexer : lex::lexer<Lexer> {
     this->self += _space [_pass = lex::pass_flags::pass_ignore];
     this->self += _comment [_pass = lex::pass_flags::pass_ignore];
   }
-    //this->self += _space [lex::_pass = lex::pass_flags::pass_ignore];
+
   lex::token_def<std::string> _space;
   lex::token_def<std::string> _comment;
 
@@ -221,10 +265,10 @@ struct ciaaLexer : lex::lexer<Lexer> {
   lex::token_def<std::string> _real_literal;
 };
 
-typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;
+//typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace text
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespace ciaa
-#endif   // CIAA_COMPILER_IEC_IL_LEXER_H
+#endif   // COMPILER_IEC_LEXER_H
 
