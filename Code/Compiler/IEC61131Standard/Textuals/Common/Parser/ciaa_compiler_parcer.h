@@ -253,7 +253,7 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
   ciaaTextualParser(const ciaaTextualParser&&) = delete;
   ciaaTextualParser& operator=(const ciaaTextualParser&&) = delete;
 
-  qi::rule<Iterator, std::string> _constant;
+  qi::rule<Iterator, std::string()> _constant;
   qi::rule<Iterator, std::string> _numeric_literal;
 
   qi::rule<Iterator, std::string> _integer_literal;
@@ -264,7 +264,7 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
 
   qi::rule<Iterator, std::string> _character_string;
 
-  qi::rule<Iterator, std::string> _function_name;
+  qi::rule<Iterator, std::string()> _function_name;
   qi::rule<Iterator, std::string> _standard_function_name;
   qi::rule<Iterator, std::string> _derived_function_name;
 

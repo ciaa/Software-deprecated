@@ -143,25 +143,23 @@ struct instruction_list : std::list<il_operand>{};
 
 
 
+//struct ast_label {
+//  std::string _label;
+//};
 
+//struct ast_il_simple_operation {
+//  ast_label _fefa;
+//};
 
+//struct ast_il_expression {
+//  ast_label _fefa;
+//};
 
-struct ast_label {
-  std::string _label;
-};
-
-struct ast_il_simple_operation {
-  ast_label _fefa;
-};
-
-struct ast_il_expression {
-  ast_label _fefa;
-};
-
-struct ast_il_instruction {
-  using avariant = boost::variant<ast_il_expression, ast_il_simple_operation>;
-  avariant  _inst;
-};
+//struct ast_il_instruction {
+//  using variant_instruction = boost::variant<ast_il_expression,
+//                                             ast_il_simple_operation>;
+//  variant_instruction  _inst;
+//};
 
 }  // namespace il
 }  // namespace text
@@ -170,25 +168,25 @@ struct ast_il_instruction {
 }  // namespace ciaa
 
 
-BOOST_FUSION_ADAPT_STRUCT(
-  ciaa::compiler::iec61131_3::text::il::ast_label,
-    (std::string, _label)
-)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::iec61131_3::text::il::ast_label,
+//    (std::string, _label)
+//)
 
-BOOST_FUSION_ADAPT_STRUCT(
-  ciaa::compiler::iec61131_3::text::il::ast_il_simple_operation,
-    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
-)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::iec61131_3::text::il::ast_il_simple_operation,
+//    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
+//)
 
-BOOST_FUSION_ADAPT_STRUCT(
-  ciaa::compiler::iec61131_3::text::il::ast_il_expression,
-    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
-)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::iec61131_3::text::il::ast_il_expression,
+//    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
+//)
 
-BOOST_FUSION_ADAPT_STRUCT(
-  ciaa::compiler::iec61131_3::text::il::ast_il_instruction,
-    (ciaa::compiler::iec61131_3::text::il::ast_il_instruction::avariant, _inst)
-)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::iec61131_3::text::il::ast_il_instruction,
+//    (ciaa::compiler::iec61131_3::text::il::ast_il_instruction::variant_instruction, _inst)
+//)
 
 
 //BOOST_FUSION_ADAPT_STRUCT(
@@ -246,5 +244,140 @@ BOOST_FUSION_ADAPT_STRUCT(
 //    ciaa::compiler::il::ASTIL,
 //    (ciaa::compiler::il::VarDcl, _var_dcl)
 //)
+
+
+namespace AST {
+  struct AST_il_operand {
+    std::string _operand;
+  };
+
+  using AST_il_operand_list = std::list<AST::AST_il_operand>;
+
+  struct AST_il_label {
+    std::string _label;
+  };
+
+struct AST_il_simple_operation {
+  typedef struct {
+      std::string _simple_operation;
+      boost::optional<AST_il_operand> _operand;
+  } one;
+  typedef struct {
+    std::string _function_name;
+    boost::optional<std::list<AST_il_operand>> _operand_list;
+  } two;
+  using posible_variants = boost::variant<one, two>;
+  posible_variants data;
+};
+
+struct AST_il_expression {
+
+};
+
+struct AST_il_jump_operation {
+};
+
+struct AST_il_fb_call {
+};
+
+struct AST_il_formal_funct_call {
+};
+
+struct AST_il_return_operator {
+};
+
+struct AST_il_instruction {
+  boost::optional<AST_il_label> _label;
+  using instruction_variant_type = boost::variant<AST_il_simple_operation::posible_variants,
+                                                  AST_il_expression,
+                                                  AST_il_jump_operation,
+                                                  AST_il_fb_call,
+                                                  AST_il_formal_funct_call,
+                                                  AST_il_return_operator>;
+  boost::optional<instruction_variant_type> _instruction;
+  std::list<char> _eol;
+};
+
+using AST_il_instruction_list = std::list<AST_il_instruction>;
+}
+
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_operand,
+    (std::string, _operand)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_label,
+    (std::string, _label)
+)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_simple_operation,
+////    (std::string, _simple_operation)
+////    (boost::optional<AST::AST_il_operand>, _operand)
+//      (std::string, _function_name)
+//      (boost::optional<std::list<AST::AST_il_operand>>, _operand_list)
+//)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_simple_operation::one,
+    (std::string, _simple_operation)
+    (boost::optional<AST::AST_il_operand>, _operand)
+)
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_simple_operation::two,
+    (std::string, _function_name)
+    (boost::optional<std::list<AST::AST_il_operand>>, _operand_list)
+)
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_simple_operation,
+    (AST::AST_il_simple_operation::posible_variants, data)
+)
+//struct AST_il_simple_operation {
+//  typedef struct {
+//      std::string _simple_operation;
+//      boost::optional<AST_il_operand> _operand;
+//  } one;
+//  typedef struct {
+//    std::string _function_name;
+//    boost::optional<std::list<AST::AST_il_operand>> _operand_list;
+//  } two;
+//  using posible_variants = boost::variant<one, two>;
+//  posible_variants data;
+//};
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_expression,
+//    (std::string, _label)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_jump_operation,
+//    (std::string, _label)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_fb_call,
+//    (std::string, _label)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_formal_funct_call,
+//    (std::string, _label)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_il_return_operator,
+//    (std::string, _label)
+//)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  AST::AST_il_instruction,
+    (boost::optional<AST::AST_il_label>, _label)
+    (boost::optional<AST::AST_il_instruction::instruction_variant_type>, _instruction)
+    (std::list<char>, _eol)
+)
+
+
 
 #endif  // COMPILER_IEC_IL_ASTIL_H

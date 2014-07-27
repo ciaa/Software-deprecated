@@ -82,14 +82,14 @@ int main(int argc,  char *argv[]) {
 
   ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type, lexer_type> parser{lexer, error_handler};
 
-  ciaa::compiler::iec61131_3::text::il::il_expr_operator ast;
+  AST::AST_il_instruction_list ast;
 
   base_iterator_type first = str.begin();
   base_iterator_type last = str.end();
   bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser, ast)};
 
-  std::cout << "|" << ast._exp << "|" << std::endl;
-  parser.check(ast);
+  //std::cout << "|" << ast._exp << "|" << std::endl;
+  //parser.check(ast);
 
   if (r) {
     std::printf("OK\n");
