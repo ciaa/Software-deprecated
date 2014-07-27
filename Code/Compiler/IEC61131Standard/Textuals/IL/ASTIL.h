@@ -109,9 +109,7 @@ struct il_simple_operation {
     il_simple_operator _operator;
     boost::optional<il_operand> _operand;
   }variant1;
-  typedef struct {
-    char s;
-  } variant2;
+  using variant2 = std::string;
   using variants = boost::variant<variant1, variant2>;
   variants  data;
 };
@@ -131,15 +129,38 @@ struct il_formal_funct_call {
 struct il_return_operator {
 };
 
-using il_instruction =  boost::variant<il_simple_operation::variant1,
+using il_instruction =  boost::variant<std::string,
+                                       label,
+                                       il_operand
+                                       /*il_simple_operation::variant1,
                                        il_expression,
                                        il_jump_operation,
                                        il_fb_call,
                                        il_formal_funct_call,
-                                       il_return_operator>;
+                                       il_return_operator*/>;
 
-struct instruction_list {
-  std::list<il_instruction> il;
+struct instruction_list : std::list<il_operand>{};
+
+
+
+
+
+
+struct ast_label {
+  std::string _label;
+};
+
+struct ast_il_simple_operation {
+  ast_label _fefa;
+};
+
+struct ast_il_expression {
+  ast_label _fefa;
+};
+
+struct ast_il_instruction {
+  using avariant = boost::variant<ast_il_expression, ast_il_simple_operation>;
+  avariant  _inst;
 };
 
 }  // namespace il
@@ -148,10 +169,32 @@ struct instruction_list {
 }  // namespace compiler
 }  // namespace ciaa
 
+
 BOOST_FUSION_ADAPT_STRUCT(
-  ciaa::compiler::iec61131_3::text::il::instruction_list,
-    (std::list<ciaa::compiler::iec61131_3::text::il::il_instruction>, il)
+  ciaa::compiler::iec61131_3::text::il::ast_label,
+    (std::string, _label)
 )
+
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::iec61131_3::text::il::ast_il_simple_operation,
+    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::iec61131_3::text::il::ast_il_expression,
+    (ciaa::compiler::iec61131_3::text::il::ast_label, _fefa)
+)
+
+BOOST_FUSION_ADAPT_STRUCT(
+  ciaa::compiler::iec61131_3::text::il::ast_il_instruction,
+    (ciaa::compiler::iec61131_3::text::il::ast_il_instruction::avariant, _inst)
+)
+
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  ciaa::compiler::iec61131_3::text::il::instruction_list,
+//    (std::list<ciaa::compiler::iec61131_3::text::il::il_operand>, _instr_list)
+//)
 
 BOOST_FUSION_ADAPT_STRUCT(
   ciaa::compiler::iec61131_3::text::il::label,

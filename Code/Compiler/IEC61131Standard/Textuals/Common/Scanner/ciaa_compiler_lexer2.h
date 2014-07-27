@@ -210,7 +210,6 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
       , _binary_integer{R"***(2#[01](_?[01])*)***"}
       , _octal_integer{R"***(8#[1-8](_?[1-8])*)***"}
       , _hex_integer{R"***(16#[0-9A-Fa-f](_?[0-9A-Fa-f])*)***"}
-      , _eol{R"***(\n)***"}  //FIXME(denisacostaq\@gmail.com): EOL != \n
 
 
       , _real_literal{R"***((("REAL"|"LREAL")#)?([\+\-])?[0-9](_?[0-9])*\.([0-9])(_?[0-9])*([eE]([\+\-])?[0-9](_?[0-9])*)?)***"}
@@ -233,8 +232,7 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
         (_binary_integer, static_cast<int>(tk_id::binary_integer))
         (_octal_integer, static_cast<int>(tk_id::octal_integer))
         (_hex_integer, static_cast<int>(tk_id::hex_integer))
-        (_real_literal, static_cast<int>(tk_id::real_literal))
-        (_eol, static_cast<int>(tk_id::eol));
+        (_real_literal, static_cast<int>(tk_id::real_literal));
 
     this->self += _space [_pass = lex::pass_flags::pass_ignore];
     this->self += _comment [_pass = lex::pass_flags::pass_ignore];
@@ -258,8 +256,6 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
   lex::token_def<std::string> _binary_integer;
   lex::token_def<std::string> _octal_integer;
   lex::token_def<std::string> _hex_integer;
-
-  lex::token_def<std::string> _eol;
 
 
   lex::token_def<std::string> _real_literal;

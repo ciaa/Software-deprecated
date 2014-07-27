@@ -1,2 +1,3 @@
-AND 
+hola:
+LD AND 
 ST LD

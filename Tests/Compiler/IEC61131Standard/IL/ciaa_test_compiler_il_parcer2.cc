@@ -75,17 +75,15 @@ int main(int argc,  char *argv[]) {
   typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<std::string::const_iterator> lexer_type;
   lexer_type lexer;
 
-  typedef std::string::const_iterator base_iterator_type2;
-  typedef lexer_type::iterator_type iterator_type2;
-  client::error_handler<base_iterator_type2, iterator_type2>
+  typedef std::string::const_iterator base_iterator_type;
+  typedef lexer_type::iterator_type iterator_type;
+  client::error_handler<base_iterator_type, iterator_type>
       error_handler(str.begin(), str.end());             // Our error handler
 
   ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type, lexer_type> parser{lexer, error_handler};
 
   ciaa::compiler::iec61131_3::text::il::il_expr_operator ast;
 
-
-  typedef std::string::const_iterator base_iterator_type;
   base_iterator_type first = str.begin();
   base_iterator_type last = str.end();
   bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser, ast)};

@@ -70,7 +70,6 @@ class ciaaSymbolInfo {
     octal_integer,
     hex_integer,
     real_literal,
-    eol,
     max_tk_id_val
   };
 

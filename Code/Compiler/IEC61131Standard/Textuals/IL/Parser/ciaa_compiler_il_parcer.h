@@ -95,17 +95,18 @@ namespace tnp = pnp::il;
 
 
 template <typename Iterator, typename Lexer>
-struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::il_expr_operator> {
+struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, std::string> {
   template <typename TokenDef>
   li_grammar_chield(const TokenDef& token,
                     client::error_handler<typename Lexer::base_iterator_type, Iterator>& error_handler)
     : pnp::ciaaTextualParser<Iterator,
                              Lexer,
-                             tnp::il_expr_operator>(token,
-                                                    error_handler,
-                                                    _il_expr_operator) {
+                             std::string>(token,
+                                          error_handler,
+                                          _il_simple_operator) {
     //using pc = pnp::ciaaTextualParser<Lexer::iterator_type, tnp::instruction_list>;
     qi::char_type char_;
+    boost::spirit::qi::eol_type eol_;
 //    _il_jump_operator = token._jmp;
 // // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
 
@@ -116,78 +117,88 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::i
 
 //    //_il_simple_operation = il_simple_operator
 
-//    _il_operand
-//        = token._ld;//pc::_constant;
+    _il_operand
+        = token._ld;//pc::_constant;
 //        | variable
 //        | enumerated_value;
 
+    _il_expr_operator.name("il_expr_operator");
     _il_expr_operator
-        = _str > _str;
-
-    _str
-        = token._and;
-//        | token._and_symbol
-//        | token._or
-//        | token._xor
-//        | token._andn
-//        | token._and_symbol_n
-//        | token._orn
-//        | token._xorn
-//        | token._add
-//        | token._sub
-//        | token._mul
-//        | token._div
-//        | token._mod
-//        | token._gt
-//        | token._ge
-//        | token._eq
-//        | token._lt
-//        | token._le
-//        | token._ne;
-//    _il_simple_operator
-//        = token._ld
-//        | token._ldn
-//        | token._st
-//        | token._stn
-//        | token._not
-//        | token._s
-//        | token._r
-//        | token._s1
-//        | token._r1
-//        | token._clk
-//        | token._cu
-//        | token._cd
-//        | token._pv
-//        | token._in
-//        | token._pt
-//        | _il_expr_operator;
+        = token._and
+        | token._and_symbol
+        | token._or
+        | token._xor
+        | token._andn
+        | token._and_symbol_n
+        | token._orn
+        | token._xorn
+        | token._add
+        | token._sub
+        | token._mul
+        | token._div
+        | token._mod
+        | token._gt
+        | token._ge
+        | token._eq
+        | token._lt
+        | token._le
+        | token._ne;
+    _il_simple_operator.name("il_simple_operator");
+    _il_simple_operator
+        = token._ld
+        | token._ldn
+        | token._st
+        | token._stn
+        | token._not
+        | token._s
+        | token._r
+        | token._s1
+        | token._r1
+        | token._clk
+        | token._cu
+        | token._cd
+        | token._pv
+        | token._in
+        | token._pt
+        | _il_expr_operator;
 //    _il_operand_list = _il_operand >> *(char_(',') >> _il_operand);
 
-//    _il_simple_operation
-//        = _il_simple_operator >> -_il_operand
-//        | token._identifier;
+    _il_simple_operation.name("il_simple_operation");
+    _il_simple_operation
+        =
+        //_il_simple_operator >> -_il_operand
+        //|
+        token._identifier;
 //    //    | (pc::_function_name >> -_il_operand_list);
 
-//    _label = token._identifier;
+    _label.name("label");
+    _label = token._identifier;
 
-//    _il_instruction = _il_simple_operation  |
-//                      _il_expression        |
-//                      _il_jump_operation    |
-//                      _il_fb_call           |
-//                      _il_formal_funct_call |
-//                      _il_return_operator;
+    _il_instruction.name("il_instruction");
+    _il_instruction
+        =  _label;
+//        -(_label > char_(":"))
+//        >>  -(
+//                 _il_simple_operation
+//               | _il_expression
+//               | _il_jump_operation
+//               | _il_fb_call
+//               | _il_formal_funct_call
+//               | _il_return_operator)
+//        >> +eol_
+           ;
 
 //        | token._ld;
 
-//    _instruction_list = _il_instruction >> *_il_instruction;
+    _instruction_list.name("_instruction_list");
+    _instruction_list
+        =  +_il_instruction;
+        //>> *_il_instruction;
 
 //BOOST_SPIRIT_DEBUG_NODES(
 //        (_il_expr_operator)
 //        (_str)
 //      );
-  _il_expr_operator.name("holaaaaaaaa");
-  _str.name("holaaaaaaaa2222222");
-
 
     qi::_1_type _1;
     qi::_2_type _2;
@@ -202,7 +213,12 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::i
     qi::on_error<qi::fail>(_il_expr_operator,
                            error_handler_function(error_handler)("Error! Expecting DDDDDDDDD ", _4, _3));
 
-
+_pepe = _label;
+_tiene_pepe = _pepe;
+_pepe22 = _tiene_pepe;
+_tiene_pepesss22222222 = +_pepe22;
+_tiene_pepesss = +_tiene_pepe;
+_pepe_list = +_pepe;
 
   }
 
@@ -215,26 +231,30 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, tnp::i
 
 
 
-  qi::rule<Iterator, tnp::instruction_list> _instruction_list;
-  qi::rule<Iterator, tnp::il_instruction> _il_instruction;
+  qi::rule<Iterator, instruction_list()> _instruction_list;
+  qi::rule<Iterator, tnp::il_operand()> _il_instruction;
 
-  qi::rule<Iterator, tnp::il_simple_operation::variants> _il_simple_operation;
-  qi::rule<Iterator, tnp::il_expression> _il_expression;
-  qi::rule<Iterator, tnp::il_jump_operation> _il_jump_operation;
-  qi::rule<Iterator, tnp::il_fb_call> _il_fb_call;
-  qi::rule<Iterator, tnp::il_formal_funct_call> _il_formal_funct_call;
-  qi::rule<Iterator, tnp::il_return_operator> _il_return_operator;
+  qi::rule<Iterator, tnp::il_simple_operation::variant2()> _il_simple_operation;
+  qi::rule<Iterator, tnp::il_expression()> _il_expression;
+  qi::rule<Iterator, tnp::il_jump_operation()> _il_jump_operation;
+  qi::rule<Iterator, tnp::il_fb_call()> _il_fb_call;
+  qi::rule<Iterator, tnp::il_formal_funct_call()> _il_formal_funct_call;
+  qi::rule<Iterator, tnp::il_return_operator()> _il_return_operator;
 
-  qi::rule<Iterator, tnp::label> _label;
+  qi::rule<Iterator, std::string()> _label;
 
-  qi::rule<Iterator, tnp::il_simple_operator> _il_simple_operator;
-  qi::rule<Iterator, tnp::il_expr_operator()> _il_expr_operator;
-  qi::rule<Iterator, std::string()> _str;
-  qi::rule<Iterator, il_operand> _il_operand;
-  qi::rule<Iterator, std::string> _il_operand_list;
-
+  qi::rule<Iterator, std::string()> _il_simple_operator;
+  qi::rule<Iterator, std::string()> _il_expr_operator;
+  qi::rule<Iterator, std::string()> _il_operand;
+  qi::rule<Iterator, std::string()> _il_operand_list;
 
 
+  qi::rule<Iterator, tnp::ast_label()> _pepe;
+  qi::rule<Iterator, tnp::ast_il_expression()> _tiene_pepe;
+  qi::rule<Iterator, tnp::ast_il_instruction()> _pepe22;
+  qi::rule<Iterator, std::list<tnp::ast_il_instruction>()> _tiene_pepesss22222222;
+  qi::rule<Iterator, std::list<tnp::ast_il_expression>()> _tiene_pepesss;
+  qi::rule<Iterator, std::list<tnp::ast_label>()> _pepe_list;
 
 
   void check(const ciaa::compiler::iec61131_3::text::il::il_expr_operator& ast) {
