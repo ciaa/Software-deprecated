@@ -102,11 +102,24 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
     eq = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 34,
     lt = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 35,
     le = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 36,
-    ne = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 37
+    ne = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 37,
+    eol = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 38,
+    ret = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 39,
+    retc = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 40,
+    retcn = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 41,
+    cal = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 42,
+    calc = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 43,
+    calcn = static_cast<int>(ciaaSymbolInfo::tk_kind::max_tk_id_val)  + 44
   };
 
-  ciaaILLexer()
-      : _jmp{R"***(JMP)***"}
+  ciaaILLexer()      
+      : _cal{R"***(CAL)***"}
+      , _calc{R"***(CALC)***"}
+      , _calcn{R"***(CALCN)***"}
+      , _ret{R"***(RET)***"}
+      , _retc{R"***(RETC)***"}
+      , _retcn{R"***(RETCN)***"}
+      , _jmp{R"***(JMP)***"}
       , _jmpc{R"***(JMPC)***"}
       , _jmpcn{R"***(JMPCN)***"}
       , _ld{R"***(LD)***"}
@@ -143,11 +156,18 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
       , _lt{R"***(LT)***"}
       , _le{R"***(LE)***"}
       , _ne{R"***(NE)***"}
+      , _eol{R"***(EOL)***"}
 {
     this->self.add
       (_jmp, static_cast<std::size_t>(tk_kind_chiekd::jmp))
       (_jmpc, static_cast<std::size_t>(tk_kind_chiekd::jmpc))
       (_jmpcn, static_cast<std::size_t>(tk_kind_chiekd::jmpcn))
+      (_cal, static_cast<std::size_t>(tk_kind_chiekd::cal))
+      (_calc, static_cast<std::size_t>(tk_kind_chiekd::calc))
+      (_calcn, static_cast<std::size_t>(tk_kind_chiekd::calcn))
+      (_ret, static_cast<std::size_t>(tk_kind_chiekd::ret))
+      (_retc, static_cast<std::size_t>(tk_kind_chiekd::retc))
+      (_retcn, static_cast<std::size_t>(tk_kind_chiekd::retcn))
       (_ld, static_cast<std::size_t>(tk_kind_chiekd::ld))
       (_ldn, static_cast<std::size_t>(tk_kind_chiekd::ldn))
       (_st, static_cast<std::size_t>(tk_kind_chiekd::st))
@@ -181,7 +201,8 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
       (_eq, static_cast<std::size_t>(tk_kind_chiekd::eq))
       (_lt, static_cast<std::size_t>(tk_kind_chiekd::lt))
       (_le, static_cast<std::size_t>(tk_kind_chiekd::le))
-      (_ne, static_cast<std::size_t>(tk_kind_chiekd::ne));
+      (_ne, static_cast<std::size_t>(tk_kind_chiekd::ne))
+      (_eol, static_cast<std::size_t>(tk_kind_chiekd::eol));
   }
   ~ciaaILLexer() = default;
 
@@ -191,9 +212,13 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
   ciaaILLexer(const ciaaILLexer&&) = delete;
   ciaaILLexer& operator=(const ciaaILLexer&&) = delete;
 
-  lex::token_def<std::string> _jmp;
-  lex::token_def<std::string> _jmpc;
-  lex::token_def<std::string> _jmpcn;
+
+
+  lex::token_def<std::string> _cal, _calc, _calcn;
+  lex::token_def<std::string> _ret, _retc, _retcn;
+  lex::token_def<std::string> _jmp, _jmpc, _jmpcn;
+
+
 
 //  //il_simple_operator(il_expr_operator included)
   lex::token_def<std::string> _ld;
@@ -231,6 +256,8 @@ struct ciaaILLexer : ciaa::compiler::iec61131_3::text::ciaaLexer<BaseIterator> {
   lex::token_def<std::string> _lt;
   lex::token_def<std::string> _le;
   lex::token_def<std::string> _ne;
+
+  lex::token_def<std::string> _eol;
 };
 //typedef ciaaILLexer<lex::lexertl::actor_lexer<>> Scanner;
 }  // namespace il

@@ -1,3 +1,1 @@
-hola:
-LD AND 
-ST LD
+LD EOL LD EOL

@@ -295,7 +295,7 @@ struct AST_il_instruction {
                                                   AST_il_formal_funct_call,
                                                   AST_il_return_operator>;
   boost::optional<instruction_variant_type> _instruction;
-  std::list<char> _eol;
+  std::string _eol;
 };
 
 using AST_il_instruction_list = std::list<AST_il_instruction>;
@@ -311,14 +311,6 @@ BOOST_FUSION_ADAPT_STRUCT(
     (std::string, _label)
 )
 
-//BOOST_FUSION_ADAPT_STRUCT(
-//  AST::AST_il_simple_operation,
-////    (std::string, _simple_operation)
-////    (boost::optional<AST::AST_il_operand>, _operand)
-//      (std::string, _function_name)
-//      (boost::optional<std::list<AST::AST_il_operand>>, _operand_list)
-//)
-
 BOOST_FUSION_ADAPT_STRUCT(
   AST::AST_il_simple_operation::one,
     (std::string, _simple_operation)
@@ -333,18 +325,6 @@ BOOST_FUSION_ADAPT_STRUCT(
   AST::AST_il_simple_operation,
     (AST::AST_il_simple_operation::posible_variants, data)
 )
-//struct AST_il_simple_operation {
-//  typedef struct {
-//      std::string _simple_operation;
-//      boost::optional<AST_il_operand> _operand;
-//  } one;
-//  typedef struct {
-//    std::string _function_name;
-//    boost::optional<std::list<AST::AST_il_operand>> _operand_list;
-//  } two;
-//  using posible_variants = boost::variant<one, two>;
-//  posible_variants data;
-//};
 
 //BOOST_FUSION_ADAPT_STRUCT(
 //  AST::AST_il_expression,
@@ -375,7 +355,7 @@ BOOST_FUSION_ADAPT_STRUCT(
   AST::AST_il_instruction,
     (boost::optional<AST::AST_il_label>, _label)
     (boost::optional<AST::AST_il_instruction::instruction_variant_type>, _instruction)
-    (std::list<char>, _eol)
+    (std::string, _eol)
 )
 
 

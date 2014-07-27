@@ -62,7 +62,6 @@
 #include <boost/spirit/include/phoenix.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_stl.hpp>
-//#include <boost/phoenix/stl/container.hpp>
 
 #include <boost/spirit/home/lex/argument.hpp>
 
@@ -77,105 +76,6 @@ namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace text {
-
-/*struct declaration
-{
-    template <typename T1, typename T2 = void>
-    struct result { typedef void type; };
-
-    void operator()(boost::spirit::utree& expr, boost::spirit::utree const& rhs) const
-    {
-      //boost::spirit::utree ut;
-      //ut.push_back(rhs);
-      expr.push_back(rhs);
-    }
-};
-boost::phoenix::function<declaration> dcl;
-
-
-struct ids
-{
-    template <typename T1, typename T2 = void>
-    struct result { typedef void type; };
-
-    void operator()(boost::spirit::lex::_tokenid_type td) const
-    {
-//      if (td == tk_id_::REAL_LITERAL) {
-//      }
-    }
-};
-boost::phoenix::function<ids> iddd;
-
-
-template <typename Iterator>
-struct li_grammar : qi::grammar<Iterator, boost::spirit::utree()> {
-  template <typename TokenDef>
-  li_grammar(const TokenDef& token,
-             boost::spirit::utree *ut)
-    : li_grammar::base_type(data_type_declaration) {
-
-    real_type_name
-        = token._real_rw
-              // [boost::phoenix::push_back(boost::phoenix::ref(*ut), boost::spirit::_1)]
-          | token._lreal_rw
-        ;
-    //    non_generic_type_name = real_type_name;
-    //    data_type_name = non_generic_type_name;
-    simple_type_name
-        = token._identifier
-        ;
-
-    numeric_type_name
-        = real_type_name
-        ;
-
-    elementary_type_name
-        = numeric_type_name
-        ;
-    simple_specification
-        = elementary_type_name
-        ;
-    simple_spec_init
-        = simple_specification
-        ;
-    simple_type_declaration
-        =  simple_type_name
-        >> token._common_docolon_lit
-        >> simple_spec_init
-        ;
-    single_element_type_declaration
-        = simple_type_declaration
-        ;
-    type_declaration
-        = single_element_type_declaration
-        ;
-
-    data_type_declaration =
-        token._common_type_lit
-        >> type_declaration
-        >> token._common_colon_lit
-        >> *(type_declaration
-             >> token._common_colon_lit
-            )
-        >> token._common_type_end_lit
-        ;
-  }
-
-
-  qi::rule<Iterator, boost::spirit::utree()> data_type_declaration;
-  qi::rule<Iterator, boost::spirit::utree()> type_declaration;
-  qi::rule<Iterator, boost::spirit::utree()> single_element_type_declaration;
-  qi::rule<Iterator, boost::spirit::utree()> simple_type_declaration;
-  qi::rule<Iterator, boost::spirit::utree()> simple_type_name;
-  qi::rule<Iterator, boost::spirit::utree()> numeric_type_name;
-  qi::rule<Iterator, boost::spirit::utree()> simple_spec_init;
-
-  qi::rule<Iterator, boost::spirit::utree()> simple_specification;
-  qi::rule<Iterator, boost::spirit::utree()> elementary_type_name;
-
-  qi::rule<Iterator, boost::spirit::utree()> real_type_name;
-  qi::rule<Iterator, boost::spirit::utree()> non_generic_type_name;
-  qi::rule<Iterator, boost::spirit::utree()> data_type_name;*/
 
 
 /*! \brief tnp This namespace
@@ -192,9 +92,67 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
     : ciaaTextualParser::base_type(str) {
     qi::char_type char_;
 
-//    _standard_function_name = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-//    _derived_function_name = token._identifier;
-//    _function_name = _standard_function_name | _derived_function_name;
+//    // B.1.4.2 Multi-element variables
+    _field_selector
+        = token._identifier;
+    _record_variable
+        =  _symbolic_variable.alias();
+    _structured_variable
+        =  _record_variable
+        >  char_('.')
+        > _field_selector;
+    _subscript
+        =  _expression;
+    _subscript_list
+        =  char_('[')
+        >  _subscript
+        >> *(char_(',') > _subscript)
+        >  char_(']');
+    _subscripted_variable
+        = _symbolic_variable.alias();
+    _array_variable
+        =  _subscripted_variable
+        > _subscript_list;
+    _multi_element_variable
+        = _array_variable
+        | _structured_variable;
+    // B.1.4.1 Directly represented variables
+    _location_prefix
+        =  char_('I')
+        |  char_('Q')
+        |  char_('M');
+    _size_prefix
+        =  char_('N')  // FIXME(denisacostaq\@gmail.com): see NIL in the manual.
+        |  char_('X')
+        |  char_('B')
+        |  char_('W')
+        |  char_('D')
+        |  char_('L');
+    _direct_variable
+        =  char_('%')
+        >  _location_prefix
+        >  _size_prefix
+        >  token._integer
+        > *(char_('.') > token._integer);
+    // B.1.4 Variables
+    _variable_name
+        =  token._identifier;
+    _symbolic_variable
+        =  _variable_name
+        |  _multi_element_variable;
+    _variable
+        =  _direct_variable
+        |  _symbolic_variable;
+
+
+
+    _standard_function_name
+        = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
+    _derived_function_name
+        = token._identifier;
+    _function_name
+        = _standard_function_name
+        | _derived_function_name;
 ////    _character_string
 ////        =
 
@@ -215,23 +173,28 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
 //        = (char_('-')|char_('+'))
 //        >>token._integer;
 //    _integer_literal
-//        = -(_integer_type_name >> char_('#'))
-//           >>(  _signed_integer
+//        =  -(_integer_type_name >> char_('#'))
+//        >> (  _signed_integer
 //              |  token._binary_integer
 //              |  token._octal_integer
 //              |  token._hex_integer
-//             );
+//           );
 
-//    _numeric_literal
-//        = _integer_literal
-//        | token._real_literal;
+    _numeric_literal
+        =// _integer_literal
+        //|
+        token._real_literal;
 
-//    _constant
-//        = _numeric_literal
+    _constant
+        = _numeric_literal;
 //        | _character_string;
 //        | time_literal
 //        | bit_string_literal
 //        | boolean_literal;
+
+    BOOST_SPIRIT_DEBUG_NODES(
+      (_function_name)
+    );
 
     qi::_1_type _1;
     qi::_2_type _2;
@@ -254,19 +217,37 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
   ciaaTextualParser& operator=(const ciaaTextualParser&&) = delete;
 
   qi::rule<Iterator, std::string()> _constant;
-  qi::rule<Iterator, std::string> _numeric_literal;
+  qi::rule<Iterator, std::string()> _numeric_literal;
 
-  qi::rule<Iterator, std::string> _integer_literal;
-  qi::rule<Iterator, std::string> _integer_type_name;
-  qi::rule<Iterator, std::string> _signed_integer_type_name;
-  qi::rule<Iterator, std::string> _unsigned_integer_type_name;
-  qi::rule<Iterator, std::string> _signed_integer;
+//  qi::rule<Iterator, std::string()> _integer_literal;
+//  qi::rule<Iterator, std::string()> _integer_type_name;
+//  qi::rule<Iterator, std::string()> _signed_integer_type_name;
+//  qi::rule<Iterator, std::string()> _unsigned_integer_type_name;
+//  qi::rule<Iterator, std::string()> _signed_integer;
 
-  qi::rule<Iterator, std::string> _character_string;
+//  qi::rule<Iterator, std::string()> _character_string;
 
   qi::rule<Iterator, std::string()> _function_name;
-  qi::rule<Iterator, std::string> _standard_function_name;
-  qi::rule<Iterator, std::string> _derived_function_name;
+  qi::rule<Iterator, std::string()> _standard_function_name;
+  qi::rule<Iterator, std::string()> _derived_function_name;
+
+  qi::rule<Iterator, std::string> _variable;
+  qi::rule<Iterator, std::string> _direct_variable;
+  qi::rule<Iterator, std::string> _location_prefix;
+  qi::rule<Iterator, std::string> _size_prefix;
+  qi::rule<Iterator, std::string> _multi_element_variable;
+  qi::rule<Iterator, std::string> _array_variable;
+  qi::rule<Iterator, std::string> _subscripted_variable;
+  qi::rule<Iterator, std::string> _subscript_list;
+  qi::rule<Iterator, std::string> _subscript;
+  qi::rule<Iterator, std::string> _structured_variable;
+  qi::rule<Iterator, std::string> _record_variable;
+  qi::rule<Iterator, std::string> _field_selector;
+  qi::rule<Iterator, std::string> _variable_name;
+  qi::rule<Iterator, std::string> _symbolic_variable;
+  qi::rule<Iterator, std::string> _expression;
+
+
 
 
 

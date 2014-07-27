@@ -77,4 +77,53 @@ BOOST_FUSION_ADAPT_STRUCT(
 //  ciaa::compiler::character_string,
 //    (std::string, _val)
 //)
+
+
+
+
+
+
+
+
+
+
+
+//namespace AST {
+//  struct AST_field_selector {
+//    std::string _identifier;
+//  };
+//  struct AST_symbolic_variable {
+//    std::string _value;
+//  };
+
+//  struct AST_record_variable {
+//    AST::AST_symbolic_variable _value;
+//  };
+
+//  struct AST_structured_variable {
+//    AST_record_variable _record_variable;
+//    char _dot;
+//    std::string _field_selector;
+//  };
+//}
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_field_selector,
+//    (std::string, _identifier)
+//)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_symbolic_variable,
+//    (std::string, _value)
+//)
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_symbolic_variable,
+//    (std::string, _value)
+//)
+
+//BOOST_FUSION_ADAPT_STRUCT(
+//  AST::AST_structured_variable,
+//    (AST_record_variable, _record_variable)
+//    (char, _dor)
+//    (std::string, _field_selector)
+//)
 #endif  // COMPILER_IEC_AST_H

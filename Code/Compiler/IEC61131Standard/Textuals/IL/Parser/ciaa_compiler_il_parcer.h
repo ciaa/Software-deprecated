@@ -107,32 +107,27 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
                                     _il_instruction_list2) {
     using pc = pnp::ciaaTextualParser<Iterator, Lexer, AST::AST_il_instruction_list>;
     qi::char_type char_;
-    boost::spirit::qi::eol_type eol_;
-//    _il_jump_operator = token._jmp;
-// // FIXME(denisacostaq\@gmail.com): reutilizar el lexer comun.
 
-//    // _instruction_list = /*_label >> */qi::char_(":");
-//    _instruction_list = token._jmp;
+//    il_assign_operator ::= variable_name':='
+//    il_assign_out_operator ::= ['NOT'] variable_name'=>'
 
-//    // il_jump_operator ::= 'JMP' | 'JMPC' | 'JMPCN'
+    _il_call_operator
+        = token._cal
+        | token._calc
+        | token._calcn;
+    _il_return_operator
+        = token._ret
+        | token._retc
+        | token._retcn;
+    _il_jump_operator
+        = token._jmp
+        | token._jmpc
+        | token._jmpcn;
 
-//    //_il_simple_operation = il_simple_operator
-
-
-
-
-//    _il_operand_list = _il_operand >> *(char_(',') >> _il_operand);
-
-    _il_simple_operation.name("il_simple_operation");
-    _il_simple_operation
-        =
-        //_il_simple_operator >> -_il_operand
-        //|
-        token._identifier;
-//    //    | (pc::_function_name >> -_il_operand_list);
-
-
-
+    _il_label
+        = token._identifier;
+    _il_label2
+        = _il_label;
     _il_expr_operator2
         = token._and
         | token._and_symbol
@@ -170,7 +165,6 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
         | token._in
         | token._pt
         | _il_expr_operator2;
-
     _il_operand2
         = pc::_constant;
 //        | variable
@@ -182,9 +176,8 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
     _il_simple_operation2
         =  (_il_simple_operator2 >> -_il_operand2)
         |  (pc::_function_name >> -_il_operand_list2);
-
     _il_instruction2
-        = -_il_label2
+        =  -_il_label2
         >> -(  _il_simple_operation2
                | _il_expression2
                | _il_jump_operation2
@@ -192,14 +185,28 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
                | _il_formal_funct_call2
                | _il_return_operator2
             )
-        >> +eol_;
+        >> token._eol;//+qi::eol_parser::;
     _il_instruction_list2
         = +_il_instruction2;
 
-  //BOOST_SPIRIT_DEBUG_NODES(
-  //        (_il_expr_operator)
-  //        (_str)
-  //      );
+    BOOST_SPIRIT_DEBUG_NODES(
+//      (_il_instruction_list2)
+//      (_il_instruction2)
+      (_il_simple_operation2)
+//      (_il_expression2)
+//      (_il_jump_operation2)
+//      (_il_fb_call2)
+//      (_il_formal_funct_call2)
+//      (_il_return_operator2)
+      (_il_label)
+      (_il_label2)
+      (_il_simple_operator2)
+      (_il_expr_operator2)
+      (_il_operand_list2)
+      (_il_operand2)
+    );
+
+
     _il_expr_operator2.name("expr_operator");
     _il_simple_operator2.name("simple_operator");
     _il_label2.name("label");
@@ -237,43 +244,14 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
   qi::rule<Iterator, AST::AST_il_formal_funct_call()> _il_formal_funct_call2;
   qi::rule<Iterator, AST::AST_il_return_operator()> _il_return_operator2;
   qi::rule<Iterator, AST::AST_il_label()> _il_label2;
+  qi::rule<Iterator, std::string()> _il_label;
   qi::rule<Iterator, std::string()> _il_simple_operator2;
   qi::rule<Iterator, std::string()> _il_expr_operator2;
   qi::rule<Iterator, std::list<AST::AST_il_operand>()> _il_operand_list2;
   qi::rule<Iterator, AST::AST_il_operand()> _il_operand2;
-
-
-
-//  qi::rule<Iterator, int> _il_jump_operation;
-//  qi::rule<Iterator, int> _il_jump_operator;
-
-  qi::rule<Iterator, std::string> _il_jump_operator;
-
-
-
-  qi::rule<Iterator, instruction_list()> _instruction_list;
-  qi::rule<Iterator, tnp::il_operand()> _il_instruction;
-
-  qi::rule<Iterator, tnp::il_simple_operation::variant2()> _il_simple_operation;
-  qi::rule<Iterator, tnp::il_expression()> _il_expression;
-  qi::rule<Iterator, tnp::il_jump_operation()> _il_jump_operation;
-  qi::rule<Iterator, tnp::il_fb_call()> _il_fb_call;
-  qi::rule<Iterator, tnp::il_formal_funct_call()> _il_formal_funct_call;
-  qi::rule<Iterator, tnp::il_return_operator()> _il_return_operator;
-
-  qi::rule<Iterator, std::string()> _label;
-
-
-
-
-
-
-//  qi::rule<Iterator, tnp::ast_label()> _pepe;
-//  qi::rule<Iterator, tnp::ast_il_expression()> _tiene_pepe;
-//  qi::rule<Iterator, tnp::ast_il_instruction()> _pepe22;
-//  qi::rule<Iterator, std::list<tnp::ast_il_instruction>()> _tiene_pepesss22222222;
-//  qi::rule<Iterator, std::list<tnp::ast_il_expression>()> _tiene_pepesss;
-//  qi::rule<Iterator, std::list<tnp::ast_label>()> _pepe_list;
+  qi::rule<Iterator, std::string> _il_call_operator,
+                                  _il_return_operator,
+                                  _il_jump_operator;
 
 
   void check(const ciaa::compiler::iec61131_3::text::il::il_expr_operator& ast) {
