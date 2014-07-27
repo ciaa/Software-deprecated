@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_symbol_info.h
+    \file ciaa_compiler_pou.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Wed Jul 23 23:50:50 UTC 2014
+    \date Sun Jul 27 18:47:39 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,67 +35,88 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#ifndef CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
-#define CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
+#ifndef CIAA_COMPILER_IEC_POU_H
+#define CIAA_COMPILER_IEC_POU_H
 
-#include <cinttypes>
+#define DEUGGGGGG
+#ifdef DEUGGGGGG
+#define BOOST_SPIRIT_QI_DEBUG
+#endif
 
-#include <string>
+#include <boost/spirit/include/qi.hpp>
+#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_declaration_initialization.h"
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
-namespace text {
-class ciaaSymbolInfo {
- public:  
-  enum class tk_kind {
-    identifier,
-    signed_integer_type_sint,
-    signed_integer_type_int,
-    signed_integer_type_dint,
-    signed_integer_type_lint,
-    unsigned_integer_type_usint,
-    unsigned_integer_type_uint,
-    unsigned_integer_type_udint,
-    unsigned_integer_type_ulint,
-    integer,
-    binary_integer,
-    octal_integer,
-    hex_integer,
-    real_literal,
-    rw_function,
-    rw_function_end,
-    max_tk_id_val
-  };
+namespace bsqi = boost::spirit::qi;
 
-  ciaaSymbolInfo(std::string lexeme, ciaaSymbolInfo::tk_kind kind);
-  ~ciaaSymbolInfo() = default;
+/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
+ */
+template <typename Iterator>
+struct ciaaPOU : boost::spirit::qi::grammar<Iterator, std::string> {
+  template <typename TokenDef>
+  ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function_declaration) {
+    bsqi::char_type char_;
 
-  ciaaSymbolInfo(const ciaaSymbolInfo&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&) = delete;
+    _standard_function_name
+        = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
+    _derived_function_name
+        = token._identifier;
+    _function_name
+        = _standard_function_name
+        | _derived_function_name;
+//    _function_declaration
+//        =  token._rw_function
+//        >  _derived_function_name
+//        >  char_(':')
+//        >  (_el)
 
-  ciaaSymbolInfo(const ciaaSymbolInfo&&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&&) = delete;
+  }
 
-  std::string lexeme() const;
+  ~ciaaPOU() = default;
 
- private:
-  tk_kind _kind;
-  std::string _lexeme;
-  //std::int32_t _address;
-  bool _declared;
-  bool _initialized;
+  ciaaPOU(const ciaaPOU&) = delete;
+  ciaaPOU& operator=(const ciaaPOU&) = delete;
 
+  ciaaPOU(const ciaaPOU&&) = delete;
+  ciaaPOU& operator=(const ciaaPOU&&) = delete;
+
+  // B.1.5.1 Functions
+  bsqi::rule<Iterator, std::string> _function_name;
+  bsqi::rule<Iterator, std::string> _standard_function_name;
+  bsqi::rule<Iterator, std::string> _derived_function_name;
+  bsqi::rule<Iterator, std::string> _function_declaration;
+  bsqi::rule<Iterator, std::string> _io_var_declarations;
+  bsqi::rule<Iterator, std::string> _function_var_decls;
+  bsqi::rule<Iterator, std::string> _function_body;
+  bsqi::rule<Iterator, std::string> _var2_init_decl;
+
+  // B.1.5.2 Function blocks
+  bsqi::rule<Iterator, std::string> _function_block_type_name;
+  bsqi::rule<Iterator, std::string> _standard_function_block_name;
+  bsqi::rule<Iterator, std::string> _derived_function_block_name;
+  bsqi::rule<Iterator, std::string> _function_block_declaration;
+  bsqi::rule<Iterator, std::string> _other_var_declarations;
+  bsqi::rule<Iterator, std::string> _temp_var_decls;
+  bsqi::rule<Iterator, std::string> _non_retentive_var_decls;
+  bsqi::rule<Iterator, std::string> _function_block_body;
+
+  // B.1.5.3 Programs
+  bsqi::rule<Iterator, std::string> _program_type_name;
+  bsqi::rule<Iterator, std::string> _program_declaration;
+  bsqi::rule<Iterator, std::string> _program_access_decls;
+  bsqi::rule<Iterator, std::string> _program_access_decl;
 };
-}  // namespace text
 }  // namespace iec61131_3
 }  // namespace compiler
-}  // namespace ciaa
-#endif  // CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
+}  // namespcae ciaa
+
+#endif  // CIAA_COMPILER_IEC_POU_H

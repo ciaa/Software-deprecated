@@ -20,7 +20,7 @@ target_link_libraries(${PROJECT_NAME}
       comms_drivers
       comms_protocols_modbus
     compiler
-      compiler_iec_il
+      compiler_iec61331_3
     debuger
     programmer
     system)

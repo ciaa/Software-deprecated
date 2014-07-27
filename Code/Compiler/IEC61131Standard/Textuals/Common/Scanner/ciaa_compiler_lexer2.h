@@ -214,6 +214,9 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
 
       , _real_literal{R"***((("REAL"|"LREAL")#)?([\+\-])?[0-9](_?[0-9])*\.([0-9])(_?[0-9])*([eE]([\+\-])?[0-9](_?[0-9])*)?)***"}
 
+      , _rw_function{R"***(FUNCTION)***"}
+      , _rw_function_end{R"***(FUNCTION_END)***"}
+
   {
     lex::_pass_type _pass;
 
@@ -232,10 +235,14 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
         (_binary_integer, static_cast<int>(tk_id::binary_integer))
         (_octal_integer, static_cast<int>(tk_id::octal_integer))
         (_hex_integer, static_cast<int>(tk_id::hex_integer))
-        (_real_literal, static_cast<int>(tk_id::real_literal));
+        (_real_literal, static_cast<int>(tk_id::real_literal))
+        (_rw_function, static_cast<int>(tk_id::rw_function))
+        (_rw_function_end, static_cast<int>(tk_id::rw_function_end));
 
     this->self += _space [_pass = lex::pass_flags::pass_ignore];
     this->self += _comment [_pass = lex::pass_flags::pass_ignore];
+
+
   }
 
   lex::token_def<std::string> _space;
@@ -259,6 +266,9 @@ struct ciaaLexer : lex::lexer<typename detail::get_lexer_type<BaseIterator>::typ
 
 
   lex::token_def<std::string> _real_literal;
+
+  lex::token_def<std::string> _rw_function;
+  lex::token_def<std::string> _rw_function_end;
 };
 
 //typedef ciaaLexer<lex::lexertl::actor_lexer<>> Scanner;

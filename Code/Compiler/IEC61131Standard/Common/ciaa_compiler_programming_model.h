@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_symbol_info.h
+    \file ciaa_compiler_programming_model.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Wed Jul 23 23:50:50 UTC 2014
+    \date Sun Jul 27 18:05:52 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,67 +35,57 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_programming_model.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#ifndef CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
-#define CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
 
-#include <cinttypes>
 
-#include <string>
+#ifndef CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+#define CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+
+#define DEUGGGGGG
+#ifdef DEUGGGGGG
+#define BOOST_SPIRIT_QI_DEBUG
+#endif
+
+#include <boost/spirit/include/qi.hpp>
+
+#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h"
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
-namespace text {
-class ciaaSymbolInfo {
- public:  
-  enum class tk_kind {
-    identifier,
-    signed_integer_type_sint,
-    signed_integer_type_int,
-    signed_integer_type_dint,
-    signed_integer_type_lint,
-    unsigned_integer_type_usint,
-    unsigned_integer_type_uint,
-    unsigned_integer_type_udint,
-    unsigned_integer_type_ulint,
-    integer,
-    binary_integer,
-    octal_integer,
-    hex_integer,
-    real_literal,
-    rw_function,
-    rw_function_end,
-    max_tk_id_val
-  };
+namespace bsqi = boost::spirit::qi;
 
-  ciaaSymbolInfo(std::string lexeme, ciaaSymbolInfo::tk_kind kind);
-  ~ciaaSymbolInfo() = default;
+/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
+ */
+template <typename Iterator>
+struct ciaaProgrammingModel : boost::spirit::qi::grammar<Iterator, std::string> {
+  ciaaProgrammingModel() : ciaaProgrammingModel::base_type(_library_element_declaration) {
+    _library_element_declaration
+        =  _function_declaration  // TODO(denisacostaq\@gmail.com): todo
+        // function_block_declaration
+        // program_declaration
+        // configuration_declaration
+        ;
+  }
 
-  ciaaSymbolInfo(const ciaaSymbolInfo&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&) = delete;
+  ~ciaaProgrammingModel() = default;
 
-  ciaaSymbolInfo(const ciaaSymbolInfo&&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&&) = delete;
+  ciaaProgrammingModel(const ciaaProgrammingModel&) = delete;
+  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&) = delete;
 
-  std::string lexeme() const;
+  ciaaProgrammingModel(const ciaaProgrammingModel&&) = delete;
+  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&&) = delete;
 
- private:
-  tk_kind _kind;
-  std::string _lexeme;
-  //std::int32_t _address;
-  bool _declared;
-  bool _initialized;
-
+  bsqi::rule<Iterator, std::string> _library_element_declaration;
+  ciaaPOU<Iterator> _function_declaration;
 };
-}  // namespace text
 }  // namespace iec61131_3
 }  // namespace compiler
-}  // namespace ciaa
-#endif  // CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
+}  // namespcae ciaa
+#endif  // CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H

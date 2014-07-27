@@ -92,67 +92,9 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
     : ciaaTextualParser::base_type(str) {
     qi::char_type char_;
 
-//    // B.1.4.2 Multi-element variables
-    _field_selector
-        = token._identifier;
-    _record_variable
-        =  _symbolic_variable.alias();
-    _structured_variable
-        =  _record_variable
-        >  char_('.')
-        > _field_selector;
-    _subscript
-        =  _expression;
-    _subscript_list
-        =  char_('[')
-        >  _subscript
-        >> *(char_(',') > _subscript)
-        >  char_(']');
-    _subscripted_variable
-        = _symbolic_variable.alias();
-    _array_variable
-        =  _subscripted_variable
-        > _subscript_list;
-    _multi_element_variable
-        = _array_variable
-        | _structured_variable;
-    // B.1.4.1 Directly represented variables
-    _location_prefix
-        =  char_('I')
-        |  char_('Q')
-        |  char_('M');
-    _size_prefix
-        =  char_('N')  // FIXME(denisacostaq\@gmail.com): see NIL in the manual.
-        |  char_('X')
-        |  char_('B')
-        |  char_('W')
-        |  char_('D')
-        |  char_('L');
-    _direct_variable
-        =  char_('%')
-        >  _location_prefix
-        >  _size_prefix
-        >  token._integer
-        > *(char_('.') > token._integer);
-    // B.1.4 Variables
-    _variable_name
-        =  token._identifier;
-    _symbolic_variable
-        =  _variable_name
-        |  _multi_element_variable;
-    _variable
-        =  _direct_variable
-        |  _symbolic_variable;
 
 
 
-    _standard_function_name
-        = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-    _derived_function_name
-        = token._identifier;
-    _function_name
-        = _standard_function_name
-        | _derived_function_name;
 ////    _character_string
 ////        =
 
@@ -226,28 +168,6 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
 //  qi::rule<Iterator, std::string()> _signed_integer;
 
 //  qi::rule<Iterator, std::string()> _character_string;
-
-  qi::rule<Iterator, std::string()> _function_name;
-  qi::rule<Iterator, std::string()> _standard_function_name;
-  qi::rule<Iterator, std::string()> _derived_function_name;
-
-  qi::rule<Iterator, std::string> _variable;
-  qi::rule<Iterator, std::string> _direct_variable;
-  qi::rule<Iterator, std::string> _location_prefix;
-  qi::rule<Iterator, std::string> _size_prefix;
-  qi::rule<Iterator, std::string> _multi_element_variable;
-  qi::rule<Iterator, std::string> _array_variable;
-  qi::rule<Iterator, std::string> _subscripted_variable;
-  qi::rule<Iterator, std::string> _subscript_list;
-  qi::rule<Iterator, std::string> _subscript;
-  qi::rule<Iterator, std::string> _structured_variable;
-  qi::rule<Iterator, std::string> _record_variable;
-  qi::rule<Iterator, std::string> _field_selector;
-  qi::rule<Iterator, std::string> _variable_name;
-  qi::rule<Iterator, std::string> _symbolic_variable;
-  qi::rule<Iterator, std::string> _expression;
-
-
 
 
 
