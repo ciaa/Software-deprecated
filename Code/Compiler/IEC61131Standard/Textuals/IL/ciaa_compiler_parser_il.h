@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_programming_model.h
+    \file ciaa_compiler_parser_il.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 18:05:52 UTC 2014
+    \date Mon Jul 28 16:19:42 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_programming_model.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,50 +43,39 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
+#ifndef CIAA_COMPILER_IEC_PARSER_IL_H
+#define CIAA_COMPILER_IEC_PARSER_IL_H
 
-#ifndef CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
-#define CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+#include <cstdio>
 
-#define DEUGGGGGG
-#ifdef DEUGGGGGG
-#define BOOST_SPIRIT_QI_DEBUG
-#endif
+#include <string>
+#include <fstream>
+#include <iostream>
 
-#include <boost/spirit/include/qi.hpp>
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/Parser/ciaa_compiler_il_parcer.h"
 
-#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h"
+class ciaaParserIL {
+ public:
+  ciaaParserIL();
+  ~ciaaParserIL() = default;
 
-namespace ciaa {
-namespace compiler {
-namespace iec61131_3 {
-namespace bsqi = boost::spirit::qi;
+  ciaaParserIL(const ciaaParserIL&) = delete;
+  ciaaParserIL& operator=(const ciaaParserIL&) = delete;
 
-/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
- */
-template <typename Iterator>
-struct ciaaProgrammingModel : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaProgrammingModel() : ciaaProgrammingModel::base_type(_library_element_declaration) {
-    _library_element_declaration
-        =  _function_declaration  // TODO(denisacostaq\@gmail.com): todo
-        // function_block_declaration
-        // program_declaration
-        // configuration_declaration
-        ;
+  ciaaParserIL(const ciaaParserIL&&) = delete;
+  ciaaParserIL& operator=(const ciaaParserIL&&) = delete;
+
+ private:
+  std::string read_from_file(char const* infile) {
+      std::ifstream instream(infile);
+      if (!instream.is_open()) {
+        std::cerr << "Couldn't open file: " << infile << std::endl;
+        std::exit(EXIT_FAILURE);
+      }
+      instream.unsetf(std::ios::skipws);      // No white space skipping!
+      return std::string(std::istreambuf_iterator<char>(instream.rdbuf()),
+                         std::istreambuf_iterator<char>());
   }
-
-  ~ciaaProgrammingModel() = default;
-
-  ciaaProgrammingModel(const ciaaProgrammingModel&) = delete;
-  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&) = delete;
-
-  ciaaProgrammingModel(const ciaaProgrammingModel&&) = delete;
-  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _library_element_name;
-  bsqi::rule<Iterator, std::string> _library_element_declaration;
-  ciaaPOU<Iterator> _function_declaration;
 };
-}  // namespace iec61131_3
-}  // namespace compiler
-}  // namespcae ciaa
-#endif  // CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+
+#endif  // CIAA_COMPILER_IEC_PARSER_IL_H

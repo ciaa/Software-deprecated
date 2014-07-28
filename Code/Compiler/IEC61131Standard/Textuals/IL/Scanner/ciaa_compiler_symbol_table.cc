@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_symbol_table.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Textuals/IL/Scanner/ciaa_compiler_symbol_table.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,7 +43,7 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_symbol_table.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Textuals/IL/Scanner/ciaa_compiler_symbol_table.h"
 
 namespace ciaa {
 namespace compiler {

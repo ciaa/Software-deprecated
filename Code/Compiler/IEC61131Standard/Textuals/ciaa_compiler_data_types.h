@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_data_types.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -52,8 +52,6 @@
 #endif
 
 #include <boost/spirit/include/qi.hpp>
-
-#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h"
 
 namespace ciaa {
 namespace compiler {
@@ -79,6 +77,19 @@ struct ciaaDataTypes : boost::spirit::qi::grammar<Iterator, std::string> {
   bsqi::rule<Iterator, std::string> _non_generic_type_name;
 
   // B.1.3.1 Elementary data types
+  bsqi::rule<Iterator, std::string> _elementary_type_name;
+  bsqi::rule<Iterator, std::string> _numeric_type_name;
+  bsqi::rule<Iterator, std::string> _integer_type_name;
+  bsqi::rule<Iterator, std::string> _signed_integer_type_name;
+  bsqi::rule<Iterator, std::string> _unsigned_integer_type_name;
+  bsqi::rule<Iterator, std::string> _real_type_name;
+  bsqi::rule<Iterator, std::string> _date_type_name;
+  bsqi::rule<Iterator, std::string> _bit_string_type_name;
+
+  // B.1.3.2 Generic data types
+  bsqi::rule<Iterator, std::string> _generic_type_name;
+
+  // B.1.3.3 Derived data types
   bsqi::rule<Iterator, std::string> _derived_type_name;
   bsqi::rule<Iterator, std::string> _single_element_type_name;
   bsqi::rule<Iterator, std::string> _simple_type_name;

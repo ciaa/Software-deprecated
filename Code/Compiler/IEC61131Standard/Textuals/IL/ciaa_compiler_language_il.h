@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_pou.h
+    \file ciaa_compiler_language_il.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 18:47:39 UTC 2014
+    \date Mon Jul 21 22:23:25 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,16 +34,17 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_language_il.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#ifndef CIAA_COMPILER_IEC_POU_H
-#define CIAA_COMPILER_IEC_POU_H
+
+#ifndef CIAA_COMPILER_IEC_LANGUAGE_IL_H
+#define CIAA_COMPILER_IEC_LANGUAGE_IL_H
 
 #define DEUGGGGGG
 #ifdef DEUGGGGGG
@@ -55,67 +56,46 @@
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
+namespace text {
+namespace il {
+
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
- */
+
 template <typename Iterator>
-struct ciaaPOU : boost::spirit::qi::grammar<Iterator, std::string> {
+struct ciaaLanguageIL : bsqi::grammar<Iterator, std::string> {
   template <typename TokenDef>
-  ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function_declaration) {
-    bsqi::char_type char_;
+  ciaaLanguageIL(const TokenDef& token);
 
-    _standard_function_name
-        = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-    _derived_function_name
-        = token._identifier;
-    _function_name
-        = _standard_function_name
-        | _derived_function_name;
-//    _function_declaration
-//        =  token._rw_function
-//        >  _derived_function_name
-//        >  char_(':')
-//        >  (_el)
 
-  }
 
-  ~ciaaPOU() = default;
+//  qi::rule<Iterator, AST::AST_il_instruction_list()> _il_instruction_list2;
+//  qi::rule<Iterator, AST::AST_il_instruction()> _il_instruction2;
+//  qi::rule<Iterator, AST::AST_il_simple_operation::posible_variants()> _il_simple_operation2;
+//  qi::rule<Iterator, AST::AST_il_expression()> _il_expression2;
+//  qi::rule<Iterator, AST::AST_il_jump_operation()> _il_jump_operation2;
+//  qi::rule<Iterator, AST::AST_il_fb_call()> _il_fb_call2;
+//  qi::rule<Iterator, AST::AST_il_formal_funct_call()> _il_formal_funct_call2;
+//  qi::rule<Iterator, AST::AST_il_return_operator()> _il_return_operator2;
+//  qi::rule<Iterator, AST::AST_il_label()> _il_label2;
+//  qi::rule<Iterator, std::string()> _il_label;
+//  qi::rule<Iterator, std::string()> _il_simple_operator2;
+//  qi::rule<Iterator, std::string()> _il_expr_operator2;
+//  qi::rule<Iterator, std::list<AST::AST_il_operand>()> _il_operand_list2;
+//  qi::rule<Iterator, AST::AST_il_operand()> _il_operand2;
+//  qi::rule<Iterator, std::string> _il_call_operator,
+//                                  _il_return_operator,
+//                                  _il_jump_operator;
+bsqi::rule<Iterator, std::string> _pepe;
 
-  ciaaPOU(const ciaaPOU&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&) = delete;
+bsqi::rule<Iterator, std::string()> _a;
+bsqi::rule<Iterator, std::string> _b;
 
-  ciaaPOU(const ciaaPOU&&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&&) = delete;
-
-  // B.1.5.1 Functions
-  bsqi::rule<Iterator, std::string> _function_name;
-  bsqi::rule<Iterator, std::string> _standard_function_name;
-  bsqi::rule<Iterator, std::string> _derived_function_name;
-  bsqi::rule<Iterator, std::string> _function_declaration;
-  bsqi::rule<Iterator, std::string> _io_var_declarations;
-  bsqi::rule<Iterator, std::string> _function_var_decls;
-  bsqi::rule<Iterator, std::string> _function_body;
-  bsqi::rule<Iterator, std::string> _var2_init_decl;
-
-  // B.1.5.2 Function blocks
-  bsqi::rule<Iterator, std::string> _function_block_type_name;
-  bsqi::rule<Iterator, std::string> _standard_function_block_name;
-  bsqi::rule<Iterator, std::string> _derived_function_block_name;
-  bsqi::rule<Iterator, std::string> _function_block_declaration;
-  bsqi::rule<Iterator, std::string> _other_var_declarations;
-  bsqi::rule<Iterator, std::string> _temp_var_decls;
-  bsqi::rule<Iterator, std::string> _non_retentive_var_decls;
-  bsqi::rule<Iterator, std::string> _function_block_body;
-
-  // B.1.5.3 Programs
-  bsqi::rule<Iterator, std::string> _program_type_name;
-  bsqi::rule<Iterator, std::string> _program_declaration;
-  bsqi::rule<Iterator, std::string> _program_access_decls;
-  bsqi::rule<Iterator, std::string> _program_access_decl;
 };
+}  // namespace il
+}  // namespace text
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
 
-#endif  // CIAA_COMPILER_IEC_POU_H
+#endif  // CIAA_COMPILER_IEC_LANGUAGE_IL_H

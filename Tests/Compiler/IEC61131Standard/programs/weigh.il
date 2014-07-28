@@ -1,0 +1,20 @@
+(*  F.1 Function WEIGH  *)
+
+FUNCTION WEIGH : WORD (* BCD encoded *)
+            VAR_INPUT (* "EN" input is used to indicate "scale ready" *)
+                weigh_command : BOOL;
+                gross_weight : WORD ; (* BCD encoded *)
+                tare_weight : INT ;
+            END_VAR
+
+            LD          weigh_command
+            JMPC        WEIGH_NOW
+            ST          ENO                 (* No weighing, 0 to "ENO" *)
+            RET
+WEIGH_NOW:  LD          gross_weight
+            BCD_TO_INT
+            SUB         tare_weight
+            INT_TO_BCD                      (* Return evaluated weight *)
+            ST          WEIGH
+
+END_FUNCTION (* Implicit "ENO" *)

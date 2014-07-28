@@ -111,126 +111,126 @@ struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::A
 //    il_assign_operator ::= variable_name':='
 //    il_assign_out_operator ::= ['NOT'] variable_name'=>'
 
-    _il_call_operator
-        = token._cal
-        | token._calc
-        | token._calcn;
-    _il_return_operator
-        = token._ret
-        | token._retc
-        | token._retcn;
-    _il_jump_operator
-        = token._jmp
-        | token._jmpc
-        | token._jmpcn;
+//    _il_call_operator
+//        = token._cal
+//        | token._calc
+//        | token._calcn;
+//    _il_return_operator
+//        = token._ret
+//        | token._retc
+//        | token._retcn;
+//    _il_jump_operator
+//        = token._jmp
+//        | token._jmpc
+//        | token._jmpcn;
 
-    _il_label
-        = token._identifier;
-    _il_label2
-        = _il_label;
-    _il_expr_operator2
-        = token._and
-        | token._and_symbol
-        | token._or
-        | token._xor
-        | token._andn
-        | token._and_symbol_n
-        | token._orn
-        | token._xorn
-        | token._add
-        | token._sub
-        | token._mul
-        | token._div
-        | token._mod
-        | token._gt
-        | token._ge
-        | token._eq
-        | token._lt
-        | token._le
-        | token._ne;
-    _il_simple_operator2
-        = token._ld
-        | token._ldn
-        | token._st
-        | token._stn
-        | token._not
-        | token._s
-        | token._r
-        | token._s1
-        | token._r1
-        | token._clk
-        | token._cu
-        | token._cd
-        | token._pv
-        | token._in
-        | token._pt
-        | _il_expr_operator2;
-    _il_operand2
-        = pc::_constant;
-//        | variable
-//        | enumerated_value;
-    _il_operand_list2
-        = _il_operand2
-        >> *(char_(',') >> _il_operand2);
-//        = +(_il_operand2 % char_(','));
-    _il_simple_operation2
-        =  (_il_simple_operator2 >> -_il_operand2)
-        |  (pc::_function_name >> -_il_operand_list2);
-    _il_instruction2
-        =  -_il_label2
-        >> -(  _il_simple_operation2
-               | _il_expression2
-               | _il_jump_operation2
-               | _il_fb_call2
-               | _il_formal_funct_call2
-               | _il_return_operator2
-            )
-        >> token._eol;//+qi::eol_parser::;
-    _il_instruction_list2
-        = +_il_instruction2;
+//    _il_label
+//        = token._identifier;
+//    _il_label2
+//        = _il_label;
+//    _il_expr_operator2
+//        = token._and
+//        | token._and_symbol
+//        | token._or
+//        | token._xor
+//        | token._andn
+//        | token._and_symbol_n
+//        | token._orn
+//        | token._xorn
+//        | token._add
+//        | token._sub
+//        | token._mul
+//        | token._div
+//        | token._mod
+//        | token._gt
+//        | token._ge
+//        | token._eq
+//        | token._lt
+//        | token._le
+//        | token._ne;
+//    _il_simple_operator2
+//        = token._ld
+//        | token._ldn
+//        | token._st
+//        | token._stn
+//        | token._not
+//        | token._s
+//        | token._r
+//        | token._s1
+//        | token._r1
+//        | token._clk
+//        | token._cu
+//        | token._cd
+//        | token._pv
+//        | token._in
+//        | token._pt
+//        | _il_expr_operator2;
+//    _il_operand2
+//        = pc::_constant;
+////        | variable
+////        | enumerated_value;
+//    _il_operand_list2
+//        = _il_operand2
+//        >> *(char_(',') >> _il_operand2);
+////        = +(_il_operand2 % char_(','));
+//    _il_simple_operation2
+//        =  (_il_simple_operator2 >> -_il_operand2)
+//        |  (pc::_function_name >> -_il_operand_list2);
+//    _il_instruction2
+//        =  -_il_label2
+//        >> -(  _il_simple_operation2
+//               | _il_expression2
+//               | _il_jump_operation2
+//               | _il_fb_call2
+//               | _il_formal_funct_call2
+//               | _il_return_operator2
+//            )
+//        >> token._eol;//+qi::eol_parser::;
+//    _il_instruction_list2
+//        = +_il_instruction2;
 
-    BOOST_SPIRIT_DEBUG_NODES(
-//      (_il_instruction_list2)
-//      (_il_instruction2)
-      (_il_simple_operation2)
-//      (_il_expression2)
-//      (_il_jump_operation2)
-//      (_il_fb_call2)
-//      (_il_formal_funct_call2)
-//      (_il_return_operator2)
-      (_il_label)
-      (_il_label2)
-      (_il_simple_operator2)
-      (_il_expr_operator2)
-      (_il_operand_list2)
-      (_il_operand2)
-    );
-
-
-    _il_expr_operator2.name("expr_operator");
-    _il_simple_operator2.name("simple_operator");
-    _il_label2.name("label");
-    _il_simple_operation2.name("simple_operation");
-    _il_expression2.name("expression");
-    _il_jump_operation2.name("jump_operation");
-    _il_fb_call2.name("fb_call");
-    _il_formal_funct_call2.name("formal_funct_call");
-    _il_return_operator2.name("return_operator");
-    _il_instruction2.name("instruction");
-    _il_instruction_list2.name("instruction_list");
-
-    qi::_1_type _1;
-    qi::_2_type _2;
-    qi::_3_type _3;
-    qi::_4_type _4;
-    ///////////////////////////////////////////////////////////////////////
-    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
-        error_handler_type;
-    typedef boost::phoenix::function<error_handler_type> error_handler_function;
+//    BOOST_SPIRIT_DEBUG_NODES(
+////      (_il_instruction_list2)
+////      (_il_instruction2)
+//      (_il_simple_operation2)
+////      (_il_expression2)
+////      (_il_jump_operation2)
+////      (_il_fb_call2)
+////      (_il_formal_funct_call2)
+////      (_il_return_operator2)
+//      (_il_label)
+//      (_il_label2)
+//      (_il_simple_operator2)
+//      (_il_expr_operator2)
+//      (_il_operand_list2)
+//      (_il_operand2)
+//    );
 
 
-    qi::on_error<qi::fail>(_il_expr_operator2,
-                           error_handler_function(error_handler)("Error! Expecting ", _4, _3));
+//    _il_expr_operator2.name("expr_operator");
+//    _il_simple_operator2.name("simple_operator");
+//    _il_label2.name("label");
+//    _il_simple_operation2.name("simple_operation");
+//    _il_expression2.name("expression");
+//    _il_jump_operation2.name("jump_operation");
+//    _il_fb_call2.name("fb_call");
+//    _il_formal_funct_call2.name("formal_funct_call");
+//    _il_return_operator2.name("return_operator");
+//    _il_instruction2.name("instruction");
+//    _il_instruction_list2.name("instruction_list");
+
+//    qi::_1_type _1;
+//    qi::_2_type _2;
+//    qi::_3_type _3;
+//    qi::_4_type _4;
+//    ///////////////////////////////////////////////////////////////////////
+//    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+//        error_handler_type;
+//    typedef boost::phoenix::function<error_handler_type> error_handler_function;
+
+
+//    qi::on_error<qi::fail>(_il_expr_operator2,
+//                           error_handler_function(error_handler)("Error! Expecting ", _4, _3));
 
   }
 

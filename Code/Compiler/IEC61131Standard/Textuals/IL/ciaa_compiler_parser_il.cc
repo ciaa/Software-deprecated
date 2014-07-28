@@ -1,7 +1,7 @@
-/*! \brief This file give the functionality to ciaaVariables class.
-    \file ciaa_compiler_variable.cc
+/*! \brief This file give the functionality to ciaaParserIL class.
+    \file ciaa_compiler_parser_il.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 20:02:46 UTC 2014
+    \date Mon Jul 28 16:19:42 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_variable.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,4 +43,45 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_variable.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h"
+
+
+#include <iostream>
+
+ciaaParserIL::ciaaParserIL() {
+  std::string str{read_from_file("argv[1]")};
+
+  // create the token definition instance needed to invoke the lexical analyzer
+    typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<std::string::const_iterator> lexer_type;
+    lexer_type lexer;
+
+    typedef std::string::const_iterator base_iterator_type;
+    typedef lexer_type::iterator_type iterator_type;
+    client::error_handler<base_iterator_type, iterator_type>
+        error_handler(str.begin(), str.end());             // Our error handler
+
+    ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type, lexer_type> parser{lexer, error_handler};
+
+    AST::AST_il_instruction_list ast;
+
+    base_iterator_type first = str.begin();
+    base_iterator_type last = str.end();
+    bool r{qi::parse(lexer.begin(first, last), lexer.end(), parser, ast)};
+
+    //std::cout << "|" << ast._exp << "|" << std::endl;
+    //parser.check(ast);
+
+    if (r) {
+      std::printf("OK\n");
+  //    if (!ut.empty()) {
+  //      std::printf("[%d]\n", ut.size());
+  //      for (auto t  : ut) {
+  //        std::cout << t << std::endl;
+  //      }
+  //    }
+    } else {
+      std::fprintf(stderr, "Failed\n");
+      error_handler.dump_error_line(first);
+      std::cout << "Parse failure\n";
+    }
+}

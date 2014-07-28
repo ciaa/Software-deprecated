@@ -134,9 +134,9 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
 //        | bit_string_literal
 //        | boolean_literal;
 
-    BOOST_SPIRIT_DEBUG_NODES(
-      (_function_name)
-    );
+//    BOOST_SPIRIT_DEBUG_NODES(
+//      (_function_name)
+//    );
 
     qi::_1_type _1;
     qi::_2_type _2;

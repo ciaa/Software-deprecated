@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_common_elements.h
+/*! \brief This file give the functionality to ciaaConfigurationElements class.
+    \file ciaa_compiler_configuration_elements.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 28 00:45:24 UTC 2014
+    \date Sun Jul 27 22:51:11 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_common_elements.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_configuration_elements.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,46 +43,10 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_COMMON_ELEMENTS_H
-#define CIAA_COMPILER_IEC_COMMON_ELEMENTS_H
-
-#define DEUGGGGGG
-#ifdef DEUGGGGGG
-#define BOOST_SPIRIT_QI_DEBUG
-#endif
-
-#include <boost/spirit/include/qi.hpp>
-
-#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_pou.h"
-
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_configuration_elements.h"
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
-namespace bsqi = boost::spirit::qi;
-
-/*! \brief struct ciaaCommonElements implemment B.1 Common elements.
- */
-template <typename Iterator>
-struct ciaaCommonElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaCommonElements() : ciaaCommonElements::base_type(_letter) {
-  }
-
-  ~ciaaCommonElements() = default;
-
-  ciaaCommonElements(const ciaaCommonElements&) = delete;
-  ciaaCommonElements& operator=(const ciaaCommonElements&) = delete;
-
-  ciaaCommonElements(const ciaaCommonElements&&) = delete;
-  ciaaCommonElements& operator=(const ciaaCommonElements&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _letter;
-  bsqi::rule<Iterator, std::string> _digit;
-  bsqi::rule<Iterator, std::string> _octal_digit;
-  bsqi::rule<Iterator, std::string> _hex_digit;
-  bsqi::rule<Iterator, std::string> _identifier;
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
-
-#endif  // CIAA_COMPILER_IEC_COMMON_ELEMENTS_H
