@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_programming_model.h
+    \file ciaa_compiler_constants.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 18:05:52 UTC 2014
+    \date Mon Jul 28 00:56:18 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_programming_model.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_constants.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,9 +43,8 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-
-#ifndef CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
-#define CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+#ifndef CIAA_COMPILER_IEC_CONSTANTS_H
+#define CIAA_COMPILER_IEC_CONSTANTS_H
 
 #define DEUGGGGGG
 #ifdef DEUGGGGGG
@@ -61,32 +60,71 @@ namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
+/*! \brief struct ciaaCommonElements implemment B.1.2 Constants.
  */
 template <typename Iterator>
-struct ciaaProgrammingModel : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaProgrammingModel() : ciaaProgrammingModel::base_type(_library_element_declaration) {
-    _library_element_declaration
-        =  _function_declaration  // TODO(denisacostaq\@gmail.com): todo
-        // function_block_declaration
-        // program_declaration
-        // configuration_declaration
-        ;
+struct ciaaConstants : boost::spirit::qi::grammar<Iterator, std::string> {
+  ciaaConstants() : ciaaConstants::base_type(_constant) {
   }
 
-  ~ciaaProgrammingModel() = default;
+  ~ciaaConstants() = default;
 
-  ciaaProgrammingModel(const ciaaProgrammingModel&) = delete;
-  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&) = delete;
+  ciaaConstants(const ciaaConstants&) = delete;
+  ciaaConstants& operator=(const ciaaConstants&) = delete;
 
-  ciaaProgrammingModel(const ciaaProgrammingModel&&) = delete;
-  ciaaProgrammingModel& operator=(const ciaaProgrammingModel&&) = delete;
+  ciaaConstants(const ciaaConstants&&) = delete;
+  ciaaConstants& operator=(const ciaaConstants&&) = delete;
 
-  bsqi::rule<Iterator, std::string> _library_element_name;
-  bsqi::rule<Iterator, std::string> _library_element_declaration;
-  ciaaPOU<Iterator> _function_declaration;
+  bsqi::rule<Iterator, std::string> _constant;
+
+  // B.1.2.1 Numeric literals
+  bsqi::rule<Iterator, std::string> _numeric_literal;
+  bsqi::rule<Iterator, std::string> _integer_literal;
+  bsqi::rule<Iterator, std::string> _signed_integer;
+  bsqi::rule<Iterator, std::string> _integer;
+  bsqi::rule<Iterator, std::string> _binary_integer;
+  bsqi::rule<Iterator, std::string> _bit;
+  bsqi::rule<Iterator, std::string> _octal_integer;
+  bsqi::rule<Iterator, std::string> _hex_integer;
+  bsqi::rule<Iterator, std::string> _real_literal;
+  bsqi::rule<Iterator, std::string> _exponent;
+  bsqi::rule<Iterator, std::string> _bit_string_literal;
+  bsqi::rule<Iterator, std::string> _boolean_literal;
+
+  // B.1.2.2 Character strings
+  bsqi::rule<Iterator, std::string> _character_string;
+  bsqi::rule<Iterator, std::string> _single_byte_character_string;
+  bsqi::rule<Iterator, std::string> _double_byte_character_string;
+  bsqi::rule<Iterator, std::string> _single_byte_character_representation;
+  bsqi::rule<Iterator, std::string> _double_byte_character_representation;
+  bsqi::rule<Iterator, std::string> _common_character_representation;
+
+  // B.1.2.3 Time literals
+  bsqi::rule<Iterator, std::string> _time_literal;
+  // B.1.2.3.1 Duration
+  bsqi::rule<Iterator, std::string> _duration;
+  bsqi::rule<Iterator, std::string> _interval;
+  bsqi::rule<Iterator, std::string> _days;
+  bsqi::rule<Iterator, std::string> _fixed_point;
+  bsqi::rule<Iterator, std::string> _hours;
+  bsqi::rule<Iterator, std::string> _minutes;
+  bsqi::rule<Iterator, std::string> _seconds;
+  bsqi::rule<Iterator, std::string> _milliseconds;
+  // B.1.2.3.2 Time of day and date
+  bsqi::rule<Iterator, std::string> _time_of_day;
+  bsqi::rule<Iterator, std::string> _daytime;
+  bsqi::rule<Iterator, std::string> _day_hour;
+  bsqi::rule<Iterator, std::string> _day_minute;
+  bsqi::rule<Iterator, std::string> _day_second;
+  bsqi::rule<Iterator, std::string> _date;
+  bsqi::rule<Iterator, std::string> _date_literal;
+  bsqi::rule<Iterator, std::string> _year;
+  bsqi::rule<Iterator, std::string> _month;
+  bsqi::rule<Iterator, std::string> _day;
+  bsqi::rule<Iterator, std::string> _date_and_time;
 };
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
-#endif  // CIAA_COMPILER_IEC_PROGRAMMING_MODEL_H
+
+#endif  // CIAA_COMPILER_IEC_CONSTANTS_H

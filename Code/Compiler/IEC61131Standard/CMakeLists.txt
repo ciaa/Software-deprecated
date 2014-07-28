@@ -4,10 +4,12 @@
 set(compiler_iec61331_3_Code
     ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_programming_model.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_pou.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_declaration_initialization.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_variable.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_sequential_function_chart_elements.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_configuration_elements.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_common_elements.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_constants.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Common/ciaa_compiler_data_types.cc
 )
 
 add_library(compiler_iec61331_3

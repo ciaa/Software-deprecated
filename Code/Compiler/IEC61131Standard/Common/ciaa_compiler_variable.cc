@@ -1,4 +1,4 @@
-/*! \brief This file give the functionality to ciaaVariable class.
+/*! \brief This file give the functionality to ciaaVariables class.
     \file ciaa_compiler_variable.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Jul 27 20:02:46 UTC 2014
@@ -44,7 +44,3 @@
 */
 
 #include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_variable.h"
-
-ciaaVariable::ciaaVariable()
-{
-}

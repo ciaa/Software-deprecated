@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_declaration_initialization.cc
+/*! \brief This file give the functionality to ciaaCommonElements class.
+    \file ciaa_compiler_common_elements.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 19:12:17 UTC 2014
+    \date Mon Jul 28 00:45:24 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,11 +35,18 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_declaration_initialization.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/Common/ciaa_compiler_common_elements.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_declaration_initialization.h"
+
+#include "Code/Compiler/IEC61131Standard/Common/ciaa_compiler_common_elements.h"
+namespace ciaa {
+namespace compiler {
+namespace iec61131_3 {
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespcae ciaa
