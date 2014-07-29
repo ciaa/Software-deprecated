@@ -1,2 +1,2 @@
 #add_subdirectory(Comms)
-#add_subdirectory(Compiler)
+add_subdirectory(Compiler)

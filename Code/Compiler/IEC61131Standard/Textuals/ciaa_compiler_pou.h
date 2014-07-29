@@ -53,11 +53,6 @@
 
 #include <boost/spirit/include/qi.hpp>
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_language_il.h"
-
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_error_handler.h"
-
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
@@ -82,7 +77,7 @@ struct ciaaPOU : bsqi::grammar<Iterator, std::string()> {
   bsqi::rule<Iterator, std::string> _function_name;
   bsqi::rule<Iterator, std::string> _standard_function_name;
   bsqi::rule<Iterator, std::string> _derived_function_name;
-  bsqi::rule<Iterator, std::string> _function_declaration;
+  bsqi::rule<Iterator, std::string()> _function_declaration;
   bsqi::rule<Iterator, std::string> _io_var_declarations;
   bsqi::rule<Iterator, std::string> _function_var_decls;
   bsqi::rule<Iterator, std::string> _function_body;

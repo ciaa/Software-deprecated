@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_parser_il.h
+    \file ciaa_compiler_error.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 28 16:19:42 UTC 2014
+    \date Tue Jul 29 17:51:07 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,52 +35,47 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_error.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
+#ifndef CIAA_COMPILER_IEC_ERROR_H
+#define CIAA_COMPILER_IEC_ERROR_H
 
-#ifndef CIAA_COMPILER_IEC_PARSER_IL_H
-#define CIAA_COMPILER_IEC_PARSER_IL_H
-
-#include <cstdio>
-
+#include <cstdint>
 #include <string>
-#include <fstream>
-#include <iostream>
-
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou-def.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/Parser/ciaa_compiler_il_parcer.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_error_list.h"
-#include "Code/Defines/ciaaGlobalMacros.h"
-
-
-class ciaaParserIL {
+namespace ciaa {
+namespace compiler {
+namespace iec61131_3 {
+namespace text {
+class ciaaError {
  public:
-  ciaaParserIL();
-  ~ciaaParserIL() = default;
+  enum class Type {
+    error,
+    warning
+  };
+  ciaaError(std::int32_t line, std::int32_t col, Type type, std::string msg);
+  ~ciaaError() = default;
 
-  ciaaParserIL(const ciaaParserIL&) = delete;
-  ciaaParserIL& operator=(const ciaaParserIL&) = delete;
+  ciaaError(const ciaaError&) = default;
+  ciaaError& operator=(const ciaaError&) = delete;
 
-  ciaaParserIL(const ciaaParserIL&&) = delete;
-  ciaaParserIL& operator=(const ciaaParserIL&&) = delete;
+  ciaaError(const ciaaError&&) = delete;
+  ciaaError& operator=(const ciaaError&&) = delete;
 
-  void build(std::string source_file, std::string output_file);
-  std::vector<std::string> errors();
-  void reset();
+  std::string msg() const;
 
  private:
-  std::string read_from_file(char const* in_file);
-
-  typedef ciaaScanner<std::string::const_iterator> lexer_type;
-  lexer_type _lexer;
-  typedef lexer_type::iterator_type iterator_type;
-  ciaa::compiler::iec61131_3::ciaaPOU<iterator_type> _parser;
+  std::int32_t _line;
+  std::int32_t _col;
+  Type _type;
+  std::string _msg;
 };
-
-#endif  // CIAA_COMPILER_IEC_PARSER_IL_H
+}  // namespace text
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespcae ciaa
+#endif  // CIAA_COMPILER_IEC_ERROR_H

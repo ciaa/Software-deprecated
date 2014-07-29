@@ -53,8 +53,6 @@
 
 #include <boost/spirit/include/qi.hpp>
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou.h"
-
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {

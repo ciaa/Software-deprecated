@@ -42,68 +42,14 @@
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou.h"
 
-#include <boost/spirit/include/lex.hpp>
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou-def.h"
+
+
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
-template <typename Iterator>
-template <typename TokenDef>
-ciaaPOU<Iterator>::ciaaPOU(const TokenDef& token)
-  : ciaaPOU::base_type(_function_declaration) {
-#ifndef BOOST_SPIRIT_QI_DEBUG
-  bsqi::char_type char_;
-#else
-  using boost::spirit::qi::char_;
-#endif
-
-
-  // Externals rules
-  ciaaDataTypes<Iterator> _ext_data_types;
-  text::il::ciaaLanguageIL<Iterator> _instruction_list{token};
-
-//  _var2_init_decl TODO(denisacostaq\@gmail.com): todo
-//      =  var1_init_decl | array_var_init_decl
-//      |  structured_var_init_decl | string_var_declaration
-  _function_body  // TODO(denisacostaq\@gmail.com): some
-      = // ladder_diagram | function_block_diagram |
-         _instruction_list;// | statement_list | <other languages>
-  _function_var_decls
-      =  token._rw_var
-      >> -token._rw_constant
-      >  _var2_init_decl
-      >  char_(';')
-      >> *(
-              _var2_init_decl
-            > char_(';')
-          )
-      > token._rw_end_var;
-//  _io_var_declarations ::= input_declarations | output_declarations |
-//  input_output_declarations TODO(denisacostaq\@gmail.com): todo
-  _derived_function_name
-      = token._identifier;
-  _standard_function_name
-      = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-  _function_name
-      = _standard_function_name
-      | _derived_function_name;
-  _function_declaration
-      =  token._rw_function
-      >  _derived_function_name
-      >  char_(':')
-      >> (
-              _ext_data_types._elementary_type_name
-           |  _ext_data_types._derived_type_name
-         )
-      >> *(
-              _io_var_declarations
-           |  _function_var_decls
-         )
-      >>  _function_body
-      >  token._rw_function_end;
-}
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa

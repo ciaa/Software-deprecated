@@ -47,6 +47,8 @@
 #ifndef CIAA_COMPILER_IEC_SCANNER_H
 #define CIAA_COMPILER_IEC_SCANNER_H
 #include <boost/spirit/include/lex.hpp>
+#include <boost/spirit/include/lex_lexertl.hpp>
+#include <boost/spirit/include/lex_lexertl_position_token.hpp>
 
 namespace lex = boost::spirit::lex;
 

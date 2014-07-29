@@ -2,11 +2,6 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/CMake/DoxygenDependencies.cmake)
 if(DOXYGEN_FOUND)
   if(DOXYGEN_VERSION LESS 1.8)
     MESSAGE(WARNING "Your Doxygen is very old!")
-  else(DOXYGEN_VERSION LESS 1.8)
-    MESSAGE(WARNING "Doxygen meaby say ${PROJECT_SOURCE_DIR}/.../file warning:
-            Unexpected html tag <h1> found within <a href=...> context.
-            I not understand this according to:
-            file:///usr/share/doc/doxygen/html/htmlcmds.html")
   endif(DOXYGEN_VERSION LESS 1.8)
 
   if(DOXYGEN_DOT_FOUND)
