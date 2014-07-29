@@ -43,15 +43,42 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_LANGUAGE_IL_H
-#define CIAA_COMPILER_IEC_LANGUAGE_IL_H
+#ifndef CIAA_COMPILER_IEC_IL_PARCER_H
+#define CIAA_COMPILER_IEC_IL_PARCER_H
 
-#define DEUGGGGGG
-#ifdef DEUGGGGGG
+///*! \brief The ciaaParcer class provide an AST and a SymbolTable.
+// * \brief The ciaaParcer class take a flow of tockens and transorm
+// * \brief it in an AST strcut and fill a the SymbolTable.
+// * \ingroup CompilerIL
+// */
+//class ciaaParcer {
+// public:
+//  ciaaParcer() = default;
+//  ~ciaaParcer() = default;
+
+//  ciaaParcer(const ciaaParcer&) = delete;
+//  ciaaParcer& operator=(const ciaaParcer&) = delete;
+
+//  ciaaParcer(const ciaaParcer&&) = delete;
+//  ciaaParcer& operator=(const ciaaParcer&&) = delete;
+//};
+
+
+
+
+
 #define BOOST_SPIRIT_QI_DEBUG
-#endif
 
+
+
+
+#include <boost/spirit/include/phoenix_function.hpp>
 #include <boost/spirit/include/qi.hpp>
+namespace qi = boost::spirit::qi;
+
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/Scanner/ciaa_compiler_il_lexer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Common/Parser/ciaa_compiler_parcer.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ASTIL.h"
 
 namespace ciaa {
 namespace compiler {
@@ -59,37 +86,196 @@ namespace iec61131_3 {
 namespace text {
 namespace il {
 
-namespace bsqi = boost::spirit::qi;
+/*! \brief pnp Parent namespace
+ */
+namespace pnp = ciaa::compiler::iec61131_3::text;
+/*! \brief tnp This namespace
+ */
+namespace tnp = pnp::il;
 
 
 template <typename Iterator>
-struct ciaaLanguageIL : bsqi::grammar<Iterator, std::string> {
+struct ciaaLanguageIL : public pnp::ciaaTextualParser<Iterator, AST::AST_il_instruction_list> {
   template <typename TokenDef>
-  ciaaLanguageIL(const TokenDef& token);
+  ciaaLanguageIL(const TokenDef& token)
+    : pnp::ciaaTextualParser<
+      Iterator,
+      AST::AST_il_instruction_list>(token,
+                                    _il_instruction_list2) {
+    using pc = pnp::ciaaTextualParser<Iterator, AST::AST_il_instruction_list>;
+    qi::char_type char_;
+
+//    il_assign_operator ::= variable_name':='
+//    il_assign_out_operator ::= ['NOT'] variable_name'=>'
+
+    _il_call_operator
+        = token._cal
+        | token._calc
+        | token._calcn;
+    _il_return_operator
+        = token._ret
+        | token._retc
+        | token._retcn;
+    _il_jump_operator
+        = token._jmp
+        | token._jmpc
+        | token._jmpcn;
+
+    _il_label
+        = token._identifier;
+    _il_label2
+        = _il_label;
+    _il_expr_operator2
+        = token._and
+        | token._and_symbol
+        | token._or
+        | token._xor
+        | token._andn
+        | token._and_symbol_n
+        | token._orn
+        | token._xorn
+        | token._add
+        | token._sub
+        | token._mul
+        | token._div
+        | token._mod
+        | token._gt
+        | token._ge
+        | token._eq
+        | token._lt
+        | token._le
+        | token._ne;
+    _il_simple_operator2
+        = token._ld
+        | token._ldn
+        | token._st
+        | token._stn
+        | token._not
+        | token._s
+        | token._r
+        | token._s1
+        | token._r1
+        | token._clk
+        | token._cu
+        | token._cd
+        | token._pv
+        | token._in
+        | token._pt
+        | _il_expr_operator2;
+    _il_operand2
+        = pc::_constant;
+//        | variable
+//        | enumerated_value;
+    _il_operand_list2
+        = _il_operand2
+        >> *(char_(',') >> _il_operand2);
+//        = +(_il_operand2 % char_(','));
+    _il_simple_operation2
+        =  (_il_simple_operator2 >> -_il_operand2)
+        |  (pc::_function_name >> -_il_operand_list2);
+    _il_instruction2
+        =  -_il_label2
+        >> -(  _il_simple_operation2
+               | _il_expression2
+               | _il_jump_operation2
+               | _il_fb_call2
+               | _il_formal_funct_call2
+               | _il_return_operator2
+            )
+        >> token._eol;//+qi::eol_parser::;
+    _il_instruction_list2
+        = +_il_instruction2;
+
+    BOOST_SPIRIT_DEBUG_NODES(
+//      (_il_instruction_list2)
+//      (_il_instruction2)
+      (_il_simple_operation2)
+//      (_il_expression2)
+//      (_il_jump_operation2)
+//      (_il_fb_call2)
+//      (_il_formal_funct_call2)
+//      (_il_return_operator2)
+      (_il_label)
+      (_il_label2)
+      (_il_simple_operator2)
+      (_il_expr_operator2)
+      (_il_operand_list2)
+      (_il_operand2)
+    );
 
 
+    _il_expr_operator2.name("expr_operator");
+    _il_simple_operator2.name("simple_operator");
+    _il_label2.name("label");
+    _il_simple_operation2.name("simple_operation");
+    _il_expression2.name("expression");
+    _il_jump_operation2.name("jump_operation");
+    _il_fb_call2.name("fb_call");
+    _il_formal_funct_call2.name("formal_funct_call");
+    _il_return_operator2.name("return_operator");
+    _il_instruction2.name("instruction");
+    _il_instruction_list2.name("instruction_list");
 
-//  qi::rule<Iterator, AST::AST_il_instruction_list()> _il_instruction_list2;
-//  qi::rule<Iterator, AST::AST_il_instruction()> _il_instruction2;
-//  qi::rule<Iterator, AST::AST_il_simple_operation::posible_variants()> _il_simple_operation2;
-//  qi::rule<Iterator, AST::AST_il_expression()> _il_expression2;
-//  qi::rule<Iterator, AST::AST_il_jump_operation()> _il_jump_operation2;
-//  qi::rule<Iterator, AST::AST_il_fb_call()> _il_fb_call2;
-//  qi::rule<Iterator, AST::AST_il_formal_funct_call()> _il_formal_funct_call2;
-//  qi::rule<Iterator, AST::AST_il_return_operator()> _il_return_operator2;
-//  qi::rule<Iterator, AST::AST_il_label()> _il_label2;
-//  qi::rule<Iterator, std::string()> _il_label;
-//  qi::rule<Iterator, std::string()> _il_simple_operator2;
-//  qi::rule<Iterator, std::string()> _il_expr_operator2;
-//  qi::rule<Iterator, std::list<AST::AST_il_operand>()> _il_operand_list2;
-//  qi::rule<Iterator, AST::AST_il_operand()> _il_operand2;
-//  qi::rule<Iterator, std::string> _il_call_operator,
-//                                  _il_return_operator,
-//                                  _il_jump_operator;
-bsqi::rule<Iterator, std::string> _pepe;
+//    qi::_1_type _1;
+//    qi::_2_type _2;
+//    qi::_3_type _3;
+//    qi::_4_type _4;
+//    ///////////////////////////////////////////////////////////////////////
+//    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+//        error_handler_type;
+//    typedef boost::phoenix::function<error_handler_type> error_handler_function;
 
-bsqi::rule<Iterator, std::string()> _a;
-bsqi::rule<Iterator, std::string> _b;
+
+//    qi::on_error<qi::fail>(_il_expr_operator2,
+//                           error_handler_function(error_handler)("Error! Expecting ", _4, _3));
+
+  }
+
+
+  qi::rule<Iterator, AST::AST_il_instruction_list()> _il_instruction_list2;
+  qi::rule<Iterator, AST::AST_il_instruction()> _il_instruction2;
+  qi::rule<Iterator, AST::AST_il_simple_operation::posible_variants()> _il_simple_operation2;
+  qi::rule<Iterator, AST::AST_il_expression()> _il_expression2;
+  qi::rule<Iterator, AST::AST_il_jump_operation()> _il_jump_operation2;
+  qi::rule<Iterator, AST::AST_il_fb_call()> _il_fb_call2;
+  qi::rule<Iterator, AST::AST_il_formal_funct_call()> _il_formal_funct_call2;
+  qi::rule<Iterator, AST::AST_il_return_operator()> _il_return_operator2;
+  qi::rule<Iterator, AST::AST_il_label()> _il_label2;
+  qi::rule<Iterator, std::string()> _il_label;
+  qi::rule<Iterator, std::string()> _il_simple_operator2;
+  qi::rule<Iterator, std::string()> _il_expr_operator2;
+  qi::rule<Iterator, std::list<AST::AST_il_operand>()> _il_operand_list2;
+  qi::rule<Iterator, AST::AST_il_operand()> _il_operand2;
+  qi::rule<Iterator, std::string> _il_call_operator,
+                                  _il_return_operator,
+                                  _il_jump_operator;
+
+
+  void check(const ciaa::compiler::iec61131_3::text::il::il_expr_operator& ast) {
+    typedef struct {
+      bool operator()(tnp::il_instruction const& x) const {
+        std::printf("DDDDDDDDDDDD\n");
+        return true;
+      }
+
+      bool start(const tnp::il_expr_operator& ast) {
+        std::printf("|%s|\n", ast._exp.c_str());
+//        std::printf("size: %d\n", ast.il.size());
+//        for (tnp::il_instruction instr : ast.il) {
+//          std::printf("DDDDDDDDDDDD222222\n");
+//          if (!(*this)(instr)) {
+//            return false;
+//          }
+//        }
+//        std::printf("DDDDDDDDDDDD33333333\n");
+        return true;
+      }
+    } checker;
+    checker ch;
+    std::printf("DDDDDDDDDDDD4444444\n");
+    if (!ch.start(ast)) std::exit(EXIT_FAILURE);
+
+  }
 
 };
 }  // namespace il
@@ -98,4 +284,4 @@ bsqi::rule<Iterator, std::string> _b;
 }  // namespace compiler
 }  // namespcae ciaa
 
-#endif  // CIAA_COMPILER_IEC_LANGUAGE_IL_H
+#endif // CIAA_COMPILER_IEC_IL_PARCER_H

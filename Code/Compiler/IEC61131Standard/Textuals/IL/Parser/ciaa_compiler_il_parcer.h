@@ -95,17 +95,14 @@ namespace tnp = pnp::il;
 
 
 template <typename Iterator, typename Lexer>
-struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, Lexer, AST::AST_il_instruction_list> {
+struct li_grammar_chield : public pnp::ciaaTextualParser<Iterator, AST::AST_il_instruction_list> {
   template <typename TokenDef>
-  li_grammar_chield(const TokenDef& token,
-                    client::error_handler<typename Lexer::base_iterator_type, Iterator>& error_handler)
+  li_grammar_chield(const TokenDef& token)
     : pnp::ciaaTextualParser<
       Iterator,
-      Lexer,
       AST::AST_il_instruction_list>(token,
-                                    error_handler,
                                     _il_instruction_list2) {
-    using pc = pnp::ciaaTextualParser<Iterator, Lexer, AST::AST_il_instruction_list>;
+    //using pc = pnp::ciaaTextualParser<Iterator, Lexer, AST::AST_il_instruction_list>;
     qi::char_type char_;
 
 //    il_assign_operator ::= variable_name':='

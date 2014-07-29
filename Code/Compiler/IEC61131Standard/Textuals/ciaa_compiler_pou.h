@@ -54,6 +54,8 @@
 #include <boost/spirit/include/qi.hpp>
 
 #include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_language_il.h"
+
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_error_handler.h"
 
 namespace ciaa {
@@ -64,7 +66,7 @@ namespace bsqi = boost::spirit::qi;
 /*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
  */
 template <typename Iterator>
-struct ciaaPOU : bsqi::grammar<Iterator, std::string> {
+struct ciaaPOU : bsqi::grammar<Iterator, std::string()> {
   template <typename TokenDef>
   ciaaPOU(const TokenDef& token);
 
@@ -102,8 +104,11 @@ struct ciaaPOU : bsqi::grammar<Iterator, std::string> {
   bsqi::rule<Iterator, std::string> _program_access_decls;
   bsqi::rule<Iterator, std::string> _program_access_decl;
 
-  // Externals rules
-  ciaaDataTypes<Iterator> _ext_data_types;
+
+
+
+
+  // member vars
 };
 }  // namespace iec61131_3
 }  // namespace compiler

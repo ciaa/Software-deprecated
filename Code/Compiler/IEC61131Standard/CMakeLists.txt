@@ -15,7 +15,7 @@ set(compiler_iec61331_3_Code
 set(compiler_iec61331_3_il_Code
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/IL/ciaa_compiler_language_il.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/IL/ciaa_compiler_parser_il.cc
-#    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Lexer/ciaa_compiler_scanner.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Lexer/ciaa_compiler_scanner.h
 )
 
 add_library(compiler_iec61331_3

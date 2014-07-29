@@ -51,7 +51,11 @@
 #define BOOST_SPIRIT_QI_DEBUG
 #endif
 
+// #include <string>
+
 #include <boost/spirit/include/qi.hpp>
+
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_constants.h"
 
 namespace ciaa {
 namespace compiler {
@@ -62,9 +66,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaDataTypes : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaDataTypes() : ciaaDataTypes::base_type(_data_type_name) {
-  }
-
+  template<typename TokenDef>
+  ciaaDataTypes(const TokenDef& token);
   ~ciaaDataTypes() = default;
 
   ciaaDataTypes(const ciaaDataTypes&) = delete;
@@ -80,11 +83,11 @@ struct ciaaDataTypes : boost::spirit::qi::grammar<Iterator, std::string> {
   bsqi::rule<Iterator, std::string> _elementary_type_name;
   bsqi::rule<Iterator, std::string> _numeric_type_name;
   bsqi::rule<Iterator, std::string> _integer_type_name;
-  bsqi::rule<Iterator, std::string> _signed_integer_type_name;
-  bsqi::rule<Iterator, std::string> _unsigned_integer_type_name;
-  bsqi::rule<Iterator, std::string> _real_type_name;
-  bsqi::rule<Iterator, std::string> _date_type_name;
-  bsqi::rule<Iterator, std::string> _bit_string_type_name;
+  bsqi::symbols<char> _signed_integer_type_name;
+  bsqi::symbols<char> _unsigned_integer_type_name;
+  bsqi::symbols<char> _real_type_name;
+  bsqi::symbols<char> _date_type_name;
+  bsqi::symbols<char> _bit_string_type_name;
 
   // B.1.3.2 Generic data types
   bsqi::rule<Iterator, std::string> _generic_type_name;

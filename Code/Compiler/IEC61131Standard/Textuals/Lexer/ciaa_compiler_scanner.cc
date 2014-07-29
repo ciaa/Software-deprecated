@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_symbol_info.h
+/*! \brief This file give the functionality to ciaaScanner class.
+    \file ciaa_compiler_scanner.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Wed Jul 23 23:50:50 UTC 2014
+    \date Mon Jul 21 22:54:58 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,71 +34,13 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Textuals/Common/Scanner/ciaa_compiler_symbol_info.h
+    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler/IL module.\n
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
-#ifndef CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
-#define CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
 
-#include <cinttypes>
-
-#include <string>
-
-namespace ciaa {
-namespace compiler {
-namespace iec61131_3 {
-namespace text {
-class ciaaSymbolInfo {
- public:  
-  enum class tk_kind {
-    identifier,
-    signed_integer_type_sint,
-    signed_integer_type_int,
-    signed_integer_type_dint,
-    signed_integer_type_lint,
-    unsigned_integer_type_usint,
-    unsigned_integer_type_uint,
-    unsigned_integer_type_udint,
-    unsigned_integer_type_ulint,
-    integer,
-    binary_integer,
-    octal_integer,
-    hex_integer,
-    real_literal,
-    rw_function,
-    rw_function_end,
-    rw_var,
-    rw_end_var,
-    rw_constant,
-    max_tk_id_val
-  };
-
-  ciaaSymbolInfo(std::string lexeme, ciaaSymbolInfo::tk_kind kind);
-  ~ciaaSymbolInfo() = default;
-
-  ciaaSymbolInfo(const ciaaSymbolInfo&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&) = delete;
-
-  ciaaSymbolInfo(const ciaaSymbolInfo&&) = delete;
-  ciaaSymbolInfo& operator=(const ciaaSymbolInfo&&) = delete;
-
-  std::string lexeme() const;
-
- private:
-  tk_kind _kind;
-  std::string _lexeme;
-  //std::int32_t _address;
-  bool _declared;
-  bool _initialized;
-
-};
-}  // namespace text
-}  // namespace iec61131_3
-}  // namespace compiler
-}  // namespace ciaa
-#endif  // CIAA_COMPILER_IEC_TEXTUAL_SYMBOL_INFO_H
+#include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"

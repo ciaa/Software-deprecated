@@ -82,12 +82,10 @@ namespace text {
  */
 namespace tnp = ciaa::compiler::iec61131_3::text;
 
-template <typename Iterator, typename Lexer, typename Structure>
+template <typename Iterator, typename Structure>
 struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
   template <typename TokenDef>
   ciaaTextualParser(const TokenDef& token,
-                    client::error_handler<typename Lexer::base_iterator_type,
-                    Iterator>& error_handler,
                     qi::rule<Iterator, Structure()>& str)
     : ciaaTextualParser::base_type(str) {
     qi::char_type char_;
@@ -138,17 +136,17 @@ struct ciaaTextualParser : public qi::grammar<Iterator, Structure()> {
 //      (_function_name)
 //    );
 
-    qi::_1_type _1;
-    qi::_2_type _2;
-    qi::_3_type _3;
-    qi::_4_type _4;
-    ///////////////////////////////////////////////////////////////////////
-    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
-        error_handler_type;
-    typedef boost::phoenix::function<error_handler_type> error_handler_function;
+//    qi::_1_type _1;
+//    qi::_2_type _2;
+//    qi::_3_type _3;
+//    qi::_4_type _4;
+//    ///////////////////////////////////////////////////////////////////////
+//    typedef client::error_handler<typename Lexer::base_iterator_type, Iterator>
+//        error_handler_type;
+//    typedef boost::phoenix::function<error_handler_type> error_handler_function;
 
-    qi::on_error<qi::fail>(const_cast<qi::rule<Iterator, Structure()>&>(str),
-                           error_handler_function(error_handler)("Error! Expecting GGGGGGGGGGGGG ", _4, _3));
+//    qi::on_error<qi::fail>(const_cast<qi::rule<Iterator, Structure()>&>(str),
+//                           error_handler_function(error_handler)("Error! Expecting GGGGGGGGGGGGG ", _4, _3));
   }
   ~ciaaTextualParser() = default;
 

@@ -46,13 +46,17 @@
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h"
 
 
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"
+
+
 #include <iostream>
 
 ciaaParserIL::ciaaParserIL() {
   std::string str{read_from_file("argv[1]")};
 
   // create the token definition instance needed to invoke the lexical analyzer
-    typedef ciaa::compiler::iec61131_3::text::il::ciaaILLexer<std::string::const_iterator> lexer_type;
+    typedef ciaaScanner<std::string::const_iterator> lexer_type;
     lexer_type lexer;
 
     typedef std::string::const_iterator base_iterator_type;
@@ -60,9 +64,9 @@ ciaaParserIL::ciaaParserIL() {
     client::error_handler<base_iterator_type, iterator_type>
         error_handler(str.begin(), str.end());             // Our error handler
 
-    ciaa::compiler::iec61131_3::text::il::li_grammar_chield<lexer_type::iterator_type, lexer_type> parser{lexer, error_handler};
+    ciaa::compiler::iec61131_3::ciaaPOU<lexer_type::iterator_type> parser{lexer};
 
-    AST::AST_il_instruction_list ast;
+    std::string ast;
 
     base_iterator_type first = str.begin();
     base_iterator_type last = str.end();
