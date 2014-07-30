@@ -46,13 +46,14 @@
 #ifndef CIAA_COMPILER_IEC_POU_INL_H
 #define CIAA_COMPILER_IEC_POU_INL_H
 
-#include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/lex.hpp>
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
 
 #include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_data_types.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_language_il.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_variable.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_sequential_function_chart_elements.h"
+//#include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_language_il.h"
+
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_error_handler.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
 
 namespace ciaa {
 namespace compiler {
@@ -60,59 +61,78 @@ namespace iec61131_3 {
 template <typename Iterator>
 template <typename TokenDef>
 ciaaPOU<Iterator>::ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function_declaration) {
+  // Externals rules
+  ciaaDataTypes<Iterator> _ext_data_types{token};
+  ciaaVariables<Iterator> _ext_variables{token};
+  ciaaSequentialFunctionChartElements<Iterator> _ext_sfce{token};
+  // text::il::ciaaLanguageIL<Iterator> _ext_il{token};
   #ifndef BOOST_SPIRIT_QI_DEBUG
     bsqi::char_type char_;
   #else
     using boost::spirit::qi::char_;
   #endif
+  // B.1.5.2 Function blocks
+  _function_block_body
+        =  _ext_sfce._sequential_function_chart
+//      |  ladder_diagram
+//      |  function_block_diagram
+//      |  instruction_list
+//      |  statement_list
+//      |  <other languages>
+      ;
+
+  _non_retentive_var_decls
+      =  "VAR" > "NON_RETAIN" > +(_ext_variables._var_init_decl > char_(";"))
+      >  "END_VAR";
+  _temp_var_decls
+      =  "VAR_TEMP" > +(_temp_var_decls > char_(";")) > "END_VAR";
+  _other_var_declarations
+      =  _ext_variables._external_var_declarations
+      |  _ext_variables._var_declarations
+      |  _ext_variables._retentive_var_declarations
+   // |   _non_retentive_var_declarations
+      |  _temp_var_decls
+      |  _ext_variables._incompl_located_var_declarations;
+  _function_block_declaration
+      =  "FUNCTION_BLOCK" > _derived_function_block_name
+      >> *(_io_var_declarations | _other_var_declarations)
+      >  _function_block_body > "END_FUNCTION_BLOCK";
+  _derived_function_block_name
+      =  token._identifier;
+  //_standard_function_block_name ::= <as defined in 2.5.2.3>
+  _function_block_type_name
+      =  _standard_function_block_name | _derived_function_block_name;
 
 
-  // Externals rules
-  //  ciaaDataTypes<Iterator> _ext_data_types{token};
-    //text::il::ciaaLanguageIL<Iterator> _instruction_list{token};
 
-  ////  _var2_init_decl TODO(denisacostaq\@gmail.com): todo
-  ////      =  var1_init_decl | array_var_init_decl
-  ////      |  structured_var_init_decl | string_var_declaration
-  //  _function_body  // TODO(denisacostaq\@gmail.com): some
-  //      = // ladder_diagram | function_block_diagram |
-  //         _instruction_list;// | statement_list | <other languages>
-  //  _function_var_decls
-  //      =  token._rw_var
-  //      >> -token._rw_constant
-  //      >  _var2_init_decl
-  //      >  char_(';')
-  //      >> *(
-  //              _var2_init_decl
-  //            > char_(';')
-  //          )
-  //      > token._rw_end_var;
-  ////  _io_var_declarations ::= input_declarations | output_declarations |
-  ////  input_output_declarations TODO(denisacostaq\@gmail.com): todo
-  //  _derived_function_name
-  //      = token._identifier;
-  //  _standard_function_name
-  //      = char_('A');  // FIXME(denisacostaq\@gmail.com): 2.5.1.5
-  //  _function_name
-  //      = _standard_function_name
-  //      | _derived_function_name;
-    _function_declaration
-        =
-        token._rw_function
-//        >  _derived_function_name
-//        >  char_(':')
-//  //      >> (
-//  //              _ext_data_types._elementary_type_name
-//  //           |  _ext_data_types._derived_type_name
-//  //         )
-//        >> *(
-//                _io_var_declarations
-//             |  _function_var_decls
-//           )
-//        >>  _function_body
-       > token._rw_function_end
-        ;
-
+  // B.1.5.1 Functions
+  _var2_init_decl
+      =  _ext_variables._var1_init_decl
+      |  _ext_variables._array_var_init_decl
+      |  _ext_variables._structured_var_init_decl
+      |  _ext_variables._string_var_declaration;
+//  _function_body
+//      =  ladder_diagram
+//      |  function_block_diagram
+//      |  instruction_list
+//      |  statement_list
+//      |  <other languages>
+  _function_var_decls
+      =  "VAR" >> -("CONSTANT") > +(_var2_init_decl > char_(";")) > "END_VAR";
+  _io_var_declarations
+      =  _ext_variables._input_declarations
+      |  _ext_variables._output_declarations
+      |  _ext_variables._input_output_declarations;
+  _function_declaration
+      =  "FUNCTION" > _derived_function_name > char_(":")
+      >  (_ext_data_types._elementary_type_name | _ext_data_types._derived_type_name)
+      >> *(_io_var_declarations | _function_var_decls)
+      >  _function_body > "END_FUNCTION";
+  _derived_function_name
+      =  token._identifier;
+  // TODO(denisacostaq\@gmail.com): _standard_function_name ::= <as defined in 2.5.1.5>
+  _function_name
+      =  _standard_function_name | _derived_function_name;
 }
 
 

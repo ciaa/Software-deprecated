@@ -52,7 +52,7 @@
 // BOOST_SPIRIT_NO_PREDEFINED_TERMINALS defined, you are
 // responsible in creating instances of the terminals that
 // you need (e.g. see qi::uint_type uint_ below).
-#define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+//#define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////////////////////
