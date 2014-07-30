@@ -1,7 +1,7 @@
 #ifndef CIAA_COMPILER_IEC_DATA_TYPESDEF_H
 #define CIAA_COMPILER_IEC_DATA_TYPESDEF_H
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_data_types.h"
 
 namespace ciaa {
 namespace compiler {

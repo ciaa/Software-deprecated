@@ -52,10 +52,10 @@
 #include <fstream>
 #include <iostream>
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou-def.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou-def.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/Parser/ciaa_compiler_il_parcer.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_error_list.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Errors/ciaa_compiler_error_list.h"
 #include "Code/Defines/ciaaGlobalMacros.h"
 
 

@@ -1,5 +1,5 @@
-/*! \brief This file give the functionality to ciaaPOU class.
-    \file ciaa_compiler_pou.cc
+/*! \brief Do not include this file directly in external modules.
+    \file ciaa_compiler_pou.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Sun Jul 27 18:47:39 UTC 2014
 
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,13 +43,86 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou-def.h"
+#ifndef CIAA_COMPILER_IEC_POU_H
+#define CIAA_COMPILER_IEC_POU_H
 
+#define DEUGGGGGG
+#ifdef DEUGGGGGG
+#define BOOST_SPIRIT_QI_DEBUG
+#endif
+
+#include <boost/spirit/include/qi.hpp>
+
+
+#include <boost/fusion/include/adapt_struct.hpp>
+
+
+struct miast {
+  std::string g1;
+  std::string g2;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+  miast,
+    (std::string, g1)
+    (std::string, g2)
+)
 
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
+namespace bsqi = boost::spirit::qi;
+
+
+
+
+/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
+ */
+template <typename Iterator>
+struct ciaaPOU : bsqi::grammar<Iterator, miast()> {
+  template <typename TokenDef>
+  ciaaPOU(const TokenDef& token);
+
+  ~ciaaPOU() = default;
+
+  ciaaPOU(const ciaaPOU&) = delete;
+  ciaaPOU& operator=(const ciaaPOU&) = delete;
+
+  ciaaPOU(const ciaaPOU&&) = delete;
+  ciaaPOU& operator=(const ciaaPOU&&) = delete;
+
+  // B.1.5.1 Functions
+  bsqi::rule<Iterator, std::string> _function_name;
+  bsqi::rule<Iterator, std::string> _standard_function_name;
+  bsqi::rule<Iterator, std::string> _derived_function_name;
+  bsqi::rule<Iterator, miast()> _function_declaration;
+  bsqi::rule<Iterator, std::string> _io_var_declarations;
+  bsqi::rule<Iterator, std::string> _function_var_decls;
+  bsqi::rule<Iterator, std::string> _function_body;
+  bsqi::rule<Iterator, std::string> _var2_init_decl;
+
+  // B.1.5.2 Function blocks
+  bsqi::rule<Iterator, std::string> _function_block_type_name;
+  bsqi::rule<Iterator, std::string> _standard_function_block_name;
+  bsqi::rule<Iterator, std::string> _derived_function_block_name;
+  bsqi::rule<Iterator, std::string> _function_block_declaration;
+  bsqi::rule<Iterator, std::string> _other_var_declarations;
+  bsqi::rule<Iterator, std::string> _temp_var_decls;
+  bsqi::rule<Iterator, std::string> _non_retentive_var_decls;
+  bsqi::rule<Iterator, std::string> _function_block_body;
+
+  // B.1.5.3 Programs
+  bsqi::rule<Iterator, std::string> _program_type_name;
+  bsqi::rule<Iterator, std::string> _program_declaration;
+  bsqi::rule<Iterator, std::string> _program_access_decls;
+  bsqi::rule<Iterator, std::string> _program_access_decl;
+
+
+  // member vars
+};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
+
+#endif  // CIAA_COMPILER_IEC_POU_H

@@ -1,7 +1,7 @@
 /*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_pou.h
+    \file ciaa_compiler_sequential_function_chart_elements.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 18:47:39 UTC 2014
+    \date Sun Jul 27 22:37:18 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_pou.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_sequential_function_chart_elements.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,8 +43,8 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_POU_H
-#define CIAA_COMPILER_IEC_POU_H
+#ifndef CIAA_COMPILER_IEC_SEQUENTIAL_FUNCTION_CHART_ELEMENTS_H
+#define CIAA_COMPILER_IEC_SEQUENTIAL_FUNCTION_CHART_ELEMENTS_H
 
 #define DEUGGGGGG
 #ifdef DEUGGGGGG
@@ -53,76 +53,49 @@
 
 #include <boost/spirit/include/qi.hpp>
 
-
-#include <boost/fusion/include/adapt_struct.hpp>
-
-
-struct miast {
-  std::string g1;
-  std::string g2;
-};
-
-BOOST_FUSION_ADAPT_STRUCT(
-  miast,
-    (std::string, g1)
-    (std::string, g2)
-)
-
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-
-
-
-/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
+/*! \brief struct ciaaSequentialFunctionChartElements implemment B.1.6 Sequential function chart elements
  */
 template <typename Iterator>
-struct ciaaPOU : bsqi::grammar<Iterator, miast()> {
-  template <typename TokenDef>
-  ciaaPOU(const TokenDef& token);
-
-  ~ciaaPOU() = default;
-
-  ciaaPOU(const ciaaPOU&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&) = delete;
-
-  ciaaPOU(const ciaaPOU&&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&&) = delete;
-
-  // B.1.5.1 Functions
-  bsqi::rule<Iterator, std::string> _function_name;
-  bsqi::rule<Iterator, std::string> _standard_function_name;
-  bsqi::rule<Iterator, std::string> _derived_function_name;
-  bsqi::rule<Iterator, miast()> _function_declaration;
-  bsqi::rule<Iterator, std::string> _io_var_declarations;
-  bsqi::rule<Iterator, std::string> _function_var_decls;
-  bsqi::rule<Iterator, std::string> _function_body;
-  bsqi::rule<Iterator, std::string> _var2_init_decl;
-
-  // B.1.5.2 Function blocks
-  bsqi::rule<Iterator, std::string> _function_block_type_name;
-  bsqi::rule<Iterator, std::string> _standard_function_block_name;
-  bsqi::rule<Iterator, std::string> _derived_function_block_name;
-  bsqi::rule<Iterator, std::string> _function_block_declaration;
-  bsqi::rule<Iterator, std::string> _other_var_declarations;
-  bsqi::rule<Iterator, std::string> _temp_var_decls;
-  bsqi::rule<Iterator, std::string> _non_retentive_var_decls;
-  bsqi::rule<Iterator, std::string> _function_block_body;
-
-  // B.1.5.3 Programs
-  bsqi::rule<Iterator, std::string> _program_type_name;
-  bsqi::rule<Iterator, std::string> _program_declaration;
-  bsqi::rule<Iterator, std::string> _program_access_decls;
-  bsqi::rule<Iterator, std::string> _program_access_decl;
+struct ciaaSequentialFunctionChartElements : boost::spirit::qi::grammar<Iterator, std::string> {
+  ciaaSequentialFunctionChartElements() : ciaaSequentialFunctionChartElements::base_type(_sequential_function_chart) {
+  }
 
 
-  // member vars
+  ~ciaaSequentialFunctionChartElements() = default;
+
+  ciaaSequentialFunctionChartElements(const ciaaSequentialFunctionChartElements&) = delete;
+  ciaaSequentialFunctionChartElements& operator=(const ciaaSequentialFunctionChartElements&) = delete;
+
+  ciaaSequentialFunctionChartElements(const ciaaSequentialFunctionChartElements&&) = delete;
+  ciaaSequentialFunctionChartElements& operator=(const ciaaSequentialFunctionChartElements&&) = delete;
+
+  bsqi::rule<Iterator, std::string> _sequential_function_chart;
+  bsqi::rule<Iterator, std::string> _sfc_network;
+  bsqi::rule<Iterator, std::string> _initial_step;
+  bsqi::rule<Iterator, std::string> _step;
+  bsqi::rule<Iterator, std::string> _step_name;
+  bsqi::rule<Iterator, std::string> _action_association;
+  bsqi::rule<Iterator, std::string> _action_name;
+  bsqi::rule<Iterator, std::string> _action_qualifier;
+  bsqi::rule<Iterator, std::string> _timed_qualifier;
+  bsqi::rule<Iterator, std::string> _action_time;
+  bsqi::rule<Iterator, std::string> _indicator_name;
+  bsqi::rule<Iterator, std::string> _transition;
+  bsqi::rule<Iterator, std::string> _transition_name;
+  bsqi::rule<Iterator, std::string> _steps;
+  bsqi::rule<Iterator, std::string> _transition_condition;
+  bsqi::rule<Iterator, std::string> _action;
+
 };
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
 
-#endif  // CIAA_COMPILER_IEC_POU_H
+#endif  // CIAA_COMPILER_IEC_SEQUENTIAL_FUNCTION_CHART_ELEMENTS_H

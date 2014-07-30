@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_variable.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_variable.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -63,61 +63,8 @@ namespace bsqi = boost::spirit::qi;
 template <typename Iterator>
 struct ciaaVariables : boost::spirit::qi::grammar<Iterator, std::string> {
   template <typename TokenDef>
-  ciaaVariables(const TokenDef& token) : ciaaVariables::base_type(_variable) {
-    bsqi::char_type char_;
+  ciaaVariables(const TokenDef& token);
 
-    //    // B.1.4.2 Multi-element variables
-        _field_selector
-            = token._identifier;
-        _record_variable
-            =  _symbolic_variable.alias();
-        _structured_variable
-            =  _record_variable
-            >  char_('.')
-            > _field_selector;
-//        _subscript
-//            =  _expression; //FIXME(denisacostaq\@gmail.com): ST?
-        _subscript_list
-            =  char_('[')
-            >  _subscript
-            >> *(char_(',') > _subscript)
-            >  char_(']');
-        _subscripted_variable
-            = _symbolic_variable.alias();
-        _array_variable
-            =  _subscripted_variable
-            > _subscript_list;
-        _multi_element_variable
-            = _array_variable
-            | _structured_variable;
-        // B.1.4.1 Directly represented variables
-        _location_prefix
-            =  char_('I')
-            |  char_('Q')
-            |  char_('M');
-        _size_prefix
-            =  char_('N')  // FIXME(denisacostaq\@gmail.com): see NIL in the manual.
-            |  char_('X')
-            |  char_('B')
-            |  char_('W')
-            |  char_('D')
-            |  char_('L');
-        _direct_variable
-            =  char_('%')
-            >  _location_prefix
-            >  _size_prefix
-            >  token._integer
-            > *(char_('.') > token._integer);
-        // B.1.4 Variables
-        _variable_name
-            =  token._identifier;
-        _symbolic_variable
-            =  _variable_name
-            |  _multi_element_variable;
-        _variable
-            =  _direct_variable
-            |  _symbolic_variable;
-  }
 
   ~ciaaVariables() = default;
 

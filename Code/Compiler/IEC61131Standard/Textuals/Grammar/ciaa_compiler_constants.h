@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_constants.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_constants.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -52,8 +52,8 @@
 #endif
 
 #include <boost/spirit/include/qi.hpp>
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_common_elements.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_data_types.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements.h"
 
 namespace ciaa {
 namespace compiler {

@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_constants-def.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_constants-def.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -45,7 +45,7 @@
 #ifndef CIAA_COMPILER_IEC_CONSTANTS_DEF_H
 #define CIAA_COMPILER_IEC_CONSTANTS_DEF_H
 
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_constants.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_constants.h"
 
 namespace ciaa {
 namespace compiler {
@@ -54,7 +54,6 @@ template <typename Iterator>
 template<typename TokenDef>
 ciaaConstants<Iterator>::ciaaConstants(const TokenDef& token)
   : ciaaConstants::base_type(_constant)
-//  , _ext_data_types{}
 {
   bsqi::char_type char_;
   // External rules

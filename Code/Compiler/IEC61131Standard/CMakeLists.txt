@@ -2,19 +2,22 @@
 #add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/Textuals)
 
 set(compiler_iec61131_3_Code
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_programming_model.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_pou.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_pou-def.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_variable.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_sequential_function_chart_elements.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_configuration_elements.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_common_elements.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_constants.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_data_types.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_error.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_error_list.cc
-    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/AST/ciaa_compiler_ast_data_types.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Errors/ciaa_compiler_error.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Errors/ciaa_compiler_error_list.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/AST/ciaa_compiler_ast_constants.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/AST/ciaa_compiler_ast_data_types.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_constants.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_constants-def.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_programming_model.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_pou.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_pou-def.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_variable.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_variable-def.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_sequential_function_chart_elements.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_configuration_elements.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_common_elements.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_data_types.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/Grammar/ciaa_compiler_data_types-def.h
 )
 
 set(compiler_iec61131_3_il_Code

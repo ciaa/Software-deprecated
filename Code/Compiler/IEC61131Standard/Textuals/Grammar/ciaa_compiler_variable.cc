@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_error_list.h
+/*! \brief This file give the functionality to ciaaVariables class.
+    \file ciaa_compiler_variable.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Tue Jul 29 18:07:13 UTC 2014
+    \date Sun Jul 27 20:02:46 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_error_list.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_variable.cc
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,40 +43,4 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_ERROR_LIST_H
-#define CIAA_COMPILER_IEC_ERROR_LIST_H
-
-#include <vector>
-
-#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_error.h"
-
-namespace ciaa {
-namespace compiler {
-namespace iec61131_3 {
-namespace text {
-class ciaaErrorList {
- public:
-  static ciaaErrorList* getInstance();
-  ~ciaaErrorList() = default;
-
-  ciaaErrorList(const ciaaErrorList&) = delete;
-  ciaaErrorList& operator=(const ciaaErrorList&) = delete;
-
-  ciaaErrorList(const ciaaErrorList&&) = delete;
-  ciaaErrorList& operator=(const ciaaErrorList&&) = delete;
-
-  void add_error(const ciaaError& error);
-  std::vector<std::string> str_error_list() const;
-  void clear();
-
- private:
-  std::vector<ciaaError> _error_list;
-
-  static ciaaErrorList* _self_instance;
-  ciaaErrorList() = default;
-};
-}  // namespace text
-}  // namespace iec61131_3
-}  // namespace compiler
-}  // namespcae ciaa
-#endif  // CIAA_COMPILER_IEC_ERROR_LIST_H
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_variable-def.h"
