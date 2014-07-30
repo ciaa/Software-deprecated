@@ -139,13 +139,4 @@ struct ciaaVariables : boost::spirit::qi::grammar<Iterator, std::string> {
 }  // namespace compiler
 }  // namespcae ciaa
 
-
-
-
-class ciaaVariable
-{
-public:
-  ciaaVariable();
-};
-
 #endif  // CIAA_COMPILER_IEC_VARIABLE_H

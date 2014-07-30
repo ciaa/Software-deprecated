@@ -64,8 +64,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaSequentialFunctionChartElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaSequentialFunctionChartElements() : ciaaSequentialFunctionChartElements::base_type(_sequential_function_chart) {
-  }
+  template <typename TokenDef>
+  ciaaSequentialFunctionChartElements(const TokenDef& token);
 
 
   ~ciaaSequentialFunctionChartElements() = default;

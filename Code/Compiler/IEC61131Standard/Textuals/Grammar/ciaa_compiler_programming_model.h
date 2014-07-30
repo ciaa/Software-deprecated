@@ -65,14 +65,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaProgrammingModel : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaProgrammingModel() : ciaaProgrammingModel::base_type(_library_element_declaration) {
-    _library_element_declaration
-        =  _function_declaration  // TODO(denisacostaq\@gmail.com): todo
-        // function_block_declaration
-        // program_declaration
-        // configuration_declaration
-        ;
-  }
+  template <typename TokenDef>
+  ciaaProgrammingModel(const TokenDef& token);
 
   ~ciaaProgrammingModel() = default;
 

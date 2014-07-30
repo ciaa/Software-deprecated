@@ -64,6 +64,23 @@ template <typename Iterator>
 struct ciaaCommonElements : boost::spirit::qi::grammar<Iterator, std::string> {
   template<typename TokenDef>
   ciaaCommonElements(const TokenDef& token) : ciaaCommonElements::base_type(_identifier) {
+    bsqi::char_type char_;
+//    _letter
+//        =  token._letter;
+//    _digit
+//        =  token._digit;
+//    _octal_digit
+//        =  token._octal_digit;
+//    _hex_digit
+//        = _digit
+//        |  char_('A')
+//        |  char_('B')
+//        |  char_('C')
+//        |  char_('D')
+//        |  char_('E')
+//        |  char_('F');
+//    _identifier
+//        =  token._identifier;
   }
 
   ~ciaaCommonElements() = default;

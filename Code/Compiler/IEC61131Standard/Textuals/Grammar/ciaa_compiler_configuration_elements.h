@@ -64,8 +64,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaConfigurationElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaConfigurationElements() : ciaaConfigurationElements::base_type(_configuration_name) {
-  }
+  template <typename TokenDef>
+  ciaaConfigurationElements(const TokenDef& token);
 
   ~ciaaConfigurationElements() = default;
 

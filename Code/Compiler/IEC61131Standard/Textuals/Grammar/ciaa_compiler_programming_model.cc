@@ -43,7 +43,7 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_programming_model.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_programming_model-def.h"
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {

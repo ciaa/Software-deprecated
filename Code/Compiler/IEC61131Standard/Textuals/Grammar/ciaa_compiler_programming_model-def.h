@@ -1,7 +1,7 @@
-/*! \brief This file give the functionality to ciaaConfigurationElements class.
-    \file ciaa_compiler_configuration_elements.cc
+/*! \brief This file give the functionality to ciaaProgrammingModel class.
+    \file ciaa_compiler_programming_model-def.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 22:51:11 UTC 2014
+    \date Wed Jul 30 18:06:39 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,19 +35,49 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_configuration_elements.cc
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_programming_model-def.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
     [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
+#ifndef CIAA_COMPILER_IEC_PROGRAMMING_MODELDEF_H
+#define CIAA_COMPILER_IEC_PROGRAMMING_MODELDEF_H
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_configuration_elements-def.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_programming_model.h"
+
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_data_types.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_configuration_elements.h"
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
+
+template <typename Iterator>
+template <typename TokenDef>
+ciaaProgrammingModel<Iterator>::ciaaProgrammingModel(const TokenDef& token)
+  : ciaaProgrammingModel::base_type(_library_element_declaration) {
+  ciaaDataTypes<Iterator> _ext_data_type{token};
+  ciaaPOU<Iterator> _ext_pou{token};
+  ciaaConfigurationElements<Iterator> _ext_configuration_elements{token};
+  _library_element_name
+      =  _ext_data_type._data_type_name
+      |  _ext_pou._function_name
+      |  _ext_pou._function_block_type_name
+      |  _ext_pou._program_type_name
+      |  _ext_configuration_elements._resource_type_name
+      |  _ext_configuration_elements._configuration_name;
+  _library_element_declaration
+      =  _ext_data_type._data_type_declaration
+      |  _ext_pou._function_declaration
+      |  _ext_pou._function_block_declaration
+      |  _ext_pou._program_declaration
+      |  _ext_configuration_elements._configuration_declaration;
+}
+
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
+#endif  // CIAA_COMPILER_IEC_PROGRAMMING_MODELDEF_H
