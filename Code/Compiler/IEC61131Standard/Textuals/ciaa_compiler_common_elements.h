@@ -62,7 +62,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaCommonElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaCommonElements() : ciaaCommonElements::base_type(_identifier) {
+  template<typename TokenDef>
+  ciaaCommonElements(const TokenDef& token) : ciaaCommonElements::base_type(_identifier) {
   }
 
   ~ciaaCommonElements() = default;

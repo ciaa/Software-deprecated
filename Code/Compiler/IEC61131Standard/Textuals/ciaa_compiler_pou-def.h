@@ -60,15 +60,15 @@ namespace iec61131_3 {
 template <typename Iterator>
 template <typename TokenDef>
 ciaaPOU<Iterator>::ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function_declaration) {
-  //#ifndef BOOST_SPIRIT_QI_DEBUG
-  //  bsqi::char_type char_;
-  //#else
-  //  using boost::spirit::qi::char_;
-  //#endif
+  #ifndef BOOST_SPIRIT_QI_DEBUG
+    bsqi::char_type char_;
+  #else
+    using boost::spirit::qi::char_;
+  #endif
 
 
-  //  // Externals rules
-    ciaaDataTypes<Iterator> _ext_data_types{token};
+  // Externals rules
+  //  ciaaDataTypes<Iterator> _ext_data_types{token};
     //text::il::ciaaLanguageIL<Iterator> _instruction_list{token};
 
   ////  _var2_init_decl TODO(denisacostaq\@gmail.com): todo
@@ -98,7 +98,7 @@ ciaaPOU<Iterator>::ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function
   //      | _derived_function_name;
     _function_declaration
         =
-//        token._rw_function
+        token._rw_function
 //        >  _derived_function_name
 //        >  char_(':')
 //  //      >> (
@@ -110,8 +110,8 @@ ciaaPOU<Iterator>::ciaaPOU(const TokenDef& token) : ciaaPOU::base_type(_function
 //             |  _function_var_decls
 //           )
 //        >>  _function_body
-//        >
-            token._rw_function_end;
+       > token._rw_function_end
+        ;
 
 }
 

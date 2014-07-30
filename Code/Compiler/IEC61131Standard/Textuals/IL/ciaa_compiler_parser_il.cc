@@ -58,7 +58,7 @@ void ciaaParserIL::build(std::string source_file, std::string output_file) {
   using base_iterator_type = std::string::const_iterator;
   base_iterator_type first = source.begin();
   base_iterator_type last = source.end();
-  std::string ast;
+  miast ast;
   bool r{qi::parse(_lexer.begin(first, last), _lexer.end(), _parser, ast)};
 
 

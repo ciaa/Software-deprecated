@@ -13,6 +13,8 @@ set(compiler_iec61131_3_Code
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_data_types.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_error.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/ciaa_compiler_error_list.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/AST/ciaa_compiler_ast_data_types.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Textuals/AST/ciaa_compiler_ast_constants.cc
 )
 
 set(compiler_iec61131_3_il_Code

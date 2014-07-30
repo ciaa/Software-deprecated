@@ -53,15 +53,34 @@
 
 #include <boost/spirit/include/qi.hpp>
 
+
+#include <boost/fusion/include/adapt_struct.hpp>
+
+
+struct miast {
+  std::string g1;
+  std::string g2;
+};
+
+BOOST_FUSION_ADAPT_STRUCT(
+  miast,
+    (std::string, g1)
+    (std::string, g2)
+)
+
+
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
+
+
+
 /*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
  */
 template <typename Iterator>
-struct ciaaPOU : bsqi::grammar<Iterator, std::string()> {
+struct ciaaPOU : bsqi::grammar<Iterator, miast()> {
   template <typename TokenDef>
   ciaaPOU(const TokenDef& token);
 
@@ -77,7 +96,7 @@ struct ciaaPOU : bsqi::grammar<Iterator, std::string()> {
   bsqi::rule<Iterator, std::string> _function_name;
   bsqi::rule<Iterator, std::string> _standard_function_name;
   bsqi::rule<Iterator, std::string> _derived_function_name;
-  bsqi::rule<Iterator, std::string()> _function_declaration;
+  bsqi::rule<Iterator, miast()> _function_declaration;
   bsqi::rule<Iterator, std::string> _io_var_declarations;
   bsqi::rule<Iterator, std::string> _function_var_decls;
   bsqi::rule<Iterator, std::string> _function_body;
@@ -98,9 +117,6 @@ struct ciaaPOU : bsqi::grammar<Iterator, std::string()> {
   bsqi::rule<Iterator, std::string> _program_declaration;
   bsqi::rule<Iterator, std::string> _program_access_decls;
   bsqi::rule<Iterator, std::string> _program_access_decl;
-
-
-
 
 
   // member vars

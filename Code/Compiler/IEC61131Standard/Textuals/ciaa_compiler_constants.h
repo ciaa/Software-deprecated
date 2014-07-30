@@ -52,6 +52,8 @@
 #endif
 
 #include <boost/spirit/include/qi.hpp>
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_data_types.h"
+#include "Code/Compiler/IEC61131Standard/Textuals/ciaa_compiler_common_elements.h"
 
 namespace ciaa {
 namespace compiler {
@@ -62,9 +64,8 @@ namespace bsqi = boost::spirit::qi;
  */
 template <typename Iterator>
 struct ciaaConstants : boost::spirit::qi::grammar<Iterator, std::string> {
-  ciaaConstants() : ciaaConstants::base_type(_constant) {
-  }
-
+  template<typename TokenDef>
+  ciaaConstants(const TokenDef& token);
   ~ciaaConstants() = default;
 
   ciaaConstants(const ciaaConstants&) = delete;
@@ -120,6 +121,8 @@ struct ciaaConstants : boost::spirit::qi::grammar<Iterator, std::string> {
   bsqi::rule<Iterator, std::string> _month;
   bsqi::rule<Iterator, std::string> _day;
   bsqi::rule<Iterator, std::string> _date_and_time;
+
+
 };
 }  // namespace iec61131_3
 }  // namespace compiler
