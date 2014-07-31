@@ -52,32 +52,15 @@
 #endif
 
 #include <boost/spirit/include/qi.hpp>
+#include "Code/Defines/ciaa_modules_config.h"
+
 
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaCommonElements implemment B.1 Common elements.
- */
-template <typename Iterator>
-struct ciaaCommonElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  template<typename TokenDef>
-  ciaaCommonElements(const TokenDef& token);
-  ~ciaaCommonElements() = default;
 
-  ciaaCommonElements(const ciaaCommonElements&) = delete;
-  ciaaCommonElements& operator=(const ciaaCommonElements&) = delete;
-
-  ciaaCommonElements(const ciaaCommonElements&&) = delete;
-  ciaaCommonElements& operator=(const ciaaCommonElements&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _letter;
-  bsqi::rule<Iterator, std::string> _digit;
-  bsqi::rule<Iterator, std::string> _octal_digit;
-  bsqi::rule<Iterator, std::string> _hex_digit;
-  bsqi::rule<Iterator, std::string> _identifier;
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa

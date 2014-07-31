@@ -1,7 +1,7 @@
-/*! \brief This file give the functionality to ciaaConfigurationElements class.
-    \file ciaa_compiler_configuration_elements.cc
+/*! \brief This file configure the modules using defines.
+    \file ciaa_modules_config.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Sun Jul 27 22:51:11 UTC 2014
+    \date Thu Jul 31 03:56:12 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -34,8 +34,8 @@
 
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
-    \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_configuration_elements.cc
+    \brief [proyecto-ciaa-PCSoftware-URL] for modules configuration.\n
+    \brief This file become from: Code/Defines/ciaa_modules_config.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,11 +43,21 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_configuration_elements-def.h"
+#ifndef CIAA_DEFINES_MODULES_CONFIG
+#define CIAA_DEFINES_MODULES_CONFIG
 
-namespace ciaa {
-namespace compiler {
-namespace iec61131_3 {
-}  // namespace iec61131_3
-}  // namespace compiler
-}  // namespcae ciaa
+////////////////////////////////////////////////////////////////////////////////
+// Spirit v2.5 allows you to suppress automatic generation
+// of predefined terminals to speed up complation. With
+// BOOST_SPIRIT_NO_PREDEFINED_TERMINALS defined, you are
+// responsible in creating instances of the terminals that
+// you need (e.g. see qi::uint_type uint_ below).
+#define BOOST_SPIRIT_NO_PREDEFINED_TERMINALS
+////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////
+// Uncomment this if you want to enable debugging
+// #define BOOST_SPIRIT_QI_DEBUG
+////////////////////////////////////////////////////////////////////////////////
+
+#endif  // CIAA_DEFINES_MODULES_CONFIG

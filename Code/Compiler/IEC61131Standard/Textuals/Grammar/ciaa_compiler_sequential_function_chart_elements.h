@@ -53,6 +53,8 @@
 
 #include <boost/spirit/include/qi.hpp>
 
+#include "Code/Defines/ciaa_modules_config.h"
+
 #include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
 
 namespace ciaa {
@@ -60,40 +62,7 @@ namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaSequentialFunctionChartElements implemment B.1.6 Sequential function chart elements
- */
-template <typename Iterator>
-struct ciaaSequentialFunctionChartElements : boost::spirit::qi::grammar<Iterator, std::string> {
-  template <typename TokenDef>
-  ciaaSequentialFunctionChartElements(const TokenDef& token);
 
-
-  ~ciaaSequentialFunctionChartElements() = default;
-
-  ciaaSequentialFunctionChartElements(const ciaaSequentialFunctionChartElements&) = delete;
-  ciaaSequentialFunctionChartElements& operator=(const ciaaSequentialFunctionChartElements&) = delete;
-
-  ciaaSequentialFunctionChartElements(const ciaaSequentialFunctionChartElements&&) = delete;
-  ciaaSequentialFunctionChartElements& operator=(const ciaaSequentialFunctionChartElements&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _sequential_function_chart;
-  bsqi::rule<Iterator, std::string> _sfc_network;
-  bsqi::rule<Iterator, std::string> _initial_step;
-  bsqi::rule<Iterator, std::string> _step;
-  bsqi::rule<Iterator, std::string> _step_name;
-  bsqi::rule<Iterator, std::string> _action_association;
-  bsqi::rule<Iterator, std::string> _action_name;
-  bsqi::rule<Iterator, std::string> _action_qualifier;
-  bsqi::rule<Iterator, std::string> _timed_qualifier;
-  bsqi::rule<Iterator, std::string> _action_time;
-  bsqi::rule<Iterator, std::string> _indicator_name;
-  bsqi::rule<Iterator, std::string> _transition;
-  bsqi::rule<Iterator, std::string> _transition_name;
-  bsqi::rule<Iterator, std::string> _steps;
-  bsqi::rule<Iterator, std::string> _transition_condition;
-  bsqi::rule<Iterator, std::string> _action;
-
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa

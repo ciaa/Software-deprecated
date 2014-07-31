@@ -52,11 +52,12 @@
 #include <fstream>
 #include <iostream>
 
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_grammar_definition.h"
+
 #include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/Parser/ciaa_compiler_il_parcer.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Errors/ciaa_compiler_error_list.h"
 #include "Code/Defines/ciaaGlobalMacros.h"
-
 
 class ciaaParserIL {
  public:
@@ -75,6 +76,11 @@ class ciaaParserIL {
 
  private:
   std::string read_from_file(char const* in_file);
+
+  typedef ciaaScanner<std::string::const_iterator> lexer_type;
+  lexer_type _lexer;
+  typedef lexer_type::iterator_type iterator_type;
+  ciaa::compiler::iec61131_3::ciaaProgrammingModel<iterator_type> _parser;
 };
 
 #endif  // CIAA_COMPILER_IEC_PARSER_IL_H

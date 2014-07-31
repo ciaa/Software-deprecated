@@ -51,6 +51,8 @@
 #define BOOST_SPIRIT_QI_DEBUG
 #endif
 
+#include "Code/Defines/ciaa_modules_config.h"
+
 #include <boost/spirit/include/qi.hpp>
 #include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_data_types.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements.h"
@@ -60,70 +62,7 @@ namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaCommonElements implemment B.1.2 Constants.
- */
-template <typename Iterator>
-struct ciaaConstants : boost::spirit::qi::grammar<Iterator, std::string> {
-  template<typename TokenDef>
-  ciaaConstants(const TokenDef& token);
-  ~ciaaConstants() = default;
 
-  ciaaConstants(const ciaaConstants&) = delete;
-  ciaaConstants& operator=(const ciaaConstants&) = delete;
-
-  ciaaConstants(const ciaaConstants&&) = delete;
-  ciaaConstants& operator=(const ciaaConstants&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _constant;
-
-  // B.1.2.1 Numeric literals
-  bsqi::rule<Iterator, std::string> _numeric_literal;
-  bsqi::rule<Iterator, std::string> _integer_literal;
-  bsqi::rule<Iterator, std::string> _signed_integer;
-  bsqi::rule<Iterator, std::string> _integer;
-  bsqi::rule<Iterator, std::string> _binary_integer;
-  bsqi::rule<Iterator, std::string> _bit;
-  bsqi::rule<Iterator, std::string> _octal_integer;
-  bsqi::rule<Iterator, std::string> _hex_integer;
-  bsqi::rule<Iterator, std::string> _real_literal;
-  bsqi::rule<Iterator, std::string> _exponent;
-  bsqi::rule<Iterator, std::string> _bit_string_literal;
-  bsqi::rule<Iterator, std::string> _boolean_literal;
-
-  // B.1.2.2 Character strings
-  bsqi::rule<Iterator, std::string> _character_string;
-  bsqi::rule<Iterator, std::string> _single_byte_character_string;
-  bsqi::rule<Iterator, std::string> _double_byte_character_string;
-  bsqi::rule<Iterator, std::string> _single_byte_character_representation;
-  bsqi::rule<Iterator, std::string> _double_byte_character_representation;
-  bsqi::rule<Iterator, std::string> _common_character_representation;
-
-  // B.1.2.3 Time literals
-  bsqi::rule<Iterator, std::string> _time_literal;
-  // B.1.2.3.1 Duration
-  bsqi::rule<Iterator, std::string> _duration;
-  bsqi::rule<Iterator, std::string> _interval;
-  bsqi::rule<Iterator, std::string> _days;
-  bsqi::rule<Iterator, std::string> _fixed_point;
-  bsqi::rule<Iterator, std::string> _hours;
-  bsqi::rule<Iterator, std::string> _minutes;
-  bsqi::rule<Iterator, std::string> _seconds;
-  bsqi::rule<Iterator, std::string> _milliseconds;
-  // B.1.2.3.2 Time of day and date
-  bsqi::rule<Iterator, std::string> _time_of_day;
-  bsqi::rule<Iterator, std::string> _daytime;
-  bsqi::rule<Iterator, std::string> _day_hour;
-  bsqi::rule<Iterator, std::string> _day_minute;
-  bsqi::rule<Iterator, std::string> _day_second;
-  bsqi::rule<Iterator, std::string> _date;
-  bsqi::rule<Iterator, std::string> _date_literal;
-  bsqi::rule<Iterator, std::string> _year;
-  bsqi::rule<Iterator, std::string> _month;
-  bsqi::rule<Iterator, std::string> _day;
-  bsqi::rule<Iterator, std::string> _date_and_time;
-
-
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa

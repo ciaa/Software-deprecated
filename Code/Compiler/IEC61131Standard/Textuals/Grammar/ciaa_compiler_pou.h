@@ -55,21 +55,23 @@
 #include <boost/spirit/include/qi.hpp>
 //#include <boost/spirit/include/lex.hpp>
 
+#include "Code/Defines/ciaa_modules_config.h"
+
 #include <boost/fusion/include/adapt_struct.hpp>
 
 
 struct miast {
-  std::string g1;
+  char g1;
   std::string g2;
 };
 
 BOOST_FUSION_ADAPT_STRUCT(
   miast,
-    (std::string, g1)
+    (char, g1)
     (std::string, g2)
 )
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements-def.h"
+//#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements.h"
 
 namespace ciaa {
 namespace compiler {
@@ -79,51 +81,6 @@ namespace bsqi = boost::spirit::qi;
 
 
 
-/*! \brief struct ciaaProgrammingModel implemment B.0 Programming model.
- */
-template <typename Iterator>
-struct ciaaPOU : bsqi::grammar<Iterator, miast()> {
-  template <typename TokenDef>
-  ciaaPOU(const TokenDef& token);
-
-  ~ciaaPOU() = default;
-
-  ciaaPOU(const ciaaPOU&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&) = delete;
-
-  ciaaPOU(const ciaaPOU&&) = delete;
-  ciaaPOU& operator=(const ciaaPOU&&) = delete;
-
-  // B.1.5.1 Functions
-  bsqi::rule<Iterator, std::string> _function_name;
-  bsqi::rule<Iterator, std::string> _standard_function_name;
-  bsqi::rule<Iterator, std::string> _derived_function_name;
-  bsqi::rule<Iterator, miast()> _function_declaration;
-  bsqi::rule<Iterator, std::string> _io_var_declarations;
-  bsqi::rule<Iterator, std::string> _function_var_decls;
-  bsqi::rule<Iterator, std::string> _function_body;
-  bsqi::rule<Iterator, std::string> _var2_init_decl;
-
-  // B.1.5.2 Function blocks
-  bsqi::rule<Iterator, std::string> _function_block_type_name;
-  bsqi::rule<Iterator, std::string> _standard_function_block_name;
-  bsqi::rule<Iterator, std::string> _derived_function_block_name;
-  bsqi::rule<Iterator, std::string> _function_block_declaration;
-  bsqi::rule<Iterator, std::string> _other_var_declarations;
-  bsqi::rule<Iterator, std::string> _temp_var_decls;
-  bsqi::rule<Iterator, std::string> _non_retentive_var_decls;
-  bsqi::rule<Iterator, std::string> _function_block_body;
-
-  // B.1.5.3 Programs
-  bsqi::rule<Iterator, std::string> _program_type_name;
-  bsqi::rule<Iterator, std::string> _program_declaration;
-  bsqi::rule<Iterator, std::string> _program_access_decls;
-  bsqi::rule<Iterator, std::string> _program_access_decl;
-
-
-  // member vars
-  ciaaCommonElements<Iterator> _kk;
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa

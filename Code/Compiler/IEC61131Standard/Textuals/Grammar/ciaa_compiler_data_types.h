@@ -55,6 +55,8 @@
 
 #include <boost/spirit/include/qi.hpp>
 
+#include "Code/Defines/ciaa_modules_config.h"
+
 #include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_constants.h"
 #include "Code/Compiler/IEC61131Standard/Textuals/AST/ciaa_compiler_ast_data_types.h"
 

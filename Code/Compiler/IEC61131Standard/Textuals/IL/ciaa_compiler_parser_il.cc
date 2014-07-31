@@ -45,28 +45,21 @@
 
 #include "Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h"
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou-def.h"
-
 #include <iostream>
 
-ciaaParserIL::ciaaParserIL() {
-  typedef ciaaScanner<std::string::const_iterator> lexer_type;
-  lexer_type _lexer;
-  typedef lexer_type::iterator_type iterator_type;
-  ciaa::compiler::iec61131_3::ciaaPOU<iterator_type> _parser{_lexer};
+ciaaParserIL::ciaaParserIL()
+  : _parser{_lexer} {
+}
 
-
-  std::string source_file, output_file;
-  // CIAA_UNUSED_PARAM(output_file);
+void ciaaParserIL::build(std::string source_file, std::string output_file) {
+  CIAA_UNUSED_PARAM(output_file);
   ciaa::compiler::iec61131_3::text::ciaaErrorList::getInstance()->clear();
   std::string source{this->read_from_file(source_file.c_str())};
   using base_iterator_type = std::string::const_iterator;
   base_iterator_type first = source.begin();
   base_iterator_type last = source.end();
-  miast ast;
+  std::string ast;
   bool r{qi::parse(_lexer.begin(first, last), _lexer.end(), _parser, ast)};
-
-
   if (r) {
     std::printf("OK\n");
 //    if (!ut.empty()) {
@@ -76,6 +69,7 @@ ciaaParserIL::ciaaParserIL() {
 //      }
 //    }
   } else {
+    std::printf("NOO OK\n");
     client::error_handler<base_iterator_type, iterator_type>
         error_handler(source.begin(), source.end());
     error_handler.dump_error_line(first);
@@ -86,40 +80,6 @@ ciaaParserIL::ciaaParserIL() {
           "Parse failure");
     ciaa::compiler::iec61131_3::text::ciaaErrorList::getInstance()->add_error(error);
   }
-
-
-}
-
-void ciaaParserIL::build(std::string source_file, std::string output_file) {
-//  CIAA_UNUSED_PARAM(output_file);
-//  ciaa::compiler::iec61131_3::text::ciaaErrorList::getInstance()->clear();
-//  std::string source{this->read_from_file(source_file.c_str())};
-//  using base_iterator_type = std::string::const_iterator;
-//  base_iterator_type first = source.begin();
-//  base_iterator_type last = source.end();
-//  miast ast;
-//  bool r{qi::parse(_lexer.begin(first, last), _lexer.end(), _parser, ast)};
-
-
-//  if (r) {
-//    std::printf("OK\n");
-////    if (!ut.empty()) {
-////      std::printf("[%d]\n", ut.size());
-////      for (auto t  : ut) {
-////        std::cout << t << std::endl;
-////      }
-////    }
-//  } else {
-//    client::error_handler<base_iterator_type, iterator_type>
-//        error_handler(source.begin(), source.end());
-//    error_handler.dump_error_line(first);
-//    ciaa::compiler::iec61131_3::text::ciaaError error(
-//          34, //line
-//          33, //col
-//          ciaa::compiler::iec61131_3::text::ciaaError::Type::error,
-//          "Parse failure");
-//    ciaa::compiler::iec61131_3::text::ciaaErrorList::getInstance()->add_error(error);
-//  }
 }
 
 std::vector<std::string> ciaaParserIL::errors() {

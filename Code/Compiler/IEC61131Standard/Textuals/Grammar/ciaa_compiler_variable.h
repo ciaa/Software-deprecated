@@ -53,88 +53,13 @@
 
 #include <boost/spirit/include/qi.hpp>
 
+#include "Code/Defines/ciaa_modules_config.h"
+
 namespace ciaa {
 namespace compiler {
 namespace iec61131_3 {
 namespace bsqi = boost::spirit::qi;
 
-/*! \brief struct ciaaVariable implemment B.1.4 Variables.
- */
-template <typename Iterator>
-struct ciaaVariables : boost::spirit::qi::grammar<Iterator, std::string> {
-  template <typename TokenDef>
-  ciaaVariables(const TokenDef& token);
-
-
-  ~ciaaVariables() = default;
-
-  ciaaVariables(const ciaaVariables&) = delete;
-  ciaaVariables& operator=(const ciaaVariables&) = delete;
-
-  ciaaVariables(const ciaaVariables&&) = delete;
-  ciaaVariables& operator=(const ciaaVariables&&) = delete;
-
-  bsqi::rule<Iterator, std::string> _variable;
-  bsqi::rule<Iterator, std::string> _symbolic_variable;
-  bsqi::rule<Iterator, std::string> _variable_name;
-
-  //B.1.4.1 Directly represented variables
-  bsqi::rule<Iterator, std::string> _direct_variable;
-  bsqi::rule<Iterator, std::string> _location_prefix;
-  bsqi::rule<Iterator, std::string> _size_prefix;
-
-  // B.1.4.2 Multi-element variables
-  bsqi::rule<Iterator, std::string> _multi_element_variable;
-  bsqi::rule<Iterator, std::string> _array_variable;
-  bsqi::rule<Iterator, std::string> _subscripted_variable;
-  bsqi::rule<Iterator, std::string> _subscript_list;
-  bsqi::rule<Iterator, std::string> _subscript;
-  bsqi::rule<Iterator, std::string> _structured_variable;
-  bsqi::rule<Iterator, std::string> _record_variable;
-  bsqi::rule<Iterator, std::string> _field_selector;
-
-  // B.1.4.3 Declaration and initialization
-  bsqi::rule<Iterator, std::string> _input_declarations;
-  bsqi::rule<Iterator, std::string> _input_declaration;
-  bsqi::rule<Iterator, std::string> _edge_declaration;
-  bsqi::rule<Iterator, std::string> _var_init_decl;
-  bsqi::rule<Iterator, std::string> _var1_init_decl;
-  bsqi::rule<Iterator, std::string> _var1_list;
-  bsqi::rule<Iterator, std::string> _array_var_init_decl;
-  bsqi::rule<Iterator, std::string> _structured_var_init_decl;
-  bsqi::rule<Iterator, std::string> _fb_name_decl;
-  bsqi::rule<Iterator, std::string> _fb_name_list;
-  bsqi::rule<Iterator, std::string> _fb_name;
-  bsqi::rule<Iterator, std::string> _output_declarations;
-  bsqi::rule<Iterator, std::string> _input_output_declarations;
-  bsqi::rule<Iterator, std::string> _var_declaration;
-  bsqi::rule<Iterator, std::string> _temp_var_decl;
-  bsqi::rule<Iterator, std::string> _var1_declaration;
-  bsqi::rule<Iterator, std::string> _array_var_declaration;
-  bsqi::rule<Iterator, std::string> _structured_var_declaration;
-  bsqi::rule<Iterator, std::string> _var_declarations;
-  bsqi::rule<Iterator, std::string> _retentive_var_declarations;
-  bsqi::rule<Iterator, std::string> _located_var_declarations;
-  bsqi::rule<Iterator, std::string> _located_var_decl;
-  bsqi::rule<Iterator, std::string> _external_var_declarations;
-  bsqi::rule<Iterator, std::string> _external_declaration;
-  bsqi::rule<Iterator, std::string> _global_var_name;
-  bsqi::rule<Iterator, std::string> _global_var_declarations;
-  bsqi::rule<Iterator, std::string> _global_var_decl;
-  bsqi::rule<Iterator, std::string> _global_var_spec;
-  bsqi::rule<Iterator, std::string> _located_var_spec_init;
-  bsqi::rule<Iterator, std::string> _location;
-  bsqi::rule<Iterator, std::string> _global_var_list;
-  bsqi::rule<Iterator, std::string> _string_var_declaration;
-  bsqi::rule<Iterator, std::string> _single_byte_string_var_declaration;
-  bsqi::rule<Iterator, std::string> _single_byte_string_spec;
-  bsqi::rule<Iterator, std::string> _double_byte_string_var_declaration;
-  bsqi::rule<Iterator, std::string> _double_byte_string_spec;
-  bsqi::rule<Iterator, std::string> _incompl_located_var_declarations;
-  bsqi::rule<Iterator, std::string> _incompl_located_var_decl;
-  bsqi::rule<Iterator, std::string> _incompl_location;
-  bsqi::rule<Iterator, std::string> _var_spec;
-};
 }  // namespace iec61131_3
 }  // namespace compiler
 }  // namespcae ciaa
