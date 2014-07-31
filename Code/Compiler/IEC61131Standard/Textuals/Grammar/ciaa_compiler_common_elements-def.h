@@ -1,7 +1,7 @@
-/*! \brief Do not include this file directly in external modules.
-    \file ciaa_compiler_parser_il.h
+/*! \brief This file give the functionality to ciaaCommonElements class.
+    \file ciaa_compiler_common_elements-def.h
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
-    \date Mon Jul 28 16:19:42 UTC 2014
+    \date Thu Jul 31 00:12:05 UTC 2014
 
     \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
                [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
@@ -35,7 +35,7 @@
     \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
     \brief , especifically in the [<strong>PC Software subproject</strong>]
     \brief [proyecto-ciaa-PCSoftware-URL] for tests in the Compiler module.\n
-    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/IL/ciaa_compiler_parser_il.h
+    \brief This file become from: Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements-def.h
 
     [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
     [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
@@ -43,38 +43,40 @@
     [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
 */
 
-#ifndef CIAA_COMPILER_IEC_PARSER_IL_H
-#define CIAA_COMPILER_IEC_PARSER_IL_H
+#ifndef CIAA_COMPILER_IEC_COMMON_ELEMENTS_DEF_H
+#define CIAA_COMPILER_IEC_COMMON_ELEMENTS_DEF_H
 
-#include <cstdio>
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements.h"
 
-#include <string>
-#include <fstream>
-#include <iostream>
+namespace ciaa {
+namespace compiler {
+namespace iec61131_3 {
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Lexer/ciaa_compiler_scanner.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/IL/Parser/ciaa_compiler_il_parcer.h"
-#include "Code/Compiler/IEC61131Standard/Textuals/Errors/ciaa_compiler_error_list.h"
-#include "Code/Defines/ciaaGlobalMacros.h"
+template<typename Iterator>
+template<typename TokenDef>
+ciaaCommonElements<Iterator>::ciaaCommonElements(const TokenDef& token) : ciaaCommonElements::base_type(_identifier) {
+  bsqi::char_type char_;
+//    _letter
+//        =  token._letter;
+//    _digit
+//        =  token._digit;
+//    _octal_digit
+//        =  token._octal_digit;
+//    _hex_digit
+//        = _digit
+//        |  char_('A')
+//        |  char_('B')
+//        |  char_('C')
+//        |  char_('D')
+//        |  char_('E')
+//        |  char_('F');
+//    _identifier
+//        =  token._identifier;
+}
+
+}  // namespace iec61131_3
+}  // namespace compiler
+}  // namespcae ciaa
 
 
-class ciaaParserIL {
- public:
-  ciaaParserIL();
-  ~ciaaParserIL() = default;
-
-  ciaaParserIL(const ciaaParserIL&) = delete;
-  ciaaParserIL& operator=(const ciaaParserIL&) = delete;
-
-  ciaaParserIL(const ciaaParserIL&&) = delete;
-  ciaaParserIL& operator=(const ciaaParserIL&&) = delete;
-
-  void build(std::string source_file, std::string output_file);
-  std::vector<std::string> errors();
-  void reset();
-
- private:
-  std::string read_from_file(char const* in_file);
-};
-
-#endif  // CIAA_COMPILER_IEC_PARSER_IL_H
+#endif  // CIAA_COMPILER_IEC_COMMON_ELEMENTS_DEF_H

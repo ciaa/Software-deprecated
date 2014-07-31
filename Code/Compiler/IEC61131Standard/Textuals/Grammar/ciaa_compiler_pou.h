@@ -69,6 +69,7 @@ BOOST_FUSION_ADAPT_STRUCT(
     (std::string, g2)
 )
 
+#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_common_elements-def.h"
 
 namespace ciaa {
 namespace compiler {
@@ -121,6 +122,7 @@ struct ciaaPOU : bsqi::grammar<Iterator, miast()> {
 
 
   // member vars
+  ciaaCommonElements<Iterator> _kk;
 };
 }  // namespace iec61131_3
 }  // namespace compiler
