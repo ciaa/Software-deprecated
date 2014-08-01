@@ -54,8 +54,6 @@
 
 #include <boost/spirit/include/qi.hpp>
 
-#include "Code/Compiler/IEC61131Standard/Textuals/Grammar/ciaa_compiler_pou.h"
-
 
 #include <iostream>
 #include "Code/Defines/ciaa_modules_config.h"
@@ -138,7 +136,7 @@ struct ciaaProgrammingModel : boost::spirit::qi::grammar<Iterator, std::string()
     bsqi::rule<Iterator, std::string> _numeric_literal;
     bsqi::rule<Iterator, std::string> _integer_literal;
     bsqi::rule<Iterator, std::string> _signed_integer;
-    bsqi::rule<Iterator, std::string> _integer;
+    bsqi::rule<Iterator, std::string()> _integer;
     bsqi::rule<Iterator, std::string> _binary_integer;
     bsqi::rule<Iterator, std::string> _bit;
     bsqi::rule<Iterator, std::string> _octal_integer;

@@ -136,6 +136,10 @@ struct ciaaScanner : lex::lexer<typename detail::get_lexer_type<BaseIterator>::t
       , _rw_var{R"***(VAR)***"}
       , _rw_end_var{R"***(END_VAR)***"}
       , _rw_constant{R"***(CONSTANT)***"}
+      , _letter{R"***(a-zA-Z)***"}
+      , _digit{R"***(\d)***"}
+      , _octal_digit{R"***(0-7)***"}
+      , _hex_digit{R"***(0-9A-F)***"}
 
   {
     lex::_pass_type _pass;
@@ -170,7 +174,11 @@ struct ciaaScanner : lex::lexer<typename detail::get_lexer_type<BaseIterator>::t
         (_rw_function_end, static_cast<int>(tk_id::rw_function_end))
         (_rw_var, static_cast<int>(tk_id::rw_var))
         (_rw_end_var, static_cast<int>(tk_id::rw_end_var))
-        (_rw_constant, static_cast<int>(tk_id::rw_constant));
+        (_rw_constant, static_cast<int>(tk_id::rw_constant))
+        (_letter, static_cast<int>(tk_id::letter))
+        (_digit, static_cast<int>(tk_id::digit))
+        (_octal_digit, static_cast<int>(tk_id::octal_digit))
+        (_hex_digit, static_cast<int>(tk_id::hex_digit));
 
     this->self += _space [_pass = lex::pass_flags::pass_ignore];
     this->self += _comment [_pass = lex::pass_flags::pass_ignore];
@@ -221,6 +229,10 @@ struct ciaaScanner : lex::lexer<typename detail::get_lexer_type<BaseIterator>::t
   lex::token_def<std::string> _rw_var;
   lex::token_def<std::string> _rw_end_var;
   lex::token_def<std::string> _rw_constant;
+  lex::token_def<char> _letter;
+  lex::token_def<int> _digit;
+  lex::token_def<int> _octal_digit;
+  lex::token_def<char> _hex_digit;
 };
 
 

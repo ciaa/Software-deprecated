@@ -75,6 +75,10 @@ class ciaaSymbolInfo {
     rw_var,
     rw_end_var,
     rw_constant,
+    letter,
+    digit,
+    octal_digit,
+    hex_digit,
     max_tk_id_val
   };
 
