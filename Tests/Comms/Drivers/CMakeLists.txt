@@ -62,9 +62,8 @@ endif(PYTHONINTERP_FOUND)
 if(USE_BOOST_ASIO)
   qt5_use_modules(tcp_test Network)
   qt5_use_modules(async_tcp_test Network)
-
   find_package(Qt5Core REQUIRED)
   qt5_use_modules(serial_port_test Core)
-
+    #FIXME(denisacostaq\@gmail.com): Esto no esta funcionando
   add_definitions(-DUSE_BOOST_ASIO_WITH_CMAKE_BUG)
 endif(USE_BOOST_ASIO)

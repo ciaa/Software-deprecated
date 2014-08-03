@@ -29,27 +29,28 @@
  */
 
 
-/** \defgroup Comms
- *  \brief The communication module
+/** \defgroup Comms Módulo de Comunicación
+ *  \brief El software de la CIAA contará con un Módulo de Comunicación, cuya
+ *  \brief funcionalidad será establecer comunicaciones con la CIAA.
  *  \{
- *  	\defgroup Protocols
+ *  	\defgroup Protocols TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
- * 			\defgroup Modbus
+ * 			\defgroup Modbus TODO: it is ....
  * 			\brief TODO: it is ....
  * 			\{
  * 			\}
  *		\}
  *
- * 		\defgroup Drivers
+ * 		\defgroup Drivers TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
- * 			\defgroup Ethernet
+ * 			\defgroup Ethernet TODO: it is ....
  * 			\brief TODO: it is ....
  * 			\{
  * 			\}
  *
- * 			\defgroup SerialPort
+ * 			\defgroup SerialPort TODO: it is ....
  *	 		\brief TODO: it is ....
  * 			\{
  * 			\}
@@ -57,69 +58,85 @@
  *  \}
  */
  
-/** \defgroup Coder
- *  \brief TODO: it is ....
+/** \defgroup Coder Módulo de Codificación
+ *  \brief El software de la CIAA contará con un Módulo de Codificación, cuya
+ *  \brief funcionalidad será permitir a los usuarios crear y editar los
+ *  \brief programas que luego ejecutará la CIAA.
  *  \{
- * 		\defgroup IEC61131Standard
+ * 		\defgroup IEC61131Standard TODO: it is ....
+ *    \brief
  *  	\brief TODO: it is ....
  *  	\{
  *  	\}
  * 
- * 		\defgroup IL
+ * 		\defgroup IL TODO: it is ....
  *  	\brief TODO: it is ....
  *  	\{
  *  	\}
  * 
- *  	\defgroup Ladder
+ *  	\defgroup Ladder TODO: it is ....
  *  	\brief TODO: it is ....
  *  	\{
  *  	\}
  *  \}
  */
 
-/** \defgroup Compiler
- * 	\brief TODO: it is ....
+/** \defgroup Compiler Módulo  de  Compilación
+ *  \brief El software de la CIAA contará con un Módulo de Compilación encargado
+ *  \brief de  compilar  el  programa  escrito  mediante  el Módulo de
+ *  \brief Codificación.
  *  \{
  *  \}
 */
 
-/** \defgroup Debugger
- * 	\brief TODO: it is ....
+/** \defgroup Debugger Módulo de Depuración
+ *  \brief El software de la CIAA contará con un Módulo de Depuración, cuya
+ *  \brief funcionalidad será obtener información del mapa de memoria de la
+ *  \brief CIAA, para su visualización y/o edición.
  *  \{
  *  \}
 */
 
-/** \defgroup GUI
- * 	\brief TODO: it is ....
+/** \defgroup GUI Interfaz Gráfica de Usuario
+ * 	\brief El software de la CIAA contará con una Interfaz Gráfica de Usuario,
+ *  \brief cuya funcionalidad será permitir a los usuarios de la plataforma CIAA
+ * 	\brief realizar de manera gráfica las siguientes tareas:
+ * 	\brief - Apertura y guardado de proyectos.
+ *  \brief - Codificación.
+ *  \brief - Compilación.
+ *  \brief - Programación.
+ *  \brief - Depuración.
  *  \{
  *  \}
 */
 
-/** \defgroup Programmer
- * 	\brief TODO: it is ....
+/** \defgroup Programmer Módulo de Programación
+ *  \brief El software de la CIAA contará con un Módulo de Programación, cuya
+ *  \brief funcionalidad será tomar el programa compilado, generado por el
+ *  \brief Módulo de Compilación, y descargarlo al microcontrolador de la CIAA.
  *  \{
  *  \}
 */
 
-/** \defgroup System
+/** \defgroup System TODO: it is ....
  *  \brief TODO: it is ....
  *  \{
- *  	\defgroup Base
+ *  	\defgroup Base TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
  *		\}
  * 
- * 		\defgroup ciaaFreescale
+ * 		\defgroup ciaaFreescale TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
  * 		\}
  *
- * 		\defgroup ciaaNXP
+ * 		\defgroup ciaaNXP TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
  * 		\}
  * 
- *		\defgroup ciaaST
+ *		\defgroup ciaaST TODO: it is ....
  * 		\brief TODO: it is ....
  * 		\{
  * 		\}

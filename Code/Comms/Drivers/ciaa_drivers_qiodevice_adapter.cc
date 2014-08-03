@@ -1,35 +1,48 @@
-/*! \brief This file gives a ciaaDriversQIODeviceAdapter functionality.
+/*! \brief This file give the functionality to ciaaDriversQIODeviceAdapter class.
     \file ciaa_drivers_qiodevice_adapter.cc
     \author Alvaro Denis Acosta Quesada <denisacostaq\@gmail.com>
     \date Mon Apr 28 14:09:31 CDT 2014
 
-    \brief This file is part of Comms module.
+    \attention <h1><center><strong>&copy;COPYRIGHT 2014 </strong>[<strong>ACSE</strong>]
+               [ACSE-URL] & [<strong>CADIEEL</strong>][CADIEEL-URL]</center></h1>
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
+
+    1. Redistributions of source code must retain the above copyright notice,
+     this list of conditions and the following disclaimer.
+
+    2. Redistributions in binary form must reproduce the above copyright notice,
+     this list of conditions and the following disclaimer in the documentation
+     and/or other materials provided with the distribution.
+
+    3. Neither the name of the copyright holder nor the names of its
+     contributors may be used to endorse or promote products derived from this
+     software without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+
+    \brief This file is part of [<strong>CIAA Project</strong>][proyecto-ciaa-URL]
+    \brief , especifically in the [<strong>PC Software subproject</strong>]
+    \brief [proyecto-ciaa-PCSoftware-URL], in the Comms/Drivers module.\n
     \brief This file become from: Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.cc
 
-    \attention <h1><center>&copy; COPYRIGHT
-    GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007</center></h1>
+    [ACSE-URL]: http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/ "Asociación Civil para la Investigación, Promoción y Desarrollo de los Sistemas Electrónicos Embebidos"
+    [CADIEEL-URL]: http://www.cadieel.org.ar "Cámara de Industrias Electrónicas, Electromecánicas y Luminotécnicas"
+    [proyecto-ciaa-URL]: http://proyecto-ciaa.com.ar "Proyecto CIAA(Computador Industrial Abierta Argentina)"
+    [proyecto-ciaa-PCSoftware-URL]: http://proyecto-ciaa.com.ar/gggg "PCSoftware bla bla"
+*/
 
-    <a class="el" href="http://proyecto-ciaa.com.ar">
-      This file is part of CIAA Project.
-      ==================================
-    </a>
-
-    Copyright (C) 2014 $(Entidad que patenta)
-
-  This software is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License along
-  with this program; if not, write to the Free Software Foundation, Inc.,
-  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
 
 #include "Code/Comms/Drivers/ciaa_drivers_qiodevice_adapter.h"
 
@@ -46,13 +59,14 @@ namespace drivers {
   }
 
   // FIXME(denisacostaq\@gmail.com): arreglar esto, ver el .h \warning
-  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::read(std::chrono::milliseconds timeout,
-                                                     char *data,
-                                                     ciaa_size_t *n_bytes) {
+  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::read(
+      std::chrono::milliseconds timeout,
+      char *data,
+      ciaa_size_t *n_bytes) {
     ciaa_size_t total_readed = conexion_->read(data, *n_bytes);
     if (total_readed != *n_bytes &&  // IF NOT, all ok!
         total_readed >= 0) {  // IF NOT, is an error!
-      if (conexion_->waitForReadyRead(timeout)) {
+      if (conexion_->waitForReadyRead(timeout.count())) {
         do {
           ciaa_size_t readed_in_transition =
               conexion_->read(data + total_readed, *n_bytes - total_readed);
@@ -63,7 +77,7 @@ namespace drivers {
           } else {
             break;
           }
-        } while (conexion_->waitForReadyRead(timeout));
+        } while (conexion_->waitForReadyRead(timeout.count()));
       }
     }
 
@@ -101,9 +115,10 @@ namespace drivers {
     conexion_->waitForReadyRead(-1);
   }
 
-  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::write(std::chrono::milliseconds timeout,
-                                                      const char *data,
-                                                      ciaa_size_t *n_bytes) {
+  ciaaDriversErrorCode ciaaDriversQIODeviceAdapter::write(
+      std::chrono::milliseconds timeout,
+      const char *data,
+      ciaa_size_t *n_bytes) {
     ciaa_size_t total_writed = conexion_->write(data, *n_bytes);
     // FIXME(denisacostaq@gmail.com): deberia ser esto en lugar de el
     // socket_waitForBytesWritten(timeout); que hay en siguiente bloque ya que
@@ -116,7 +131,7 @@ namespace drivers {
     //  }
 
     if (total_writed == *n_bytes) {
-      conexion_->waitForBytesWritten(timeout);
+      conexion_->waitForBytesWritten(timeout.count());
       return ciaaDriversErrorCode::OK;
     } else {
       *n_bytes = total_writed;
